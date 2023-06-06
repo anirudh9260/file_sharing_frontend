@@ -11,23 +11,36 @@ import {
 } from '@mui/material'
 import { useAppSelector, useAppDispatch } from '../hooks/redux-hooks'
 import { useState, useEffect } from 'react'
-import {CircularProgress} from '@mui/material'
+import { CircularProgress } from '@mui/material'
 
 import { getProjects } from '../redux/actions/projects'
 
 export default function SelectProject(props) {
     const dispatch = useAppDispatch()
-    const state = useAppSelector((state) => state.projectsReducer)
-    console.log("State:", state)
+    const state = useAppSelector(state => state.projectsReducer)
+    console.log('State:', state)
     const [project, setproject] = useState('')
 
     const handleChange = event => {
         setproject(event.target.value)
     }
-    
+
     useEffect(() => {
         dispatch(getProjects())
     }, [])
+
+    let menu_items = []
+    if (state && state.isLoading) {
+        menu_items = <MenuItem value="A">Loading</MenuItem>
+    }
+    if (state && state.projects) {
+        console.log(state.projects)
+        // TODO: Update it as per projects list
+        
+        // menu_items = state.projects.map(item => {
+        //     return <MenuItem key={item.value} value={item.value}>{item.name}</MenuItem>
+        // })
+    }
 
     return (
         <div>
@@ -40,12 +53,8 @@ export default function SelectProject(props) {
                             value={project}
                             onChange={handleChange}
                             fullWidth
-                        >   {state && (
-                            <MenuItem value="A">Loading</MenuItem>
-                        )}
-                            <MenuItem value="A">Project A</MenuItem>
-                            <MenuItem value="B">Project B</MenuItem>
-                            <MenuItem value="C">Project C</MenuItem>
+                        >
+                            {menu_items}
                         </TextField>
 
                         <Box>
