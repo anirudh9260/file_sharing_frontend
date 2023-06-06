@@ -8,7 +8,7 @@ const initialState = {
 
 export const projectsReducer = createSlice({
     name: 'projects',
-    initialState:[],
+    initialState,
     reducers: {
         fetchProjects(state, action) {
             return {
@@ -22,7 +22,7 @@ export const projectsReducer = createSlice({
                 ...state,
                 message: 'Projects API Successfull',
                 isLoading: false,
-                projects: action
+                projects: action.payload
             }
         },
         fetchProjectsFailed(state, action) {
