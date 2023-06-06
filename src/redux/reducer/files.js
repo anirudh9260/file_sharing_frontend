@@ -2,40 +2,40 @@ import { createSlice } from '@reduxjs/toolkit'
 
 
 const initialState = {
-    projects: [], 
+    Files: [], 
     isLoading: false
 }
 
-export const projectsReducer = createSlice({
-    name: 'projects',
+export const FilesReducer = createSlice({
+    name: 'Files',
     initialState:[],
     reducers: {
-        fetchProjects(state, action) {
+        fetchFiles(state, action) {
             return {
                 ...state,
                 isLoading: true,
             }
         },
-        fetchProjectsSuccess(state, action) {
+        fetchFilesSuccess(state, action) {
             console.log("Reducer data printing", action.data)
             return {
                 ...state,
-                message: 'Projects API Successfull',
+                message: 'Files API Successfull',
                 isLoading: false,
-                projects: action
+                Files: action
             }
         },
-        fetchProjectsFailed(state, action) {
+        fetchFilesFailed(state, action) {
             return {
                 ...state,
                 isLoading: false,
             }
         },
-        
-        removeProjects(state, action){
+
+        removeFiles(state, action){
             return []
         },
-        updateProjects(state, action){
+        updateFiles(state, action){
             return []
         }
             
@@ -44,9 +44,9 @@ export const projectsReducer = createSlice({
 });
 
 export const {
-    fetchProjects,
-    fetchProjectsSuccess,
-    fetchProjectsFailed,
-} = projectsReducer.actions
+    fetchFiles,
+    fetchFilesSuccess,
+    fetchFilesFailed,
+} = FilesReducer.actions
 
-export default projectsReducer.reducer;
+export default FilesReducer.reducer;

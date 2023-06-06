@@ -4,3 +4,4 @@ export const CHANGE_PASSWORD = '/auth/change_password'
 
 
 export const PROJECTS_API = '/projects'
+export const FILES_API = '/files'
