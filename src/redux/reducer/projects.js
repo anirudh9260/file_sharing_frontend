@@ -1,8 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-
 const initialState = {
-    projects: [], 
+    projects: [],
     isLoading: false
 }
 
@@ -17,9 +16,9 @@ export const projectsReducer = createSlice({
             }
         },
         fetchProjectsSuccess(state, action) {
-            console.log("Reducer data printing", action.data)
+            // console.log('Projects Reducer data printing', action.payload)
             return {
-                ...state,
+                ...state,   
                 message: 'Projects API Successfull',
                 isLoading: false,
                 projects: action.payload
@@ -31,22 +30,19 @@ export const projectsReducer = createSlice({
                 isLoading: false,
             }
         },
-        
-        removeProjects(state, action){
+        addProjects(state, action) {
             return []
         },
-        updateProjects(state, action){
+        removeProjects(state, action) {
             return []
-        }
-            
-        
+        },
+        updateProjects(state, action) {
+            return []
+        },
     },
-});
+})
 
-export const {
-    fetchProjects,
-    fetchProjectsSuccess,
-    fetchProjectsFailed,
-} = projectsReducer.actions
+export const { fetchProjects, fetchProjectsSuccess, fetchProjectsFailed } =
+    projectsReducer.actions
 
-export default projectsReducer.reducer;
+export default projectsReducer.reducer
