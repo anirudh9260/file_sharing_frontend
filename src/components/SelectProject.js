@@ -1,15 +1,14 @@
 import React from 'react'
 
 import { Stack, Button, Box, TextField, MenuItem } from '@mui/material'
-
-import EditProjectDialog from './EditProjectDialog'
-
 import { useAppSelector, useAppDispatch } from '../hooks/redux-hooks'
 import { useState, useEffect } from 'react'
-
 import { getProjects } from '../redux/actions/projects'
 import { getFiles } from '../redux/actions/files'
+
+import EditProjectDialog from './EditProjectDialog'
 import AddProjectDialog from './AddProjectDialog'
+import UploadFile from './UploadFile'
 
 export default function SelectProject(props) {
     const dispatch = useAppDispatch()
@@ -62,26 +61,7 @@ export default function SelectProject(props) {
                         ></EditProjectDialog>
                     )}
                     <AddProjectDialog></AddProjectDialog>
-
-                    {/* <EditProjectModal project_name={project}></EditProjectModal> */}
-                    {/* <AddProjectModal></AddProjectModal> */}
-                    {/* <DeleteProjectModal></DeleteProjectModal> */}
-                    {/* <Box>
-                            <Stack spacing={2} direction="row" useFlexGap>
-                                <Button
-                                    variant="contained"
-                                    size="small"
-                                    color="primary"
-                                    onClick={handleEditProject}
-                                >
-                                    Edit Project
-                                </Button>
-
-                                <Button onClick={handleAddProject}>
-                                    Add Project
-                                </Button>
-                            </Stack>
-                        </Box> */}
+                    <UploadFile project_name={project}></UploadFile>
                 </Stack>
             </Stack>
             {/* </Box> */}

@@ -18,7 +18,7 @@ export const getProjects = () => async dispatch => {
     }
 }
 
-export const addProjects = () => async dispatch => {
+export const editProjects = () => async dispatch => {
     await dispatch(fetchProjects())
     try {
         const response = await apiClient.post(PROJECTS_API)
