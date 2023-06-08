@@ -9,11 +9,12 @@ import SelectProject from './SelectProject'
 import Heading from './Heading'
 import Container from '@mui/material/Container';
 import EnhancedTable from './EnhancedTable'
+import EnhancedTableContainer from './EnhancedTableContainer'
 const Home = () => {
     return (
         <>
         <Container maxWidth="xl">
-            <Heading></Heading>
+            {/* <Heading></Heading> */}
             {/* <Project></Project> */}
             {/* <MuiTypography></MuiTypography> */}
             {/* <MuiButton></MuiButton> */}
@@ -21,7 +22,7 @@ const Home = () => {
             {/* <MuiSelect></MuiSelect> */}
 
             <SelectProject></SelectProject>
-            <EnhancedTable></EnhancedTable>
+            <EnhancedTableContainer></EnhancedTableContainer>
             </Container>
         </>
     )
