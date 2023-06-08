@@ -2,7 +2,7 @@ import axios from 'axios'
 import UserSession from './auth'
 
 const token = UserSession.getToken()
-console.log(token)
+// console.log(token)
 const apiClient = axios.create({
     baseURL: `${process.env.REACT_APP_API_URL}`,
     headers: {
