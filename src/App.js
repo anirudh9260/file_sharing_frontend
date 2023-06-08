@@ -11,10 +11,10 @@ import Project from './components/SelectProject'
 
 function App() {
     const onDelete = () => {
-        console.log("onDelete Clicked")
+        console.log('onDelete Clicked')
     }
 
-    let projects = ["a", "b", "c"]
+    let projects = ['a', 'b', 'c']
 
     return (
         <BrowserRouter>
@@ -24,7 +24,7 @@ function App() {
                     <Route
                         exact
                         path="/"
-                        element={<Home/>}
+                        element={<Home />}
                         render={() => {
                             return UserSession.isAuthenticated() ? (
                                 <Navigate to="/" />
