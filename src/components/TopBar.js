@@ -161,10 +161,19 @@ const TopBar = () => {
                         <Button
                             key="About"
                             onClick={() => navigate('/about')}
-                            sx={{ my: 2, color: 'white', display: 'block' }}
+                            sx={{ my: 2, color: 'white' }}
                         >
                             About
                         </Button>
+                        <Typography
+                            variant="h5"
+                            align="center"
+                            fontFamily="roboto"
+                            
+                            sx={{ my: 2, color: 'white', flex: '1'}}
+                        >
+                            DATA MANAGEMENT
+                        </Typography>
                     </Box>
 
                     {UserSession.isAuthenticated() ? (
