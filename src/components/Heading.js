@@ -6,7 +6,7 @@ import React from 'react'
 
 function Heading() {
   return (
-    <Typography variant='h4' align="center">DATA MANAGEMENT</Typography>
+    <Typography variant='h4' align="center" fontFamily='monospace'>Data Management</Typography>
   )
 }
 
