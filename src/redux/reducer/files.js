@@ -1,14 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-
 const initialState = {
-    Files: [], 
-    isLoading: false
+    files: [],
+    isLoading: false,
 }
 
-export const FilesReducer = createSlice({
-    name: 'Files',
-    initialState:[],
+export const filesReducer = createSlice({
+    name: 'files',
+    initialState,
     reducers: {
         fetchFiles(state, action) {
             return {
@@ -17,12 +16,12 @@ export const FilesReducer = createSlice({
             }
         },
         fetchFilesSuccess(state, action) {
-            console.log("Reducer data printing", action.data)
+            // console.log('Files Reducer data printing', action.payload)
             return {
                 ...state,
                 message: 'Files API Successfull',
                 isLoading: false,
-                Files: action
+                files: action.payload,
             }
         },
         fetchFilesFailed(state, action) {
@@ -32,21 +31,16 @@ export const FilesReducer = createSlice({
             }
         },
 
-        removeFiles(state, action){
+        removeFiles(state, action) {
             return []
         },
-        updateFiles(state, action){
+        updateFiles(state, action) {
             return []
-        }
-            
-        
+        },
     },
-});
+})
 
-export const {
-    fetchFiles,
-    fetchFilesSuccess,
-    fetchFilesFailed,
-} = FilesReducer.actions
+export const { fetchFiles, fetchFilesSuccess, fetchFilesFailed } =
+    filesReducer.actions
 
-export default FilesReducer.reducer;
+export default filesReducer.reducer
