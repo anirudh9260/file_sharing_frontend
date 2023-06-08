@@ -1,28 +1,25 @@
 import React from 'react'
 
-import {
-    Stack,
-    Button,
-    ButtonGroup,
-    Box,
-    TextField,
-    MenuItem,
-    Grid,
-} from '@mui/material'
+import { Stack, Button, Box, TextField, MenuItem } from '@mui/material'
+
+import EditProjectDialog from './EditProjectDialog'
+
 import { useAppSelector, useAppDispatch } from '../hooks/redux-hooks'
 import { useState, useEffect } from 'react'
-import { CircularProgress } from '@mui/material'
 
 import { getProjects } from '../redux/actions/projects'
+import { getFiles } from '../redux/actions/files'
+import AddProjectDialog from './AddProjectDialog'
 
 export default function SelectProject(props) {
     const dispatch = useAppDispatch()
     const state = useAppSelector(state => state.projectsReducer)
-    console.log('State:', state)
+
     const [project, setproject] = useState('')
 
-    const handleChange = event => {
+    const handleSelectProject = event => {
         setproject(event.target.value)
+        dispatch(getFiles())
     }
 
     useEffect(() => {
@@ -34,50 +31,60 @@ export default function SelectProject(props) {
         menu_items = <MenuItem value="A">Loading</MenuItem>
     }
     if (state && state.projects) {
-        console.log(state.projects)
-        // TODO: Update it as per projects list
-        
-        // menu_items = state.projects.map(item => {
-        //     return <MenuItem key={item.value} value={item.value}>{item.name}</MenuItem>
-        // })
+        menu_items = state.projects.map(item => {
+            return (
+                <MenuItem key={item.id} value={item.project_name}>
+                    {item.project_name}
+                </MenuItem>
+            )
+        })
     }
 
     return (
         <div>
-            <Box width="400px">
-                <Stack>
-                    <Stack spacing={2} direction="row">
-                        <TextField
-                            label="Select your project"
-                            select
-                            value={project}
-                            onChange={handleChange}
-                            fullWidth
-                        >
-                            {menu_items}
-                        </TextField>
+            {/* <Box width="1000px"> */}
+            <Stack>
+                <Stack spacing={2} direction="row">
+                    <TextField
+                        label="Select your project"
+                        select
+                        key={project.id}
+                        value={project}
+                        onChange={handleSelectProject}
+                        fullWidth
+                        helperText="Please select your project"
+                    >
+                        {menu_items}
+                    </TextField>
+                    {project && (
+                        <EditProjectDialog
+                            project_name={project}
+                        ></EditProjectDialog>
+                    )}
+                    <AddProjectDialog></AddProjectDialog>
 
-                        <Box>
+                    {/* <EditProjectModal project_name={project}></EditProjectModal> */}
+                    {/* <AddProjectModal></AddProjectModal> */}
+                    {/* <DeleteProjectModal></DeleteProjectModal> */}
+                    {/* <Box>
                             <Stack spacing={2} direction="row" useFlexGap>
                                 <Button
                                     variant="contained"
                                     size="small"
                                     color="primary"
+                                    onClick={handleEditProject}
                                 >
                                     Edit Project
                                 </Button>
-                                <Button
-                                    onClick={() => {
-                                        alert(' Add Project clicked!!!')
-                                    }}
-                                >
+
+                                <Button onClick={handleAddProject}>
                                     Add Project
                                 </Button>
                             </Stack>
-                        </Box>
-                    </Stack>
+                        </Box> */}
                 </Stack>
-            </Box>
+            </Stack>
+            {/* </Box> */}
         </div>
     )
 }
