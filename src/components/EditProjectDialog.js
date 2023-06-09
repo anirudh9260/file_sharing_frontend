@@ -21,7 +21,7 @@ export default function EditProjectDialog(props) {
 
     return (
         <div>
-            <Button variant="contained" size="large" onClick={handleClickOpen} sx={{ whiteSpace: 'nowrap' }}> 
+            <Button variant="contained" size="large" onClick={handleClickOpen} sx={{my: 1}}> 
                 Edit Project
             </Button>
             <Dialog open={open} onClose={handleClose}>

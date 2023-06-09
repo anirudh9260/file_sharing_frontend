@@ -29,7 +29,7 @@ export default function AddProjectDialog() {
 
     return (
         <div>
-            <Button variant="contained" size="large" onClick={handleClickOpen}>
+            <Button variant="contained" size="large" onClick={handleClickOpen} sx={{my: 1}}>
                 Add Project
             </Button>
             <Dialog open={open} onClose={handleClose}>
