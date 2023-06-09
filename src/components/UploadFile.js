@@ -83,7 +83,7 @@ function UploadFile(props) {
 export default UploadFile
 
 UploadFile.propTypes = {
-    project_name: PropTypes.string.isRequired,
+    project_name: PropTypes.string,
 }
 
 UploadFile.defaultProp = {
