@@ -23,20 +23,20 @@ export default function AddProjectDialog() {
     }
 
     const handleAddNewProject = () => {
-        console.log('ABCDE')
+        console.log('New Project Added')
         // dispatch(getFiles())
     }
 
     return (
         <div>
-            <Button variant="contained" size="small" onClick={handleClickOpen}>
+            <Button variant="contained" size="large" onClick={handleClickOpen}>
                 Add Project
             </Button>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Edit Project</DialogTitle>
+                <DialogTitle>Add New Project</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Provide a new name for the project
+                        Provide a name for the project
                     </DialogContentText>
                     <TextField
                         autoFocus
