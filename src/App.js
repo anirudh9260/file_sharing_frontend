@@ -7,7 +7,7 @@ import Home from './components/Home'
 import UserSession from './services/auth'
 import About from './components/About'
 import Profile from './components/Profile'
-import Project from './components/SelectProject'
+
 
 function App() {
     const onDelete = () => {
