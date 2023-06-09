@@ -49,8 +49,8 @@ function UploadFile(props) {
 
     return (
         <div>
-            <Button variant="contained" size="small" onClick={handleClickOpen}>
-                Upload File
+            <Button variant="contained" size="large" onClick={handleClickOpen} sx={{ px:"5", whiteSpace: 'nowrap' }}>
+                Upload File <FileUploadIcon></FileUploadIcon>
             </Button>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Upload File</DialogTitle>
