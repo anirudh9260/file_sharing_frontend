@@ -7,8 +7,13 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import PropTypes from 'prop-types'
+import {useAppDispatch } from '../hooks/redux-hooks'
+import { editProjectsAction } from '../redux/actions/projects'
+
 
 export default function EditProjectDialog(props) {
+    const dispatch = useAppDispatch()
+    const [newProject, setNewProject] = React.useState(props.projectName)
     const [open, setOpen] = React.useState(false)
 
     const handleClickOpen = () => {
@@ -17,6 +22,11 @@ export default function EditProjectDialog(props) {
 
     const handleClose = () => {
         setOpen(false)
+        let newProjectValues = {"projectName" : newProject, 
+                                "projectId" : props.projectId}
+                                
+        props.changeSelectedProject(newProjectValues)
+        dispatch(editProjectsAction(props.projectId, {"project_name": newProject}))
     }
 
     return (
@@ -35,9 +45,10 @@ export default function EditProjectDialog(props) {
                         margin="dense"
                         id="name"
                         label="Project Name"
-                        defaultValue={props.project_name}
+                        defaultValue={props.projectName}
                         fullWidth
                         variant="standard"
+                        onChange={(v) => setNewProject(v.target.value)}
                     />
                 </DialogContent>
                 <DialogActions>
@@ -50,9 +61,11 @@ export default function EditProjectDialog(props) {
 }
 
 EditProjectDialog.propTypes = {
-    project_name: PropTypes.string.isRequired,
+    projectName: PropTypes.string.isRequired,
+    projectId: PropTypes.number.isRequired
 }
 
 EditProjectDialog.defaultProp = {
-    project_name: '',
+    projectName: '',
+    projectId:''
 }
