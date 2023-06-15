@@ -14,7 +14,11 @@ import FileBar from './FileBar'
 import { useState, useEffect } from 'react'
 
 const Home = () => {
-    const [selectedProject, setSelectedProject] = useState()
+    let initialProjectsValue = {
+        projectId: '',
+        projectName: '',
+    }
+    const [selectedProject, setSelectedProject] = useState(initialProjectsValue)
 
     return (
         <>
@@ -23,11 +27,11 @@ const Home = () => {
                 <MuiButton></MuiButton>
                 <MuiTextField></MuiTextField>
                 <MuiSelect></MuiSelect> */}
-
+    
                 <ProjectBar
                     changeSelectedProject={setSelectedProject}
                 ></ProjectBar>
-                <FileBar project_name={selectedProject}></FileBar>
+                <FileBar Project={selectedProject}></FileBar>
                 {/* <EnhancedTable></EnhancedTable> */}
                 <EnhancedTableContainer></EnhancedTableContainer>
             </Container>
