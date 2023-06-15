@@ -1,34 +1,41 @@
-import apiClient from '../../services/apiClient'
-import { FILES_API } from '../../constants'
+import apiClient, { uploadApiClient } from '../../services/apiClient'
+import { FILES_API, PROJECTS_API } from '../../constants'
 import {
+    fetchFiles,
     fetchFilesSuccess,
     fetchFilesFailed,
-    fetchFiles,
+    uploadFiles,
+    uploadFilesSuccess,
+    uploadFilesFailed,
+    removeFiles,
+    updateFiles,
 } from '../reducer/files'
 
 
-export const getFiles = (project_id) => async dispatch => {
-    console.log("Project_ID:", project_id)
+
+export const getFilesForProject = projectId => async dispatch => {
+    console.log('Calling Action : getFilesForProject()')
     await dispatch(fetchFiles())
     try {
-        const response = await apiClient.get(FILES_API)
-        // console.log("Printing from files actions:", response.data)
+        const response = await apiClient.get(`${FILES_API}/${projectId}`)
+        console.log('Response from getFilesForProject():', response.data)
         return dispatch(fetchFilesSuccess(response.data))
     } catch (err) {
         return dispatch(fetchFilesFailed(err))
     }
 }
 
-
-export const getFilesForProject = (project_id) => async dispatch => {
-    
-    console.log("Project_ID:", project_id)
-    // await dispatch(fetchFiles())
+export const uploadFilesAction = formData => async dispatch => {
+    console.log('Calling Action : uploadFiles()')
+    // console.log(formData)
+    await dispatch(uploadFiles())
     try {
-        const response = await apiClient.get(FILES_API, "/", project_id)
-        // console.log("Printing from files actions:", response.data)
-        return dispatch(fetchFilesSuccess(response.data))
+        const response = await uploadApiClient.post(FILES_API, formData)
+        console.log('Printing from uploadFilesAction():', response.data)
+        return dispatch(uploadFilesSuccess(response.data))
     } catch (err) {
-        return dispatch(fetchFilesFailed(err))
+        return dispatch(uploadFilesFailed(err))
     }
 }
+
+
