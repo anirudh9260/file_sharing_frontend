@@ -6,13 +6,15 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
-import PropTypes from 'prop-types'
-import { useAppSelector, useAppDispatch } from '../hooks/redux-hooks'
+import {useAppDispatch } from '../hooks/redux-hooks'
+import {addProjectAction} from '../redux/actions/projects'
+
 
 export default function AddProjectDialog() {
     const dispatch = useAppDispatch()
 
     const [open, setOpen] = React.useState(false)
+    const [projectName, setProjectName] = React.useState('')
 
     const handleClickOpen = () => {
         setOpen(true)
@@ -23,8 +25,10 @@ export default function AddProjectDialog() {
     }
 
     const handleAddNewProject = () => {
-        console.log('New Project Added')
-        // dispatch(getFiles())
+        setOpen(false)
+        dispatch(addProjectAction({
+            "project_name":projectName
+        }))
     }
 
     return (
@@ -45,6 +49,7 @@ export default function AddProjectDialog() {
                         label="Project Name"
                         fullWidth
                         variant="standard"
+                        onChange = {(e) => setProjectName(e.target.value) }
                     />
                 </DialogContent>
                 <DialogActions>
