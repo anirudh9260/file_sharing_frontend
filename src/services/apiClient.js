@@ -6,7 +6,8 @@ const token = UserSession.getToken()
 const apiClient = axios.create({
     baseURL: `${process.env.REACT_APP_API_URL}`,
     headers: {
-        Authorization: token ? `Bearer ${token}` : ''
+        Authorization: token ? `Bearer ${token}` : '',
+        "Content-Type" : 'application/json'
     }
 })
 
@@ -22,5 +23,13 @@ apiClient.interceptors.response.use(
         return Promise.reject(error)
     },
 )
+
+export const uploadApiClient = axios.create({
+    baseURL: `${process.env.REACT_APP_API_URL}`,
+    headers: {
+        Authorization: token ? `Bearer ${token}` : '',
+        'Content-Type' : 'multipart/form-data'
+    }
+})
 
 export default apiClient
