@@ -5,12 +5,17 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
-import PropTypes from 'prop-types'
 import FileUploadIcon from '@mui/icons-material/FileUpload'
+import PropTypes from 'prop-types'
 import { useState } from 'react'
+import { uploadFilesAction } from '../redux/actions/files'
+import { useAppDispatch } from '../hooks/redux-hooks'
 
 function UploadFile(props) {
-    const [file, setFile] = useState()
+    const dispatch = useAppDispatch()
+
+    const [selectedFile, setSelectedFile] = useState()
+    const [isFilePicked, setIsFilePicked] = useState(false)
 
     const [open, setOpen] = React.useState(false)
 
@@ -23,46 +28,43 @@ function UploadFile(props) {
     }
 
     const handleFileChange = e => {
-        if (e.target.files) {
-            setFile(e.target.files[0])
-        }
+        setSelectedFile(e.target.files[0])
+        setIsFilePicked(true)
     }
 
     const handleUploadClick = () => {
-        if (!file) {
-            return
+        if (isFilePicked) {
+            const formData = new FormData()
+            formData.append('file', selectedFile)
+            formData.append('project_id', props.Project.projectId)
+            console.log(dispatch(uploadFilesAction(formData)))
+            setOpen(false)
         }
-
-        fetch('https://httpbin.org/post', {
-            method: 'POST',
-            body: file,
-            // 👇 Set headers manually for single file upload
-            headers: {
-                'content-type': file.type,
-                'content-length': `${file.size}`, // 👈 Headers need to be a string
-            },
-        })
-            .then(res => res.json())
-            .then(data => console.log(data))
-            .catch(err => console.error(err))
+        setIsFilePicked(false)
     }
 
     return (
         <div>
-            <Button variant="contained" size="large" onClick={handleClickOpen} sx={{ px:"5", whiteSpace: 'nowrap' }}>
+            <Button
+                variant="contained"
+                size="large"
+                onClick={handleClickOpen}
+                sx={{ px: '5', whiteSpace: 'nowrap' }}
+            >
                 Upload File <FileUploadIcon></FileUploadIcon>
             </Button>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Upload File</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        
-                        {file && `${file.name} - ${file.type}`}
-                        <span><input type="file" onChange={handleFileChange} /></span>
+                        {/* {selectedFile &&
+                            `${selectedFile.name}`} */}
+                        <span>
+                            <input type="file" onChange={handleFileChange} />
+                        </span>
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-
                     <Button onClick={handleClose}>Cancel</Button>
                     <Button
                         variant="contained"
@@ -73,7 +75,6 @@ function UploadFile(props) {
                     >
                         Upload
                     </Button>
-
                 </DialogActions>
             </Dialog>
         </div>
@@ -83,9 +84,5 @@ function UploadFile(props) {
 export default UploadFile
 
 UploadFile.propTypes = {
-    project_name: PropTypes.string,
-}
-
-UploadFile.defaultProp = {
-    project_name: ''
+    Project: PropTypes.object,
 }
