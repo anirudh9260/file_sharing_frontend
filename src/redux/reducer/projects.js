@@ -2,7 +2,10 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
     projects: [],
-    isLoading: false
+    isLoading: false,
+    isAdding: false,
+    isDeleteting: false,
+    isUpdating: false,
 }
 
 export const projectsReducer = createSlice({
@@ -18,10 +21,10 @@ export const projectsReducer = createSlice({
         fetchProjectsSuccess(state, action) {
             // console.log('Projects Reducer data printing', action.payload)
             return {
-                ...state,   
+                ...state,
                 message: 'Projects API Successfull',
                 isLoading: false,
-                projects: action.payload
+                projects: action.payload,
             }
         },
         fetchProjectsFailed(state, action) {
@@ -30,19 +33,74 @@ export const projectsReducer = createSlice({
                 isLoading: false,
             }
         },
+
         addProjects(state, action) {
-            return []
+            return {
+                ...state,
+                isAdding: true,
+            }
         },
-        removeProjects(state, action) {
-            return []
+        addProjectsSuccess(state, action) {
+            return {
+                ...state,
+                message: 'Add Projects API Successfull',
+                isAdding: false,
+                // projects: action.payload
+            }
         },
+        addProjectsFailed(state, action) {
+            return {
+                ...state,
+                isAdding: false,
+            }
+        },
+
+        deleteProjects(state, action) {
+            return {
+                ...state,
+                isDeleteting: true,
+            }
+        },
+        deleteProjectsSuccess(state, action) {
+            return {
+                ...state,
+                message: 'Delete Projects API Successfull',
+                isDeleteting: false,
+            }
+        },
+        deleteProjectsFailed(state, action) {
+            return {
+                ...state,
+                isDeleteting: false,
+            }
+        },
+
         updateProjects(state, action) {
+            return []
+        },
+        updateProjectsSuccess(state, action) {
+            return []
+        },
+        updateProjectsFailed(state, action) {
             return []
         },
     },
 })
 
-export const { fetchProjects, fetchProjectsSuccess, fetchProjectsFailed } =
-    projectsReducer.actions
+export const {
+    fetchProjects,
+    fetchProjectsSuccess,
+    fetchProjectsFailed,
+    addProjects,
+    addProjectsSuccess,
+    addProjectsFailed,
+    deleteProjects,
+    deleteProjectsSuccess, 
+    deleteProjectsFailed,
+    updateProjects,
+    updateProjectsSuccess,
+    updateProjectsFailed
+    
+} = projectsReducer.actions
 
 export default projectsReducer.reducer
