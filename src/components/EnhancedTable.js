@@ -47,7 +47,7 @@ function stableSort(array, comparator) {
 
 export default function EnhancedTable(props) {
     const rows = props.rows
-    console.log("Rows:", rows)
+    // console.log("Rows:", rows)
 
     const [order, setOrder] = React.useState('asc')
     const [orderBy, setOrderBy] = React.useState('id')
