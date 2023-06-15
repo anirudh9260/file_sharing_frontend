@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
     files: [],
     isLoading: false,
+    isUploading: false
 }
 
 function createData(id, file_name, date_modified, type, size, uploaded_by) {
@@ -44,7 +45,7 @@ export const filesReducer = createSlice({
 
             return {
                 ...state,
-                message: 'Files API Successfull',
+                message: 'Files GET API Successfull',
                 isLoading: false,
                 files: row_data,
             }
@@ -55,7 +56,27 @@ export const filesReducer = createSlice({
                 isLoading: false,
             }
         },
-
+        uploadFiles(state, action) {
+            return {
+                ...state,
+                isUploading: true,
+            }
+        },
+        uploadFilesSuccess(state, action) {
+            console.log("Upload file success")
+            console.log('Files Reducer Upload data', action.payload)
+            return {
+                ...state,
+                message: 'Files POST UPLOAD API Successfull',
+                isUploading: false,
+            }
+        },
+        uploadFilesFailed(state, action) {
+            return {
+                ...state,
+                isUploading: false,
+            }
+        },
         removeFiles(state, action) {
             return []
         },
@@ -65,7 +86,7 @@ export const filesReducer = createSlice({
     },
 })
 
-export const { fetchFiles, fetchFilesSuccess, fetchFilesFailed } =
+export const { fetchFiles, fetchFilesSuccess, fetchFilesFailed, uploadFiles, uploadFilesSuccess, uploadFilesFailed, removeFiles, updateFiles } =
     filesReducer.actions
 
 export default filesReducer.reducer
