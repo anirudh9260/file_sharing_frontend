@@ -4,7 +4,7 @@ import ShareIcon from '@mui/icons-material/Share'
 import DeleteIcon from '@mui/icons-material/Delete';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import { useAppDispatch } from '../hooks/redux-hooks'
-import { deleteFilesAction } from '../redux/actions/files'
+import { deleteFilesAction, copyLinkAction } from '../redux/actions/files'
 
 function RowButton(props) {
     const {row} = props
@@ -17,6 +17,8 @@ function RowButton(props) {
 
     const handleCopyLink = () => {
         console.log(row)
+        const link = `${process.env.REACT_APP_API_URL}` + "/" + row.uid + "/" + row.file_name
+        dispatch(copyLinkAction(link))
     }
 
     const handleDelete = () => {
