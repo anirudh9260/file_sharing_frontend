@@ -10,6 +10,9 @@ import {
     removeFiles,
     removeFilesSuccess,
     removeFilesFailed,
+    copyLink,
+    copyLinkSuccess,
+    copyLinkFailed
     
 } from '../reducer/files'
 
@@ -37,6 +40,16 @@ export const uploadFilesAction = formData => async dispatch => {
         return dispatch(uploadFilesSuccess(response.data))
     } catch (err) {
         return dispatch(uploadFilesFailed(err))
+    }
+}
+
+export const copyLinkAction = link => async dispatch => {
+    console.log('copyLinkAction()')
+    await dispatch(copyLink())
+    try {
+        return dispatch(copyLinkSuccess(link))
+    } catch (err) {
+        return dispatch(copyLinkFailed(err))
     }
 }
 
