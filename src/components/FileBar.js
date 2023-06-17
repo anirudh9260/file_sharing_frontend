@@ -1,10 +1,8 @@
 import { Stack } from '@mui/material'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import Typography from '@mui/material/Typography'
 import UploadFile from './UploadFile'
 import PropTypes from 'prop-types'
-
-import FormUploadButton from './FormFields'
 
 export default function FileBar(props) {
     // Shashank code
