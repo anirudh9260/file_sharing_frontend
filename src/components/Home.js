@@ -37,6 +37,10 @@ const Home = () => {
     useEffect(() => {
         dispatch(getProjects())
     }, [projectsState.isAdding])
+
+    useEffect(() => {
+        dispatch(getProjects())
+    }, [projectsState.isUpdating])
     
 
     return (
@@ -66,7 +70,7 @@ const Home = () => {
                     <SnackbarNotification
                         message={filesState.message }
                         onClose={() => setSnackbarState(false)}
-                        severity={projectsState.isError ? 'error' : 'success'}
+                        severity={filesState.isError ? 'error' : 'success'}
                     />
                 )}
             </Container>
