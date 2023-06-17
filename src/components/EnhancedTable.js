@@ -148,9 +148,9 @@ export default function EnhancedTable(props) {
                                 return (
                                     <TableRow
                                         hover
-                                        onClick={event =>
-                                            handleClick(event, row.file_name)
-                                        }
+                                        // onClick={event =>
+                                        //     handleClick(event, row.file_name)
+                                        // }
                                         role="checkbox"
                                         aria-checked={isItemSelected}
                                         tabIndex={-1}
@@ -165,6 +165,9 @@ export default function EnhancedTable(props) {
                                                 inputProps={{
                                                     'aria-labelledby': labelId,
                                                 }}
+                                                onClick={event =>
+                                            handleClick(event, row.file_name)
+                                        }
                                             />
                                         </TableCell>
                                         <TableCell
@@ -188,7 +191,7 @@ export default function EnhancedTable(props) {
                                             {row.uploaded_by}
                                         </TableCell>
                                         <TableCell align="right">
-                                            <RowButton></RowButton>
+                                            <RowButton row={row}></RowButton>
                                         </TableCell>
                                     </TableRow>
                                 )
@@ -228,7 +231,3 @@ export default function EnhancedTable(props) {
 EnhancedTable.propTypes = {
   rows: PropTypes.array,
 }
-
-// EnhancedTable.defaultProps = {
-//   rows : []
-// }
