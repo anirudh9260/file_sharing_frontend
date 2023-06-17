@@ -1,46 +1,52 @@
 import React from 'react'
-
-import { Stack, Button, Box, TextField, MenuItem } from '@mui/material'
-
-import { useAppSelector, useAppDispatch } from '../hooks/redux-hooks'
+import { Stack, Box, MenuItem, FormControl } from '@mui/material'
+import InputLabel from '@mui/material/InputLabel'
+import Select from '@mui/material/Select'
 import PropTypes from 'prop-types'
-import { useState, useEffect } from 'react'
+import { useAppSelector, useAppDispatch } from '../hooks/redux-hooks'
+import { useEffect } from 'react'
 import { getProjects } from '../redux/actions/projects'
-import { getFiles } from '../redux/actions/files'
+import { getFilesForProject } from '../redux/actions/files'
 import EditProjectDialog from './EditProjectDialog'
 import AddProjectDialog from './AddProjectDialog'
+import DeleteProjectModal from './DeleteProjectDialog'
 
 export default function ProjectBar(props) {
+    const { selectedProject, changeSelectedProject } = props
     const dispatch = useAppDispatch()
-
-    useEffect(() => {
-        dispatch(getProjects())
-    }, [])
-
-    const state = useAppSelector(state => state.projectsReducer)
+    const projectsState = useAppSelector(state => state.projectsReducer)
+    
+    // useEffect(() => {
+    //     dispatch(getProjects()), changeSelectedProject
+    // }, [projectsState.isDeleteting, projectsState.isAdding])
 
     let menu_items = []
-    if (state && state.isLoading) {
+    if (projectsState && projectsState.isLoading) {
         menu_items = <MenuItem value="loading">Loading</MenuItem>
     }
-    if (state && state.projects) {
-        menu_items = state.projects.map(item => {
+    if (projectsState && projectsState.projects) {
+        menu_items = projectsState.projects.map(item => {
             return (
-                <MenuItem key={item.id} value={item.project_name}>
+                <MenuItem
+                    name={item.id}
+                    key={item.id}
+                    value={item.project_name}
+                >
                     {item.project_name}
                 </MenuItem>
             )
         })
     }
 
-    const [project, setproject] = useState('')
-
-    const handleSelectProject = event => {
-        setproject(event.target.value)
-        // console.log("Selected Project :", event.target.value);
-        // console.log("Use state Project:", project);
-        props.changeSelectedProject(event.target.value)
-        dispatch(getFiles())
+    const handleSelectProject = (event, item) => {
+        const projectName = event.target.value
+        const projectId = item.props.name
+        let newProjectValues = {
+            projectName: projectName,
+            projectId: projectId,
+        }
+        changeSelectedProject(newProjectValues)
+        dispatch(getFilesForProject(projectId))
     }
 
     return (
@@ -52,27 +58,34 @@ export default function ProjectBar(props) {
             >
                 <Stack spacing={2} direction="row">
                     <Box sx={{ minWidth: 200 }}>
-                        <TextField
-                            fullWidth
-                            select
-                            label="Select project"
-                            // key={project.id}
-                            value={project}
-                            onChange={handleSelectProject}
-                            helperText="Please select your project"
-                        >
-                            {menu_items}
-                        </TextField>
+                        <FormControl fullWidth>
+                            <InputLabel>Select Project</InputLabel>
+                            <Select
+                                value={selectedProject.projectName}
+                                label="Select Project"
+                                onChange={handleSelectProject}
+                            >
+                                {menu_items}
+                            </Select>
+                        </FormControl>
                     </Box>
-                    {project && (
+
+                    {selectedProject.projectName && (
                         <EditProjectDialog
-                            project_name={project}
+                            projectName={selectedProject.projectName}
+                            projectId={selectedProject.projectId}
+                            changeSelectedProject={changeSelectedProject}
                         ></EditProjectDialog>
+                    )}
+                    {selectedProject.projectName && (
+                        <DeleteProjectModal
+                            projectName={selectedProject.projectName}
+                            projectId={selectedProject.projectId}
+                        ></DeleteProjectModal>
                     )}
                 </Stack>
                 <Stack direction="row">
                     <AddProjectDialog></AddProjectDialog>
-                    {/* <UploadFile project_name={project}></UploadFile> */}
                 </Stack>
             </Stack>
         </div>
