@@ -15,10 +15,6 @@ export default function ProjectBar(props) {
     const { selectedProject, changeSelectedProject } = props
     const dispatch = useAppDispatch()
     const projectsState = useAppSelector(state => state.projectsReducer)
-    
-    // useEffect(() => {
-    //     dispatch(getProjects()), changeSelectedProject
-    // }, [projectsState.isDeleteting, projectsState.isAdding])
 
     let menu_items = []
     if (projectsState && projectsState.isLoading) {
