@@ -6,6 +6,9 @@ const initialState = {
     isAdding: false,
     isDeleteting: false,
     isUpdating: false,
+    message: '',
+    isError: false,
+    selectedProject : ""
 }
 
 export const projectsReducer = createSlice({
@@ -15,74 +18,97 @@ export const projectsReducer = createSlice({
         fetchProjects(state, action) {
             return {
                 ...state,
+                // message: '',
                 isLoading: true,
             }
         },
         fetchProjectsSuccess(state, action) {
-            // console.log('Projects Reducer data printing', action.payload)
             return {
                 ...state,
-                message: 'Projects API Successfull',
                 isLoading: false,
-                projects: action.payload,
+                projects: action?.payload,
+                isError: false
             }
         },
         fetchProjectsFailed(state, action) {
             return {
                 ...state,
+                message: 'Get Projects Failed',
                 isLoading: false,
+                isError: true,
             }
         },
 
         addProjects(state, action) {
             return {
                 ...state,
+                message: "",
                 isAdding: true,
             }
         },
         addProjectsSuccess(state, action) {
+            console.log("Action", action)
             return {
                 ...state,
-                message: 'Add Projects API Successfull',
+                message: 'Add Project Successfull',
                 isAdding: false,
-                // projects: action.payload
+                isError: false,
             }
         },
         addProjectsFailed(state, action) {
             return {
                 ...state,
+                message: 'Add Project Failed',
                 isAdding: false,
+                isError: true,
             }
         },
 
         deleteProjects(state, action) {
             return {
                 ...state,
+                message: "",
                 isDeleteting: true,
             }
         },
         deleteProjectsSuccess(state, action) {
             return {
                 ...state,
-                message: 'Delete Projects API Successfull',
+                message: 'Project Successfully Deleted',
                 isDeleteting: false,
+                isError: false
             }
         },
         deleteProjectsFailed(state, action) {
             return {
                 ...state,
                 isDeleteting: false,
+                message: `Delete Project Failed : ${action?.payload?.msg ? action?.payload?.msg : ''}`,
+                isError: true,
             }
         },
 
         updateProjects(state, action) {
-            return []
+            return {
+                ...state,
+                isUpdating: true,
+            }
         },
         updateProjectsSuccess(state, action) {
-            return []
+            return {
+                ...state,
+                message: 'Project Name Updated',
+                isUpdating: false,
+                isError: false,
+            }
         },
         updateProjectsFailed(state, action) {
-            return []
+            return {
+                ...state,
+                isUpdating: false,
+                message: 'Project Name Update Failed',
+                isError: true,
+            }
         },
     },
 })
@@ -95,12 +121,11 @@ export const {
     addProjectsSuccess,
     addProjectsFailed,
     deleteProjects,
-    deleteProjectsSuccess, 
+    deleteProjectsSuccess,
     deleteProjectsFailed,
     updateProjects,
     updateProjectsSuccess,
-    updateProjectsFailed
-    
+    updateProjectsFailed,
 } = projectsReducer.actions
 
 export default projectsReducer.reducer
