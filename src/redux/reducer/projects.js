@@ -8,7 +8,8 @@ const initialState = {
     isUpdating: false,
     message: '',
     isError: false,
-    selectedProject : ""
+    projectName : "",
+    projectId : ""
 }
 
 export const projectsReducer = createSlice({
@@ -83,14 +84,15 @@ export const projectsReducer = createSlice({
             return {
                 ...state,
                 isDeleteting: false,
-                message: `Delete Project Failed : ${action?.payload?.msg ? action?.payload?.msg : ''}`,
                 isError: true,
+                message: `Delete Project Failed : ${action?.payload?.msg ? action?.payload?.msg : ''}`,
             }
         },
 
         updateProjects(state, action) {
             return {
                 ...state,
+                message: "",
                 isUpdating: true,
             }
         },
