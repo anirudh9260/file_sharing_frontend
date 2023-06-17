@@ -7,9 +7,8 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import PropTypes from 'prop-types'
-import {useAppDispatch } from '../hooks/redux-hooks'
+import { useAppDispatch } from '../hooks/redux-hooks'
 import { editProjectsAction } from '../redux/actions/projects'
-
 
 export default function EditProjectDialog(props) {
     const dispatch = useAppDispatch()
@@ -22,16 +21,29 @@ export default function EditProjectDialog(props) {
 
     const handleClose = () => {
         setOpen(false)
-        let newProjectValues = {"projectName" : newProject, 
-                                "projectId" : props.projectId}
-                                
+    }
+    
+    const handleEdit = () => {
+        let newProjectValues = {
+            projectName: newProject,
+            projectId: props.projectId,
+        }
+
         props.changeSelectedProject(newProjectValues)
-        dispatch(editProjectsAction(props.projectId, {"project_name": newProject}))
+        dispatch(
+            editProjectsAction(props.projectId, { project_name: newProject }),
+        )
+        setOpen(false)
     }
 
     return (
         <div>
-            <Button variant="contained" size="large" onClick={handleClickOpen} sx={{my: 1}}> 
+            <Button
+                variant="contained"
+                size="large"
+                onClick={handleClickOpen}
+                sx={{ my: 1 }}
+            >
                 Edit Project
             </Button>
             <Dialog open={open} onClose={handleClose}>
@@ -48,12 +60,12 @@ export default function EditProjectDialog(props) {
                         defaultValue={props.projectName}
                         fullWidth
                         variant="standard"
-                        onChange={(v) => setNewProject(v.target.value)}
+                        onChange={v => setNewProject(v.target.value)}
                     />
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={handleClose}>OK</Button>
+                    <Button onClick={handleEdit}>OK</Button>
                 </DialogActions>
             </Dialog>
         </div>
@@ -62,10 +74,10 @@ export default function EditProjectDialog(props) {
 
 EditProjectDialog.propTypes = {
     projectName: PropTypes.string.isRequired,
-    projectId: PropTypes.number.isRequired
+    projectId: PropTypes.number.isRequired,
 }
 
 EditProjectDialog.defaultProp = {
     projectName: '',
-    projectId:''
+    projectId: '',
 }
