@@ -12,7 +12,7 @@ import {useAppDispatch } from '../hooks/redux-hooks'
 import { deleteProjectAction } from '../redux/actions/projects'
 
 export default function DeleteProjectDialog(props) {
-    console.log(props)
+
     const dispatch = useAppDispatch()
     const [open, setOpen] = React.useState(false)
 
