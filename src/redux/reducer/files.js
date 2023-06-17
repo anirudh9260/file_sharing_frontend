@@ -8,9 +8,10 @@ const initialState = {
     isError: false,
 }
 
-function createData(id, file_name, date_modified, type, size, uploaded_by) {
+function createData(id, uid, file_name, date_modified, type, size, uploaded_by) {
     return {
         id,
+        uid, 
         file_name,
         date_modified,
         type,
@@ -32,10 +33,12 @@ export const filesReducer = createSlice({
         },
         fetchFilesSuccess(state, action) {
             let row_data = []
+            console.log("Action payload", action.payload)
             for (let i = 0; i < action.payload.length; i++) {
                 row_data.push(
                     createData(
                         action.payload[i].id,
+                        action.payload[i].uid,
                         action.payload[i].file_name,
                         action.payload[i].created_at.toString('MMMM yyyy'),
                         action.payload[i].extension,
@@ -63,12 +66,11 @@ export const filesReducer = createSlice({
         uploadFiles(state, action) {
             return {
                 ...state,
+                message : "",
                 isUploading: true,
             }
         },
         uploadFilesSuccess(state, action) {
-            console.log('Upload file success')
-            console.log('Files Reducer Upload data', action.payload)
             return {
                 ...state,
                 message: 'File Upload Successfull',
@@ -87,6 +89,7 @@ export const filesReducer = createSlice({
         removeFiles(state, action) {
             return {
                 ...state,
+                message : "",
                 isDeleting: true,
             }
         },
@@ -106,6 +109,34 @@ export const filesReducer = createSlice({
                 isError: true,
             }
         },
+
+
+        copyLink(state, action) {
+            return {
+                ...state,
+                message : "",
+                isCopying: true,
+            }
+        },
+        copyLinkSuccess(state, action) {
+            navigator.clipboard.writeText(action.payload)
+            return {
+                ...state,
+                message: 'File Link Copied',
+                isCopying: false,
+                isError: false,
+            }
+        },
+        copyLinkFailed(state, action) {
+            return {
+                ...state,
+                message: 'File Link Copy Error',
+                isCopying: false,
+                isError: true,
+            }
+        },
+
+
     },
 })
 
@@ -120,6 +151,9 @@ export const {
     removeFilesSuccess,
     removeFilesFailed,
     updateFiles,
+    copyLink,
+    copyLinkSuccess,
+    copyLinkFailed
 } = filesReducer.actions
 
 export default filesReducer.reducer
