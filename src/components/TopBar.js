@@ -151,6 +151,7 @@ const TopBar = () => {
                     >
                         {UserSession.isAuthenticated() && (
                             <Button
+                            href="/"
                                 key="Home"
                                 onClick={handleCloseNavMenu}
                                 sx={{ my: 2, color: 'white', display: 'block' }}
