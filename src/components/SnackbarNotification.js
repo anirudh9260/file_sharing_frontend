@@ -12,10 +12,10 @@ export default function SnackbarNotification(props) {
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                 open={true}
                 autoHideDuration={6000}
-                onClose={props.onClose}
+                onClose={onClose}
             >
                 <Alert
-                    onClose={props.onClose}
+                    onClose={onClose}
                     severity={severity}
                     sx={{ width: '100%' }}
                 >
