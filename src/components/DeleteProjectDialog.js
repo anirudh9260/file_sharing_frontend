@@ -20,6 +20,10 @@ export default function DeleteProjectDialog(props) {
     }
 
     const handleClose = () => {
+        setOpen(false)
+    }
+
+    const handleDelete = () => {
         dispatch(deleteProjectAction(props.projectId))
         setOpen(false)
     }
@@ -40,7 +44,7 @@ export default function DeleteProjectDialog(props) {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={handleClose} color="error">OK</Button>
+                    <Button onClick={handleDelete} color="error">OK</Button>
                 </DialogActions>
             </Dialog>
         </div>
