@@ -1,9 +1,9 @@
 import React from 'react'
-import { Stack, Box, Button } from '@mui/material'
+import { Box, Button } from '@mui/material'
 import ShareIcon from '@mui/icons-material/Share'
 import DeleteIcon from '@mui/icons-material/Delete';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
-import { useAppSelector, useAppDispatch } from '../hooks/redux-hooks'
+import { useAppDispatch } from '../hooks/redux-hooks'
 import { deleteFilesAction } from '../redux/actions/files'
 
 function RowButton(props) {
