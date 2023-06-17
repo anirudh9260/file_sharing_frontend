@@ -1,5 +1,5 @@
 import apiClient, { uploadApiClient } from '../../services/apiClient'
-import { FILES_API, PROJECTS_API } from '../../constants'
+import { FILES_API } from '../../constants'
 import {
     fetchFiles,
     fetchFilesSuccess,
@@ -8,7 +8,9 @@ import {
     uploadFilesSuccess,
     uploadFilesFailed,
     removeFiles,
-    updateFiles,
+    removeFilesSuccess,
+    removeFilesFailed,
+    
 } from '../reducer/files'
 
 
@@ -38,4 +40,15 @@ export const uploadFilesAction = formData => async dispatch => {
     }
 }
 
+export const deleteFilesAction = id => async dispatch => {
+    console.log('Calling Action : deleteFilesAction()')
+    await dispatch(removeFiles())
+    try {
+        const response = await apiClient.delete(`${FILES_API}/${id}`)
+        console.log('Response from deleteFilesAction():', response.data)
+        return dispatch(removeFilesSuccess(response.data))
+    } catch (err) {
+        return dispatch(removeFilesFailed(err))
+    }
+}
 
