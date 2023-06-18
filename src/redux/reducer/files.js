@@ -6,6 +6,7 @@ const initialState = {
     isUploading: false,
     isDeleting: false,
     isError: false,
+    message: ""
 }
 
 function createData(id, uid, file_name, date_modified, type, size, uploaded_by) {
@@ -66,7 +67,7 @@ export const filesReducer = createSlice({
         uploadFiles(state, action) {
             return {
                 ...state,
-                message : "",
+                // message : "",
                 isUploading: true,
             }
         },
@@ -89,7 +90,7 @@ export const filesReducer = createSlice({
         removeFiles(state, action) {
             return {
                 ...state,
-                message : "",
+                // message : "",
                 isDeleting: true,
             }
         },
