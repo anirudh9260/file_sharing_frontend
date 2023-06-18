@@ -13,6 +13,7 @@ import SnackbarNotification from './SnackbarNotification'
 import { getProjects } from '../redux/actions/projects'
 
 
+
 const Home = () => {
     const dispatch = useAppDispatch()
 
@@ -31,7 +32,15 @@ const Home = () => {
     }, [projectsState.message])
 
     useEffect(() => {
-        dispatch(getProjects()), setSelectedProject(initialProjectsValue)
+        setSnackbarState(true)
+    }, [filesState.isDeleteting, filesState.isUploading])
+
+    useEffect(() => {
+        dispatch(getProjects());
+    }, [projectsState.isDeleteting])
+
+    useEffect(() => {
+        setSelectedProject(initialProjectsValue);
     }, [projectsState.isDeleteting])
 
     useEffect(() => {
@@ -41,6 +50,8 @@ const Home = () => {
     useEffect(() => {
         dispatch(getProjects())
     }, [projectsState.isUpdating])
+
+    
     
 
     return (
@@ -57,18 +68,18 @@ const Home = () => {
                 ></ProjectBar>
                 <FileBar Project={selectedProject}></FileBar>
                 {/* <EnhancedTable></EnhancedTable> */}
-                <EnhancedTableContainer></EnhancedTableContainer>
+                <EnhancedTableContainer selectedProject={selectedProject}></EnhancedTableContainer>
 
                 {snackbarState && (projectsState.message) && (
                     <SnackbarNotification
-                        message={projectsState.message }
+                        message={projectsState.message}
                         onClose={() => setSnackbarState(false)}
                         severity={projectsState.isError ? 'error' : 'success'}
                     />
                 )}
                 {snackbarState && (filesState.message) && (
                     <SnackbarNotification
-                        message={filesState.message }
+                        message={filesState.message}
                         onClose={() => setSnackbarState(false)}
                         severity={filesState.isError ? 'error' : 'success'}
                     />
