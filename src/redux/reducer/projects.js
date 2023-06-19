@@ -28,7 +28,7 @@ export const projectsReducer = createSlice({
                 ...state,
                 isLoading: false,
                 projects: action?.payload,
-                isError: false
+                // isError: false
             }
         },
         fetchProjectsFailed(state, action) {
