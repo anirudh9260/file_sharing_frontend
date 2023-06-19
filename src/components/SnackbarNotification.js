@@ -15,7 +15,7 @@ export default function SnackbarNotification(props) {
         <div>
           <Box sx={{ width: "400px"  }}>
             <Snackbar
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'middle' }}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
                 open={true}
                 autoHideDuration={6000}
                 onClose={onClose}
@@ -23,7 +23,7 @@ export default function SnackbarNotification(props) {
                 <Alert
                     onClose={onClose}
                     severity={severity}
-                    sx={{ width: '20%' }}
+                    sx={{ width: '100%' }}
                 >
                     {message}
                 </Alert>
