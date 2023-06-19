@@ -40,6 +40,10 @@ const Home = () => {
     }, [filesState.isDeleteting])
 
     useEffect(() => {
+        setSnackbarState(true)
+    }, [filesState.isConverting])
+
+    useEffect(() => {
         dispatch(getProjects());
     }, [projectsState.isDeleteting])
 
