@@ -33,7 +33,11 @@ const Home = () => {
 
     useEffect(() => {
         setSnackbarState(true)
-    }, [filesState.isDeleteting, filesState.isUploading])
+    }, [filesState.isUploading])
+    
+    useEffect(() => {
+        setSnackbarState(true)
+    }, [filesState.isDeleteting])
 
     useEffect(() => {
         dispatch(getProjects());
