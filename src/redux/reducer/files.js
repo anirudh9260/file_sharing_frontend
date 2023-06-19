@@ -4,6 +4,7 @@ const initialState = {
     files: [],
     isLoading: false,
     isUploading: false,
+    isCopying: false,
     isDeleting: false,
     isError: false,
     message: ""
@@ -34,7 +35,7 @@ export const filesReducer = createSlice({
         },
         fetchFilesSuccess(state, action) {
             let row_data = []
-            console.log("Action payload", action.payload)
+            // console.log("Action payload", action.payload)
             for (let i = 0; i < action.payload.length; i++) {
                 row_data.push(
                     createData(
@@ -90,11 +91,13 @@ export const filesReducer = createSlice({
         removeFiles(state, action) {
             return {
                 ...state,
-                // message : "",
+                message : "",
                 isDeleting: true,
             }
         },
         removeFilesSuccess(state, action) {
+            
+            console.log("Action payload:", action)
             return {
                 ...state,
                 message: 'File Delete Successfull',
