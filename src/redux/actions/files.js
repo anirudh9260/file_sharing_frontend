@@ -53,11 +53,11 @@ export const copyLinkAction = link => async dispatch => {
     }
 }
 
-export const deleteFilesAction = id => async dispatch => {
+export const deleteFilesAction = row => async dispatch => {
     console.log('Calling Action : deleteFilesAction()')
     await dispatch(removeFiles())
     try {
-        const response = await apiClient.delete(`${FILES_API}/${id}`)
+        const response = await apiClient.delete(`${FILES_API}/${row.id}`)
         console.log('Response from deleteFilesAction():', response.data)
         return dispatch(removeFilesSuccess(response.data))
     } catch (err) {
