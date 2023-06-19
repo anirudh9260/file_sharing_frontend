@@ -2,6 +2,7 @@ import * as React from 'react'
 import Box from '@mui/material/Box'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
+import { Stack } from '@mui/material'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TablePagination from '@mui/material/TablePagination'
@@ -15,6 +16,7 @@ import PropTypes from 'prop-types'
 
 import EnhancedTableHead from './EnhancedTableHead'
 import EnhancedTableToolbar from './EnhancedTableToolbar'
+import ConvertButton from './ConvertButton'
 
 
 function descendingComparator(a, b, orderBy) {
@@ -64,19 +66,22 @@ export default function EnhancedTable(props) {
 
     const handleSelectAllClick = event => {
         if (event.target.checked) {
-            const newSelected = rows.map(n => n.name)
+            const newSelected = rows.map(n => n.id)
+            console.log(newSelected)
             setSelected(newSelected)
             return
         }
         setSelected([])
     }
 
-    const handleClick = (event, name) => {
-        const selectedIndex = selected.indexOf(name)
+    const handleClick = (event, id) => {
+        
+        const selectedIndex = selected.indexOf(id)
+        console.log("selectedIndex", selectedIndex, " ID", id)
         let newSelected = []
 
         if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, name)
+            newSelected = newSelected.concat(selected, id)
         } else if (selectedIndex === 0) {
             newSelected = newSelected.concat(selected.slice(1))
         } else if (selectedIndex === selected.length - 1) {
@@ -89,7 +94,10 @@ export default function EnhancedTable(props) {
         }
 
         setSelected(newSelected)
+        console.log("Selected Row:", selected)
     }
+    
+
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage)
@@ -120,7 +128,7 @@ export default function EnhancedTable(props) {
     )
 
     return (
-      
+        
         <Box sx={{ width: '100%' }}>
           
             <Paper sx={{ width: '100%', mb: 2 }}>
@@ -142,7 +150,7 @@ export default function EnhancedTable(props) {
                         
                         <TableBody>
                             {visibleRows.map((row, index) => {
-                                const isItemSelected = isSelected(row.file_name)
+                                const isItemSelected = isSelected(row.id)
                                 const labelId = `enhanced-table-checkbox-${index}`
 
                                 return (
@@ -166,7 +174,7 @@ export default function EnhancedTable(props) {
                                                     'aria-labelledby': labelId,
                                                 }}
                                                 onClick={event =>
-                                            handleClick(event, row.file_name)
+                                                    handleClick(event, row.id)
                                         }
                                             />
                                         </TableCell>
@@ -224,6 +232,9 @@ export default function EnhancedTable(props) {
                 }
                 label="Dense padding"
             />
+            <Box>
+            <ConvertButton rows={rows} rowIds={selected}></ConvertButton>
+            </Box>
         </Box>
     )
 }
