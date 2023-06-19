@@ -12,7 +12,10 @@ import {
     removeFilesFailed,
     copyLink,
     copyLinkSuccess,
-    copyLinkFailed
+    copyLinkFailed,
+    convertFile,
+    convertFileSuccess,
+    convertFileFailed,
     
 } from '../reducer/files'
 
@@ -65,3 +68,15 @@ export const deleteFilesAction = row => async dispatch => {
     }
 }
 
+export const convertFilesAction = formData => async dispatch => {
+    console.log('Calling Action : convertFilesAction()')
+    // console.log(formData)
+    await dispatch(convertFile())
+    try {
+        const response = await apiClient.post(`${FILES_API}/convert`, formData)
+        console.log('Printing from uploadFilesAction():', response.data)
+        return dispatch(convertFileSuccess(response.data))
+    } catch (err) {
+        return dispatch(convertFileFailed(err))
+    }
+}
