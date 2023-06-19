@@ -7,6 +7,7 @@ const initialState = {
     isCopying: false,
     isDeleting: false,
     isError: false,
+    isConverting: "",
     message: ""
 }
 
@@ -96,7 +97,7 @@ export const filesReducer = createSlice({
             }
         },
         removeFilesSuccess(state, action) {
-            
+
             console.log("Action payload:", action)
             return {
                 ...state,
@@ -140,6 +141,31 @@ export const filesReducer = createSlice({
             }
         },
 
+        convertFile(state, action) {
+            return {
+                ...state,
+                message : "",
+                isConverting: true,
+            }
+        },
+        convertFileSuccess(state, action) {
+            navigator.clipboard.writeText(action.payload)
+            return {
+                ...state,
+                message: 'File Successfully Converted',
+                isConverting: false,
+                isError: false,
+            }
+        },
+        convertFileFailed(state, action) {
+            return {
+                ...state,
+                message: 'File Conversion Error',
+                isConverting: false,
+                isError: true,
+            }
+        },
+
 
     },
 })
@@ -157,7 +183,10 @@ export const {
     updateFiles,
     copyLink,
     copyLinkSuccess,
-    copyLinkFailed
+    copyLinkFailed,
+    convertFile,
+    convertFileSuccess,
+    convertFileFailed
 } = filesReducer.actions
 
 export default filesReducer.reducer
