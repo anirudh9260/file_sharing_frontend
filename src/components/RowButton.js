@@ -33,12 +33,12 @@ function RowButton(props) {
 
     const handleDelete = () => {
         console.log(row)
-        dispatch(deleteFilesAction(row.id))
-        dispatch(getFilesForProject())
+        dispatch(deleteFilesAction(row))
+        // dispatch(getFilesForProject())
     }
 
     return (
-        <Box justifyContent="space-between">
+        <Box>
             {/* <ShareIcon></ShareIcon> */}
             <a href={link} download target="_blank" rel="noopener noreferrer">
                 <Button
