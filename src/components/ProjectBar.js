@@ -20,7 +20,7 @@ export default function ProjectBar(props) {
     if (projectsState && projectsState.isLoading) {
         menu_items = <MenuItem value="loading">Loading</MenuItem>
     }
-    if (projectsState && projectsState.projects) {
+    if (projectsState && !projectsState.isLoading) {
         menu_items = projectsState.projects.map(item => {
             return (
                 <MenuItem
