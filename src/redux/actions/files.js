@@ -22,6 +22,7 @@ import {
 
 
 export const getFilesForProject = projectId => async dispatch => {
+    if (projectId){
     console.log('Calling Action : getFilesForProject()')
     await dispatch(fetchFiles())
     try {
@@ -30,7 +31,7 @@ export const getFilesForProject = projectId => async dispatch => {
         return dispatch(fetchFilesSuccess(response.data))
     } catch (err) {
         return dispatch(fetchFilesFailed(err))
-    }
+    }}
 }
 
 export const uploadFilesAction = formData => async dispatch => {
@@ -70,11 +71,10 @@ export const deleteFilesAction = row => async dispatch => {
 
 export const convertFilesAction = formData => async dispatch => {
     console.log('Calling Action : convertFilesAction()')
-    // console.log(formData)
     await dispatch(convertFile())
     try {
         const response = await apiClient.post(`${FILES_API}/convert`, formData)
-        console.log('Printing from uploadFilesAction():', response.data)
+        console.log('Printing from convertFilesAction():', response.data)
         return dispatch(convertFileSuccess(response.data))
     } catch (err) {
         return dispatch(convertFileFailed(err))
