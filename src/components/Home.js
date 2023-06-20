@@ -31,37 +31,28 @@ const Home = () => {
         setSnackbarState(true)
     }, [projectsState.message])
 
-    useEffect(() => {
-        setSnackbarState(true)
-    }, [filesState.isUploading])
     
-    useEffect(() => {
-        setSnackbarState(true)
-    }, [filesState.isDeleteting])
-
-    useEffect(() => {
-        setSnackbarState(true)
-    }, [filesState.isConverting])
-
     useEffect(() => {
         dispatch(getProjects());
     }, [projectsState.isDeleteting])
-
+    
     useEffect(() => {
         setSelectedProject(initialProjectsValue);
     }, [projectsState.isDeleteting])
-
+    
     useEffect(() => {
         dispatch(getProjects())
     }, [projectsState.isAdding])
-
+    
     useEffect(() => {
         dispatch(getProjects())
     }, [projectsState.isUpdating])
-
+    
+    useEffect(() => {
+        setSnackbarState(true)
+    }, [filesState.isUploading, filesState.isDeleteting, filesState.isConverting])
     
     
-
     return (
         <>
             <Container maxWidth="xl">
