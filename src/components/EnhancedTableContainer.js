@@ -12,12 +12,12 @@ function EnhancedTableContainer(props) {
 
     const filesState = useAppSelector(state => state.filesReducer)
 
-    // useEffect(() => {
-    //     dispatch(getFilesForProject(selectedProject.projectId))
-    // }, [filesState.isDeleting])
+    useEffect(() => {
+        dispatch(getFilesForProject(selectedProject.projectId))
+    }, [filesState.isDeleting, filesState.isUploading])
 
     if (filesState.isLoading === false && filesState.files) {
-        return <EnhancedTable rows={filesState.files} />
+        return <EnhancedTable selectedProject={selectedProject} rows={filesState.files} />
     }
 }
 
