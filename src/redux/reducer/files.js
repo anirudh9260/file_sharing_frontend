@@ -82,9 +82,10 @@ export const filesReducer = createSlice({
             }
         },
         uploadFilesFailed(state, action) {
+            console.log("upload error", action.payload.response.data)
             return {
                 ...state,
-                message: 'File Upload Failed',
+                message: action.payload.response.data.error,
                 isUploading: false,
                 isError: true,
             }
@@ -98,7 +99,7 @@ export const filesReducer = createSlice({
         },
         removeFilesSuccess(state, action) {
 
-            console.log("Action payload:", action)
+            // console.log("Action payload:", action)
             return {
                 ...state,
                 message: 'File Delete Successfull',
@@ -152,15 +153,16 @@ export const filesReducer = createSlice({
             navigator.clipboard.writeText(action.payload)
             return {
                 ...state,
-                message: 'File Successfully Converted',
+                message: action.payload.message,
                 isConverting: false,
                 isError: false,
             }
         },
         convertFileFailed(state, action) {
+            console.log(action.payload)
             return {
                 ...state,
-                message: 'File Conversion Error',
+                message: action.payload.response.data.error,
                 isConverting: false,
                 isError: true,
             }
