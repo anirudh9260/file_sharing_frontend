@@ -25,12 +25,17 @@ export default function FileBar(props) {
     return (
         <Stack direction="row" justifyContent="space-between">
             <Typography sx={{ flex: '1 1 100%' }} variant="h5"> 
+                {props.Project.projectName.length < 1 &&
+                    'Please select a project'}
+                    </Typography>
+            <Typography sx={{ flex: '1 1 100%' }} variant="h5"> 
                 {props.Project.projectName.length > 0 &&
                     props.Project.projectName + ' files'}
             </Typography>
             { props.Project.projectName && (
                 <UploadFile Project={props.Project}></UploadFile>
             )}
+
 
             {/* <FormUploadButton
                 id="benchmark-productivity-upload-btn"
