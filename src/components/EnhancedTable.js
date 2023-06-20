@@ -16,8 +16,8 @@ import PropTypes from 'prop-types'
 
 import EnhancedTableHead from './EnhancedTableHead'
 import EnhancedTableToolbar from './EnhancedTableToolbar'
-import ConvertButton from './ConvertButton'
-
+import ConvertCSVDialog from './ConvertCSVDialog'
+import ConvertJSONDialog from './ConvertJSONDialog'
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -48,7 +48,7 @@ function stableSort(array, comparator) {
 }
 
 export default function EnhancedTable(props) {
-    const rows = props.rows
+    const { selectedProject, rows } = props
     // console.log("Rows:", rows)
 
     const [order, setOrder] = React.useState('asc')
@@ -67,7 +67,7 @@ export default function EnhancedTable(props) {
     const handleSelectAllClick = event => {
         if (event.target.checked) {
             const newSelected = rows.map(n => n.id)
-            console.log(newSelected)
+            // console.log(newSelected)
             setSelected(newSelected)
             return
         }
@@ -75,9 +75,8 @@ export default function EnhancedTable(props) {
     }
 
     const handleClick = (event, id) => {
-        
         const selectedIndex = selected.indexOf(id)
-        console.log("selectedIndex", selectedIndex, " ID", id)
+        // console.log("selectedIndex", selectedIndex, " ID", id)
         let newSelected = []
 
         if (selectedIndex === -1) {
@@ -94,10 +93,8 @@ export default function EnhancedTable(props) {
         }
 
         setSelected(newSelected)
-        console.log("Selected Row:", selected)
+        // console.log("Selected Row:", selected)
     }
-    
-
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage)
@@ -128,9 +125,7 @@ export default function EnhancedTable(props) {
     )
 
     return (
-        
         <Box sx={{ width: '100%' }}>
-          
             <Paper sx={{ width: '100%', mb: 2 }}>
                 <EnhancedTableToolbar numSelected={selected.length} />
                 <TableContainer>
@@ -147,7 +142,7 @@ export default function EnhancedTable(props) {
                             onRequestSort={handleRequestSort}
                             rowCount={rows.length}
                         />
-                        
+
                         <TableBody>
                             {visibleRows.map((row, index) => {
                                 const isItemSelected = isSelected(row.id)
@@ -175,7 +170,7 @@ export default function EnhancedTable(props) {
                                                 }}
                                                 onClick={event =>
                                                     handleClick(event, row.id)
-                                        }
+                                                }
                                             />
                                         </TableCell>
                                         <TableCell
@@ -232,13 +227,30 @@ export default function EnhancedTable(props) {
                 }
                 label="Dense padding"
             />
-            <Box>
-            <ConvertButton rows={rows} rowIds={selected}></ConvertButton>
+            <Box textAlign="center">
+                <Stack
+                    direction="row"
+                    sx={{ my: 5, mx: 1 }}
+                    justifyContent="space-evenly"
+                >
+                    { rows.length > 0  && selected.length > 0 &&
+                    (<ConvertJSONDialog
+                        selectedProject={selectedProject}
+                        rows={rows}
+                        selected={selected}
+                    ></ConvertJSONDialog> )}
+                    { rows.length > 0  && selected.length > 0 &&
+                    (<ConvertCSVDialog
+                        selectedProject={selectedProject}
+                        rows={rows}
+                        selected={selected}
+                    ></ConvertCSVDialog> )}
+                </Stack>
             </Box>
         </Box>
     )
 }
 
 EnhancedTable.propTypes = {
-  rows: PropTypes.array,
+    rows: PropTypes.array,
 }
