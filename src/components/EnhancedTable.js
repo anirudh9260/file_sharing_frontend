@@ -16,6 +16,7 @@ import PropTypes from 'prop-types'
 
 import EnhancedTableHead from './EnhancedTableHead'
 import EnhancedTableToolbar from './EnhancedTableToolbar'
+import FileActionDialog from './FileActionDialog'
 import ConvertCSVDialog from './ConvertCSVDialog'
 import ConvertJSONDialog from './ConvertJSONDialog'
 
@@ -179,7 +180,13 @@ export default function EnhancedTable(props) {
                                             scope="row"
                                             padding="none"
                                         >
-                                            {row.file_name}
+                                            {
+                                                <FileActionDialog
+                                                    row={row}
+                                                ></FileActionDialog>
+                                            }
+
+                                            {/* {row.file_name} */}
                                         </TableCell>
                                         <TableCell align="right">
                                             {row.date_modified}
@@ -233,7 +240,7 @@ export default function EnhancedTable(props) {
                     sx={{ my: 5, mx: 1 }}
                     justifyContent="space-evenly"
                 >
-                    { rows.length > 0  && selected.length > 0 &&
+                    {/* { rows.length > 0  && selected.length > 0 &&
                     (<ConvertJSONDialog
                         selectedProject={selectedProject}
                         rows={rows}
@@ -244,7 +251,7 @@ export default function EnhancedTable(props) {
                         selectedProject={selectedProject}
                         rows={rows}
                         selected={selected}
-                    ></ConvertCSVDialog> )}
+                    ></ConvertCSVDialog> )} */}
                 </Stack>
             </Box>
         </Box>
