@@ -3,7 +3,7 @@ import { Box, Button } from '@mui/material'
 import ShareIcon from '@mui/icons-material/Share'
 import FileDownloadIcon from '@mui/icons-material/FileDownload'
 import { useAppDispatch } from '../hooks/redux-hooks'
-import { deleteFilesAction, copyLinkAction } from '../redux/actions/files'
+import { copyLinkAction } from '../redux/actions/files'
 import DeleteFileConfirmDialog from './DeleteFileConfirmDialog'
 
 function RowButton(props) {
@@ -19,10 +19,6 @@ function RowButton(props) {
 
     const handleCopyLink = () => {
         dispatch(copyLinkAction(link))
-    }
-
-    const handleDelete = () => {
-        dispatch(deleteFilesAction(row))
     }
 
     return (

@@ -13,7 +13,6 @@ import SnackbarNotification from './SnackbarNotification'
 import { getProjects } from '../redux/actions/projects'
 
 
-
 const Home = () => {
     const dispatch = useAppDispatch()
 
@@ -28,25 +27,17 @@ const Home = () => {
     const filesState = useAppSelector(state => state.filesReducer)
 
     useEffect(() => {
-        setSnackbarState(true)
-    }, [projectsState.message])
-
-    
-    useEffect(() => {
         dispatch(getProjects());
-    }, [projectsState.isDeleteting])
+    }, [projectsState.isAdding, projectsState.isUpdating, projectsState.isDeleteting])
     
     useEffect(() => {
         setSelectedProject(initialProjectsValue);
     }, [projectsState.isDeleteting])
-    
+
     useEffect(() => {
-        dispatch(getProjects())
-    }, [projectsState.isAdding])
+        setSnackbarState(true)
+    }, [projectsState.message])
     
-    useEffect(() => {
-        dispatch(getProjects())
-    }, [projectsState.isUpdating])
     
     useEffect(() => {
         setSnackbarState(true)
@@ -65,8 +56,7 @@ const Home = () => {
                     selectedProject={selectedProject}
                     changeSelectedProject={setSelectedProject}
                 ></ProjectBar>
-                <FileBar Project={selectedProject}></FileBar>
-                {/* <EnhancedTable></EnhancedTable> */}
+                <FileBar Project={selectedProject}></FileBar>   
                 <EnhancedTableContainer selectedProject={selectedProject}></EnhancedTableContainer>
 
                 {snackbarState && (projectsState.message) && (
