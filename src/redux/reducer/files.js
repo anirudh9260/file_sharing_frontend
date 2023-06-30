@@ -11,7 +11,7 @@ const initialState = {
     message: ""
 }
 
-function createData(id, uid, file_name, date_modified, type, size, uploaded_by) {
+function createData(id, uid, file_name, date_modified, type, size, uploaded_by, projectId) {
     return {
         id,
         uid, 
@@ -20,6 +20,7 @@ function createData(id, uid, file_name, date_modified, type, size, uploaded_by) 
         type,
         size,
         uploaded_by,
+        projectId
     }
 }
 
@@ -47,6 +48,7 @@ export const filesReducer = createSlice({
                         action.payload[i].extension,
                         action.payload[i].size,
                         action.payload[i].username,
+                        action.payload[i].project_id
                     ),
                 )
             }
