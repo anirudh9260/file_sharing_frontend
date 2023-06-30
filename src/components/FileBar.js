@@ -1,5 +1,5 @@
 import { Stack } from '@mui/material'
-import React, { useEffect } from 'react'
+import React from 'react'
 import Typography from '@mui/material/Typography'
 import UploadFile from './UploadFile'
 import PropTypes from 'prop-types'
@@ -30,7 +30,7 @@ export default function FileBar(props) {
                     </Typography>
             <Typography sx={{ flex: '1 1 100%' }} variant="h5"> 
                 {props.Project.projectName.length > 0 &&
-                    props.Project.projectName + ' files'}
+                    props.Project.projectName + ' Files'}
             </Typography>
             { props.Project.projectName && (
                 <UploadFile Project={props.Project}></UploadFile>
