@@ -52,23 +52,24 @@ const TopBar = () => {
                         sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}
                     /> */}
                     <CloudUploadIcon></CloudUploadIcon>
-                    <Typography
+                    {/* <Typography
                         variant="h6"
                         noWrap
                         component="a"
                         href="/"
                         sx={{
+                            ml: 2,
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            letterSpacing: '.3rem',
+                            // fontFamily: 'roboto',
+                            fontWeight: 500,
+                            letterSpacing: '.1rem',
                             color: 'inherit',
                             textDecoration: 'none',
                         }}
                     >
-                        DM
-                    </Typography>
+                        Data Management
+                    </Typography> */}
 
                     <Box
                         sx={{
@@ -107,7 +108,7 @@ const TopBar = () => {
                             {UserSession.isAuthenticated() && (
                                 <MenuItem onClick={handleCloseNavMenu}>
                                     <Typography textAlign="center">
-                                        Dashboard
+                                        Home
                                     </Typography>
                                 </MenuItem>
                             )}
@@ -117,14 +118,14 @@ const TopBar = () => {
                                     About
                                 </Typography>
                             </MenuItem>
-                            <MenuItem onClick={handleCloseNavMenu}>
+                            {/* <MenuItem onClick={handleCloseNavMenu}>
                                 <Typography textAlign="center">Blog</Typography>
-                            </MenuItem>
+                            </MenuItem> */}
                         </Menu>
                     </Box>
-                    <AdbIcon
+                    {/* <AdbIcon
                         sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }}
-                    />
+                    /> */}
                     <Typography
                         variant="h5"
                         noWrap
@@ -134,14 +135,14 @@ const TopBar = () => {
                             mr: 2,
                             display: { xs: 'flex', md: 'none' },
                             flexGrow: 1,
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            letterSpacing: '.3rem',
+                            // fontFamily: 'monospace',
+                            fontWeight: 500,
+                            // letterSpacing: '.3rem',
                             color: 'inherit',
                             textDecoration: 'none',
                         }}
                     >
-                        LOGO
+                        Data Management
                     </Typography>
                     <Box
                         sx={{
