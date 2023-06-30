@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Button from '@mui/material/Button'
-import TextField from '@mui/material/TextField'
+import { Box } from '@mui/material'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
@@ -43,11 +43,13 @@ export default function DeleteFileConfirmDialog(props) {
                 Delete
             </Button>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Delete File</DialogTitle>
+                <DialogTitle>Delete {row.file_name}</DialogTitle>
                 <DialogContent>
+                <Box width="300px">
                     <DialogContentText>
-                        Are you Sure ?
+                        Are you sure ?
                     </DialogContentText>
+                    </Box>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
