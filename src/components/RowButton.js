@@ -1,7 +1,6 @@
 import React from 'react'
 import { Box, Button } from '@mui/material'
 import ShareIcon from '@mui/icons-material/Share'
-import DeleteIcon from '@mui/icons-material/Delete'
 import FileDownloadIcon from '@mui/icons-material/FileDownload'
 import { useAppDispatch } from '../hooks/redux-hooks'
 import { deleteFilesAction, copyLinkAction } from '../redux/actions/files'
@@ -48,15 +47,6 @@ function RowButton(props) {
             >
                 Copy Link
             </Button>
-            {/* <Button
-                variant="contained"
-                color="error"
-                sx={{ mx: 1 }}
-                onClick={handleDelete}
-                startIcon={<DeleteIcon />}
-            >
-                Delete
-            </Button> */}
             <DeleteFileConfirmDialog row = {row}></DeleteFileConfirmDialog>
         </Box>
     )
