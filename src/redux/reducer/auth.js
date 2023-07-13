@@ -3,8 +3,12 @@ import UserSession from '../../services/auth'
 
 const initialState = {
     access_token: null,
-    user: null,
+    users: [],
+    message : "",
+    isError: false,
+    isLoadingUsers : false
 }
+
 export const authReducer = createSlice({
     name: 'auth',
     initialState,
@@ -12,22 +16,24 @@ export const authReducer = createSlice({
         fetchLogin(state, action) {
             return {
                 ...state,
+                message : "",
                 isLoading: true,
             }
         },
         fetchLoginSuccess(state, action) {
-            // Update auth details into localStorage
-            UserSession.setUser(action.payload.data)
+            console.log(action.payload)
+            UserSession.setUser(action.payload)
             return {
                 ...state,
-                message: 'Login Successfull',
                 isLoading: false,
             }
         },
         fetchLoginFailed(state, action) {
             return {
                 ...state,
+                message : action.payload.response.data["error"],
                 isLoading: false,
+                isError : true
             }
         },
         fetchRegister(state, action) {
@@ -49,6 +55,57 @@ export const authReducer = createSlice({
                 isLoading: false,
             }
         },
+        passwordReset(state, action) {
+            return {
+                ...state,
+                isLoading: true,
+                message: ""
+            }
+        },
+        passwordResetSuccess(state, action) {
+            return {
+                ...state,
+                user: action.payload.data,
+                isLoading: false,
+                message: "Password Changed Successfully",
+                isError: false
+            }
+        },
+        passwordResetFailed(state, action) {
+            console.log(action.payload.response.data)
+            return {
+                ...state,
+                isLoading: false,
+                message : action.payload.response.data["error"],
+                isError: true
+            }
+        },
+
+
+        fetchUsers(state, action) {
+            return {
+                ...state,
+                isLoadingUsers: true,
+                message: ""
+            }
+        },
+        fetchUsersSuccess(state, action) {
+            return {
+                ...state,
+                users: action.payload,
+                isLoadingUsers: false,
+                isError: false
+            }
+        },
+        fetchUsersFailed(state, action) {
+            console.log(action.payload.response.data)
+            return {
+                ...state,
+                isLoadingUsers: false,
+                message : action.payload.response.data["error"],
+                isError: true
+            }
+        },
     },
 })
 
@@ -59,6 +116,12 @@ export const {
     fetchRegister,
     fetchRegisterSuccess,
     fetchRegisterFailed,
+    passwordReset,
+    passwordResetSuccess,
+    passwordResetFailed,
+    fetchUsers,
+    fetchUsersSuccess,
+    fetchUsersFailed
 } = authReducer.actions
 
 export default authReducer.reducer
