@@ -4,6 +4,9 @@ import {
     fetchFiles,
     fetchFilesSuccess,
     fetchFilesFailed,
+    fetchConvertedFiles,
+    fetchConvertedFilesSuccess,
+    fetchConvertedFilesFailed,
     uploadFiles,
     uploadFilesSuccess,
     uploadFilesFailed,
@@ -16,6 +19,8 @@ import {
     convertFile,
     convertFileSuccess,
     convertFileFailed,
+    fileActionModalOpen,
+    fileActionModalClose
     
 } from '../reducer/files'
 
@@ -31,6 +36,19 @@ export const getFilesForProject = projectId => async dispatch => {
         return dispatch(fetchFilesSuccess(response.data))
     } catch (err) {
         return dispatch(fetchFilesFailed(err))
+    }}
+}
+
+export const getConvertedFilesAction = convertedUUID => async dispatch => {
+    if (convertedUUID){
+    console.log('Calling Action : getConvertedFilesAction()')
+    await dispatch(fetchConvertedFiles())
+    try {
+        const response = await apiClient.get(`${FILES_API}/${convertedUUID}`)
+        console.log('Response from getConvertedFilesAction():', response.data)
+        return dispatch(fetchConvertedFilesSuccess(response.data))
+    } catch (err) {
+        return dispatch(fetchConvertedFilesFailed(err))
     }}
 }
 
@@ -78,5 +96,14 @@ export const convertFilesAction = formData => async dispatch => {
         return dispatch(convertFileSuccess(response.data))
     } catch (err) {
         return dispatch(convertFileFailed(err))
+    }
+}
+
+export const fileActionModalStatus = status => async dispatch => {
+    console.log('Calling Action : fileActionModalStatus()')
+    if (status) {
+        return dispatch(fileActionModalOpen())
+    } else {
+        return dispatch(fileActionModalClose())
     }
 }
