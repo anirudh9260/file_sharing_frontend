@@ -13,12 +13,10 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import Switch from '@mui/material/Switch'
 import RowButton from './RowButton'
 import PropTypes from 'prop-types'
-
 import EnhancedTableHead from './EnhancedTableHead'
 import EnhancedTableToolbar from './EnhancedTableToolbar'
-import FileActionDialog from './FileActionDialog'
-import ConvertCSVDialog from './ConvertCSVDialog'
-import ConvertJSONDialog from './ConvertJSONDialog'
+import FileActionModal from './FileActionModal'
+
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -56,7 +54,7 @@ export default function EnhancedTable(props) {
     const [orderBy, setOrderBy] = React.useState('id')
     const [selected, setSelected] = React.useState([])
     const [page, setPage] = React.useState(0)
-    const [dense, setDense] = React.useState(false)
+    const [dense, setDense] = React.useState(true)
     const [rowsPerPage, setRowsPerPage] = React.useState(10)
 
     const handleRequestSort = (event, property) => {
@@ -152,9 +150,6 @@ export default function EnhancedTable(props) {
                                 return (
                                     <TableRow
                                         hover
-                                        // onClick={event =>
-                                        //     handleClick(event, row.file_name)
-                                        // }
                                         role="checkbox"
                                         aria-checked={isItemSelected}
                                         tabIndex={-1}
@@ -181,12 +176,10 @@ export default function EnhancedTable(props) {
                                             padding="none"
                                         >
                                             {
-                                                <FileActionDialog
+                                                <FileActionModal
                                                     row={row}
-                                                ></FileActionDialog>
+                                                ></FileActionModal>
                                             }
-
-                                            {/* {row.file_name} */}
                                         </TableCell>
                                         <TableCell align="right">
                                             {row.date_modified}
@@ -240,18 +233,6 @@ export default function EnhancedTable(props) {
                     sx={{ my: 5, mx: 1 }}
                     justifyContent="space-evenly"
                 >
-                    {/* { rows.length > 0  && selected.length > 0 &&
-                    (<ConvertJSONDialog
-                        selectedProject={selectedProject}
-                        rows={rows}
-                        selected={selected}
-                    ></ConvertJSONDialog> )}
-                    { rows.length > 0  && selected.length > 0 &&
-                    (<ConvertCSVDialog
-                        selectedProject={selectedProject}
-                        rows={rows}
-                        selected={selected}
-                    ></ConvertCSVDialog> )} */}
                 </Stack>
             </Box>
         </Box>
