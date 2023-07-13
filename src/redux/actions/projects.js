@@ -1,9 +1,11 @@
 import apiClient from '../../services/apiClient'
 import { PROJECTS_API } from '../../constants'
 import {
+    setSelectedProject,
+
+    fetchProjects,
     fetchProjectsSuccess,
     fetchProjectsFailed,
-    fetchProjects,
     addProjects,
     addProjectsSuccess,
     addProjectsFailed,
@@ -12,9 +14,21 @@ import {
     deleteProjectsFailed,
     updateProjects,
     updateProjectsSuccess,
-    updateProjectsFailed
+    updateProjectsFailed,
+
+    fetchProjectAccess,
+    fetchProjectAccessSuccess,
+    fetchProjectAccessFailed,
+    addProjectAccess,
+    addProjectAccessSuccess,
+    addProjectAccessFailed,
+    removeProjectAccess,
+    removeProjectAccessSuccess,
+    removeProjectAccessFailed
 
 } from '../reducer/projects'
+
+
 
 // GET Projects Action => GET
 export const getProjects = () => async dispatch => {
@@ -27,6 +41,14 @@ export const getProjects = () => async dispatch => {
         return dispatch(fetchProjectsFailed(err))
     }
 }
+
+
+// SET SELECTED Project Action => GET
+export const setProjectsAction = project => async dispatch => {
+    console.log('Calling Action : setProjects()')
+        return dispatch(setSelectedProject(project))
+}
+
 
 // ADD PROJECTS Action => POST
 export const addProjectAction = body => async dispatch => {
@@ -55,7 +77,6 @@ export const editProjectsAction = (projectId, body) => async dispatch => {
 }
 
 
-
 // DELETE PROJECTS Action => DELETE
 export const deleteProjectAction = projectId => async dispatch => {
     console.log('Calling Action : deleteProjectAction()')
@@ -66,5 +87,53 @@ export const deleteProjectAction = projectId => async dispatch => {
         return dispatch(deleteProjectsSuccess(response.data))
     } catch (err) {
         return dispatch(deleteProjectsFailed(err))
+    }
+}
+
+
+
+// GET Project Access Action => GET
+export const getProjectAccessAction = (projectId) => async dispatch => {
+    console.log('Calling Action : getProjectAccessAction()')
+    await dispatch(fetchProjectAccess())
+    try {
+        const response = await apiClient.get(`${PROJECTS_API}/${projectId}/access`)
+        // console.log('Printing from project actions:', response.data)
+        return dispatch(fetchProjectAccessSuccess(response.data))
+    } catch (err) {
+        return dispatch(fetchProjectAccessFailed(err))
+    }
+}
+
+// ADD Project Access Action => POST
+export const addProjectAccessAction = (projectId, body) => async dispatch => {
+    console.log('Calling Action : addProjectAccessAction()')
+    await dispatch(addProjectAccess())
+    try {
+        const response = await apiClient.post(`${PROJECTS_API}/${projectId}/access`, body)
+        // console.log('Printing from project actions:', response.data)
+        return dispatch(addProjectAccessSuccess(response.data))
+    } catch (err) {
+        return dispatch(addProjectAccessFailed(err))
+    }
+}
+
+// Remove Project Access Action => DELETE
+export const removeProjectAccessAction = (projectId, body) => async dispatch => {
+    console.log('Calling Action : removeProjectAccessAction()')
+    await dispatch(removeProjectAccess())
+    try {
+        const response = await apiClient.delete(
+            `${PROJECTS_API}/${projectId}/access`,
+            {
+                data: {
+                    ...body,
+                },
+            },
+        )
+        // console.log('Printing from project actions:', response.data)
+        return dispatch(removeProjectAccessSuccess(response.data))
+    } catch (err) {
+        return dispatch(removeProjectAccessFailed(err))
     }
 }
