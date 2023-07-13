@@ -1,48 +1,58 @@
 import React from 'react'
-import { Stack, Box, MenuItem, FormControl } from '@mui/material'
+import PropTypes from 'prop-types'
+import { Stack, Box, Button, MenuItem, FormControl } from '@mui/material'
 import InputLabel from '@mui/material/InputLabel'
 import Select from '@mui/material/Select'
-import PropTypes from 'prop-types'
 import { useAppSelector, useAppDispatch } from '../hooks/redux-hooks'
-// import { useEffect } from 'react'
-// import { getProjects } from '../redux/actions/projects'
 import { getFilesForProject } from '../redux/actions/files'
-import EditProjectDialog from './EditProjectDialog'
+import { setProjectsAction } from '../redux/actions/projects'
 import AddProjectDialog from './AddProjectDialog'
-import DeleteProjectModal from './DeleteProjectDialog'
+import { useNavigate } from 'react-router-dom'
+import UserSession from '../services/auth'
+
 
 export default function ProjectBar(props) {
-    const { selectedProject, changeSelectedProject } = props
     const dispatch = useAppDispatch()
+    const navigate = useNavigate()
     const projectsState = useAppSelector(state => state.projectsReducer)
+    
+    const { selectedProject, setSelectedProject } = props
 
     let menu_items = []
+
     if (projectsState && projectsState.isLoading) {
         menu_items = <MenuItem value="loading">Loading</MenuItem>
     }
+
+
     if (projectsState && !projectsState.isLoading) {
         menu_items = projectsState.projects.map(item => {
             return (
                 <MenuItem
-                    name={item.id}
-                    key={item.id}
-                    value={item.project_name}
+                    name={item.projectId}
+                    key={item.projectId}
+                    value={item.projectName}
                 >
-                    {item.project_name}
+                    {item.projectName}
                 </MenuItem>
             )
         })
     }
 
     const handleSelectProject = (event, item) => {
-        const projectName = event.target.value
-        const projectId = item.props.name
-        let newProjectValues = {
-            projectName: projectName,
-            projectId: projectId,
-        }
-        changeSelectedProject(newProjectValues)
-        dispatch(getFilesForProject(projectId))
+        // const projectName = event.target.value
+        // const projectId = item.props.name
+        // let newProjectValues = {
+        //     projectName: projectName,
+        //     projectId: projectId,
+        // }
+        let obj = projectsState.projects.find(o => o.projectId === item.props.name);
+        // console.log("OBJ", obj)
+        // console.log(UserSession.isAdmin())
+        // console.log(UserSession.getUserName())
+        dispatch(setProjectsAction({...obj}))
+        setSelectedProject({...obj})
+        dispatch(getFilesForProject(item.props.name))
     }
 
     return (
@@ -57,7 +67,11 @@ export default function ProjectBar(props) {
                         <FormControl fullWidth>
                             <InputLabel>Select Project</InputLabel>
                             <Select
-                                value={selectedProject.projectName}
+                                value={
+                                    !selectedProject.projectName
+                                        ? ''
+                                        : selectedProject.projectName
+                                }
                                 label="Select Project"
                                 onChange={handleSelectProject}
                             >
@@ -65,20 +79,24 @@ export default function ProjectBar(props) {
                             </Select>
                         </FormControl>
                     </Box>
-
-                    {selectedProject.projectName && (
-                        <EditProjectDialog
-                            projectName={selectedProject.projectName}
-                            projectId={selectedProject.projectId}
-                            changeSelectedProject={changeSelectedProject}
-                        ></EditProjectDialog>
+               
+                    {/* <Button variant="contained">Selected Project: {selectedProject.projectName}</Button>
+                <Button variant="contained">Project Owner: {selectedProject.userName}</Button>
+                <Button variant="contained">UserName: {UserSession.getUserName()} </Button>
+                <Button variant="contained">Is Admin: {UserSession.isAdmin()+""}</Button> */}
+                    {selectedProject.projectName && ((UserSession.isAdmin()) || (UserSession.getUserName() === selectedProject.userName)) && (
+                        <Box>
+                        <Button
+                            variant="contained"
+                            size="large"
+                            sx={{ my: 1 }}
+                            onClick={() => navigate('/settings')}
+                        >
+                            Project Settings
+                        </Button>
+                        </Box>
                     )}
-                    {selectedProject.projectName && (
-                        <DeleteProjectModal
-                            projectName={selectedProject.projectName}
-                            projectId={selectedProject.projectId}
-                        ></DeleteProjectModal>
-                    )}
+                    
                 </Stack>
                 <Stack direction="row">
                     <AddProjectDialog></AddProjectDialog>
