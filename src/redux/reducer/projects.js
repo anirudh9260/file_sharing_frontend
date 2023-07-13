@@ -2,39 +2,80 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
     projects: [],
+    selectedProject: {},
+    isSetting: false,
     isLoading: false,
     isAdding: false,
     isDeleteting: false,
     isUpdating: false,
+
+    projectAccessUsers: [],
+    isLoadingUsers: false,
+    isAddingAccess: false,
+    isRemovingAccess : false,
+    
     message: '',
     isError: false,
-    projectName : "",
-    projectId : ""
+    projectName: '',
+    projectId: '',
+}
+
+function createData(projectId, projectName, userName) {
+    return {
+        projectId,
+        projectName,
+        userName,
+    }
+}
+
+function createProjectAccessData(id, email) {
+    return {
+        id,
+        email,
+    }
 }
 
 export const projectsReducer = createSlice({
     name: 'projects',
     initialState,
     reducers: {
+        setSelectedProject(state, action) {
+            // console.log("Action", action)
+            return {
+                ...state,
+                isSetting: true,
+                selectedProject: action.payload,
+            }
+        },
+
         fetchProjects(state, action) {
             return {
                 ...state,
-                // message: '',
                 isLoading: true,
             }
         },
         fetchProjectsSuccess(state, action) {
+            let row_data = []
+            for (let i = 0; i < action.payload.length; i++) {
+                row_data.push(
+                    createData(
+                        action.payload[i].id,
+                        action.payload[i].project_name,
+                        action.payload[i].username,
+                    ),
+                )
+            }
             return {
                 ...state,
                 isLoading: false,
-                projects: action?.payload,
-                // isError: false
+                projects: row_data,
             }
         },
         fetchProjectsFailed(state, action) {
+            console.log(action.payload)
             return {
                 ...state,
-                message: 'Get Projects Failed',
+                message: action.payload.error,
                 isLoading: false,
                 isError: true,
             }
@@ -43,12 +84,11 @@ export const projectsReducer = createSlice({
         addProjects(state, action) {
             return {
                 ...state,
-                message: "",
+                message: '',
                 isAdding: true,
             }
         },
         addProjectsSuccess(state, action) {
-            console.log("Action", action)
             return {
                 ...state,
                 message: 'Add Project Successfull',
@@ -59,7 +99,7 @@ export const projectsReducer = createSlice({
         addProjectsFailed(state, action) {
             return {
                 ...state,
-                message: 'Add Project Failed',
+                message: action.payload.response.data.error,
                 isAdding: false,
                 isError: true,
             }
@@ -68,7 +108,7 @@ export const projectsReducer = createSlice({
         deleteProjects(state, action) {
             return {
                 ...state,
-                message: "",
+                message: '',
                 isDeleteting: true,
             }
         },
@@ -77,7 +117,7 @@ export const projectsReducer = createSlice({
                 ...state,
                 message: 'Project Successfully Deleted',
                 isDeleteting: false,
-                isError: false
+                isError: false,
             }
         },
         deleteProjectsFailed(state, action) {
@@ -85,14 +125,16 @@ export const projectsReducer = createSlice({
                 ...state,
                 isDeleteting: false,
                 isError: true,
-                message: `Delete Project Failed : ${action?.payload?.msg ? action?.payload?.msg : ''}`,
+                message: `Delete Project Failed : ${
+                    action?.payload?.msg ? action?.payload?.msg : ''
+                }`,
             }
         },
 
         updateProjects(state, action) {
             return {
                 ...state,
-                message: "",
+                message: '',
                 isUpdating: true,
             }
         },
@@ -112,10 +154,95 @@ export const projectsReducer = createSlice({
                 isError: true,
             }
         },
+
+
+        fetchProjectAccess(state, action) {
+            return {
+                ...state,
+                // isLoadingUsers: true,
+            }
+        },
+        fetchProjectAccessSuccess(state, action) {
+            let row_data = []
+            for (let i = 0; i < action.payload.length; i++) {
+                row_data.push(
+                    createProjectAccessData(
+                        action.payload[i].id,
+                        action.payload[i].email,
+                    ),
+                )
+            }
+            return {
+                ...state,
+                // isLoadingUsers: false,
+                projectAccessUsers: row_data,
+            }
+        },
+        fetchProjectAccessFailed(state, action) {
+            console.log(action.payload)
+            return {
+                ...state,
+                message: action.payload.error,
+                // isLoadingUsers: false,
+                isError: true,
+            }
+        },
+
+
+        addProjectAccess(state, action) {
+            return {
+                ...state,
+                isAddingAccess: true,
+                message:""
+            }
+        },
+        addProjectAccessSuccess(state, action) {
+            return {
+                ...state,
+                message: action.payload.message,
+                isAddingAccess: false,
+                isError: false,
+            }
+        },
+        addProjectAccessFailed(state, action) {
+            console.log(action.payload)
+            return {
+                ...state,
+                message: action.payload.response.data.error,
+                isAddingAccess: false,
+                isError: true,
+            }
+        },
+        removeProjectAccess(state, action) {
+            return {
+                ...state,
+                isRemovingAccess: true,
+                message: ""
+            }
+        },
+        removeProjectAccessSuccess(state, action) {
+            return {
+                ...state,
+                message: action.payload.message,
+                isRemovingAccess: false,
+                isError: false,
+            }
+        },
+        removeProjectAccessFailed(state, action) {
+            console.log(action.payload)
+            return {
+                ...state,
+                message: action.payload.response.data.message,
+                isRemovingAccess: false,
+                isError: true,
+            }
+        },
     },
 })
 
 export const {
+    setSelectedProject,
+
     fetchProjects,
     fetchProjectsSuccess,
     fetchProjectsFailed,
@@ -128,6 +255,16 @@ export const {
     updateProjects,
     updateProjectsSuccess,
     updateProjectsFailed,
+
+    fetchProjectAccess,
+    fetchProjectAccessSuccess,
+    fetchProjectAccessFailed,
+    addProjectAccess,
+    addProjectAccessSuccess,
+    addProjectAccessFailed,
+    removeProjectAccess,
+    removeProjectAccessSuccess,
+    removeProjectAccessFailed
 } = projectsReducer.actions
 
 export default projectsReducer.reducer
