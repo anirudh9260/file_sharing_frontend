@@ -2,6 +2,7 @@ import * as React from 'react'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Dialog from '@mui/material/Dialog'
+import { Box } from '@mui/material'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
@@ -29,7 +30,7 @@ export default function EditProjectDialog(props) {
             projectId: props.projectId,
         }
 
-        props.changeSelectedProject(newProjectValues)
+        props.setSelectedProject(newProjectValues)
         dispatch(
             editProjectsAction(props.projectId, { project_name: newProject }),
         )
@@ -48,10 +49,11 @@ export default function EditProjectDialog(props) {
             </Button>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Edit Project</DialogTitle>
-                <DialogContent>
+                <DialogContent><Box width="350px">
                     <DialogContentText>
                         Provide a new name for the project
                     </DialogContentText>
+                    </Box>
                     <TextField
                         autoFocus
                         margin="dense"
