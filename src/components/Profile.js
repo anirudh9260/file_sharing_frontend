@@ -1,28 +1,36 @@
 import React, { useEffect, useState } from 'react'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
-import CardActions from '@mui/material/CardActions'
+import Container from '@mui/material/Container'
 import CardContent from '@mui/material/CardContent'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import { CardMedia, TextField } from '@mui/material'
-import Grid from '@mui/material'
 import UserSession from '../services/auth'
-import { password_reset } from '../redux/actions/auth'
+import SnackbarNotification from './SnackbarNotification'
+import { passwordResetAction } from '../redux/actions/auth'
 import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks'
-// import
+
 const Profile = () => {
     const dispatch = useAppDispatch()
+    const authState = useAppSelector(state => state.authReducer)
+
+    const [snackbarState, setSnackbarState] = useState(false)
+
     const [user, setUser] = useState({
-        first_name: 'Unknown',
-        last_name: 'User',
-        email: 'N/A',
+        userName: 'Unknown',
+        email: '',
     })
 
     useEffect(() => {
-        setUser(UserSession.getUser())
-        // console.log(user)
+        setUser({...user, userName: UserSession.getUserName()})
+        // console.log("username", UserSession.getUserName())
     }, [])
+
+    useEffect(() => {
+        setSnackbarState(true)
+    }, [authState.message])
+    
 
     const handleSubmit = event => {
         event.preventDefault()
@@ -31,82 +39,92 @@ const Profile = () => {
             old_password: data.get('old_password'),
             new_password: data.get('new_password'),
         }
-        dispatch(password_reset(context))
+        dispatch(passwordResetAction(context))
     }
     return (
-        <>
-            <Card
-                sx={{ maxWidth: 300 }}
-                style={{
-                    justify: 'center',
-                    alignContent: 'center',
-                    alignItems: 'center',
-                }}
+        <Container maxWidth="xl">
+            <Box
+                display="flex"
+                justifyContent="center"
+                // alignItems="center"
+                minHeight="100vh"
             >
-                <CardContent>
-                    <CardMedia
-                        sx={{ height: 140 }}
-                        image="./profilepic.svg"
-                        title="profile pic"
-                    />
-                    <Typography variant="h5" component="div">
-                        {user.first_name} {user.last_name}
-                    </Typography>
-                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                        {user.email}
-                    </Typography>
-                </CardContent>
-
-            </Card>
-
-            <Card
-                sx={{ maxWidth: 500 }}
-                style={{
-                    justify: 'center',
-                    alignContent: 'center',
-                    alignItems: 'center',
-                }}
-            >
-                <Typography component="h1" variant="h5">
-                    Change Password
-                </Typography>
-                <Box
-                    component="form"
-                    onSubmit={handleSubmit}
-                    noValidate
-                    sx={{ mt: 1 }}
+                <Card
+                    sx={{ maxWidth: 300 }}
+                    style={{
+                        justify: 'center',
+                        alignContent: 'center',
+                        alignItems: 'center',
+                    }}
                 >
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="old_password"
-                        label="Old Password"
-                        name="old_password"
-                        autoFocus
-                    />
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="new_password"
-                        label="New Password"
-                        type="password"
-                        id="new_password"
-                        autoComplete="current-password"
-                    />
-                    <Button
-                        data-type="Update"
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
+                    <CardContent>
+                        <CardMedia
+                            sx={{ height: 240 }}
+                            image="./profilepic.svg"
+                            title="profile pic"
+                        />
+                        <Typography variant="h5">{user.userName}</Typography>
+                        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                            {user.email}
+                        </Typography>
+                    </CardContent>
+                </Card>
+
+                <Card
+                    sx={{ maxWidth: 300 }}
+                    style={{
+                        justify: 'center',
+                        alignContent: 'center',
+                        alignItems: 'center',
+                    }}
+                >
+                    <Box
+                        component="form"
+                        onSubmit={handleSubmit}
+                        sx={{ mt: 1 }}
                     >
-                        Update
-                    </Button>
-                </Box>
-            </Card>
-        </>
+                        <Typography component="h1" variant="h5" sx={{ mx: 2 }}>
+                            Change Password
+                        </Typography>
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="old_password"
+                            label="Current Password"
+                            type="password"
+                            name="old_password"
+                            autoFocus
+                        />
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="new_password"
+                            label="New Password"
+                            type="password"
+                            id="new_password"
+                            autoComplete="current-password"
+                        />
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2 }}
+                        >
+                            Update
+                        </Button>
+                    </Box>
+                </Card>
+            </Box>
+            {snackbarState && (authState.message) && (
+                    <SnackbarNotification
+                        message={authState.message}
+                        onClose={() => setSnackbarState(false)}
+                        severity={authState.isError ? 'error' : 'success'}
+                    />
+                )}
+        </Container>
     )
 }
 
