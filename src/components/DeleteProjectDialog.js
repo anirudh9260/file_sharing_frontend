@@ -28,15 +28,15 @@ export default function DeleteProjectDialog(props) {
         setOpen(false)
     }
 
-    return (
+    return (    
         <div>
-            <Button variant="contained" size="large" onClick={handleClickOpen} sx={{my: 1}}> 
-                Delete Project
+            <Button variant="contained" size="large" onClick={handleClickOpen} sx={{my: 1}} color="error"> 
+                Delete Project 
             </Button>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Delete Project</DialogTitle>
+                <DialogTitle>Delete Project - {props.projectName}</DialogTitle>
                 <DialogContent> 
-                  <Box width="300px">
+                  <Box width="350px">
                     <DialogContentText>
                         Are you Sure ?
                     </DialogContentText>
