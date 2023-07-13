@@ -3,8 +3,6 @@ import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
 import TextField from '@mui/material/TextField'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Checkbox from '@mui/material/Checkbox'
 import { Link } from 'react-router-dom'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
@@ -17,21 +15,29 @@ import { login } from '../redux/actions/auth'
 import CircularProgress from '@mui/material/CircularProgress'
 import { useNavigate } from 'react-router-dom'
 import UserSession from '../services/auth'
+import { useState, useEffect } from 'react'
+import SnackbarNotification from './SnackbarNotification'
+
 
 const theme = createTheme()
 
 export default function SignIn() {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
-    const state = useAppSelector(state => state.authReducer)
+    const authState = useAppSelector(state => state.authReducer)
+
+
+    const [snackbarState, setSnackbarState] = useState(false)
 
     React.useEffect(() => {
         if (UserSession.isAuthenticated()) {
             navigate('/')
-        } else {
-            navigate('/signin')
         }
     }, [UserSession.isAuthenticated()])
+
+    useEffect(() => {
+        setSnackbarState(true)
+    }, [authState.message])
 
     const handleSubmit = event => {
         event.preventDefault()
@@ -88,7 +94,7 @@ export default function SignIn() {
                             autoComplete="current-password"
                         />
 
-                        {state.isLoading && (
+                        {authState.isLoading && (
                             <div>
                                 <CircularProgress />
                             </div>
@@ -119,6 +125,13 @@ export default function SignIn() {
                 </Box>
                 {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
             </Container>
+            {snackbarState && (authState.message) && (
+                    <SnackbarNotification
+                        message={authState.message}
+                        onClose={() => setSnackbarState(false)}
+                        severity={authState.isError ? 'error' : 'success'}
+                    />
+                )}
         </ThemeProvider>
     )
 }
