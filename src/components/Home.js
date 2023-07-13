@@ -1,8 +1,4 @@
 import React from 'react'
-// import MuiTypography from './MUItutorials/MuiTypography'
-// import MuiButton from './MUItutorials/MuiButton'
-// import MuiTextField from './MUItutorials/MuiTextField'
-// import MuiSelect from './MUItutorials/MuiSelect'
 import ProjectBar from './ProjectBar'
 import Container from '@mui/material/Container'
 import EnhancedTableContainer from './EnhancedTableContainer'
@@ -11,50 +7,47 @@ import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks'
 import { useState, useEffect } from 'react'
 import SnackbarNotification from './SnackbarNotification'
 import { getProjects } from '../redux/actions/projects'
+import { useNavigate } from 'react-router-dom'
+import UserSession from '../services/auth'
 
 
 const Home = () => {
+    const navigate = useNavigate()
     const dispatch = useAppDispatch()
 
-    let initialProjectsValue = {
-        projectId: '',
-        projectName: '',
-    }
-    const [selectedProject, setSelectedProject] = useState(initialProjectsValue)
+    let initialProjectsValue = {}
+
+    const [selectedProject, setSelectedProject] = useState({initialProjectsValue})
     const [snackbarState, setSnackbarState] = useState(false)
 
     const projectsState = useAppSelector(state => state.projectsReducer)
     const filesState = useAppSelector(state => state.filesReducer)
+    
+    React.useEffect(() => {
+        if (!UserSession.isAuthenticated()) {
+            navigate('/signin')
+        }
+    }, [UserSession.isAuthenticated()])
+
 
     useEffect(() => {
-        dispatch(getProjects());
-    }, [projectsState.isAdding, projectsState.isUpdating, projectsState.isDeleteting])
+        if (UserSession.isAuthenticated()){
+        dispatch(getProjects());}
+    }, [UserSession.isAuthenticated(), projectsState.isAdding, projectsState.isUpdating, projectsState.isDeleteting])
     
     useEffect(() => {
         setSelectedProject(initialProjectsValue);
-    }, [projectsState.isDeleteting])
-
-    useEffect(() => {
-        setSnackbarState(true)
-    }, [projectsState.message])
-    
+    }, [projectsState.isDeleteting])    
     
     useEffect(() => {
         setSnackbarState(true)
-    }, [filesState.isUploading, filesState.isDeleteting, filesState.isConverting])
-    
+    }, [projectsState.message, filesState.isUploading, filesState.isDeleteting, filesState.isCopying, filesState.isConverting])
     
     return (
-        <>
             <Container maxWidth="xl">
-                {/* <MuiTypography></MuiTypography>
-                <MuiButton></MuiButton>
-                <MuiTextField></MuiTextField>
-                <MuiSelect></MuiSelect> */}
-
                 <ProjectBar
                     selectedProject={selectedProject}
-                    changeSelectedProject={setSelectedProject}
+                    setSelectedProject={setSelectedProject}
                 ></ProjectBar>
                 <FileBar Project={selectedProject}></FileBar>   
                 <EnhancedTableContainer selectedProject={selectedProject}></EnhancedTableContainer>
@@ -74,7 +67,6 @@ const Home = () => {
                     />
                 )}
             </Container>
-        </>
     )
 }
 
