@@ -32,7 +32,7 @@ export default function DeleteFileConfirmDialog(props) {
     }
     
     return (
-        <>
+        <Box>
             <Button
                 variant="contained"
                 color="error"
@@ -43,19 +43,19 @@ export default function DeleteFileConfirmDialog(props) {
                 Delete
             </Button>
             <Dialog open={open} onClose={handleClose}>
+                <Box width="400px">
                 <DialogTitle>Delete {row.file_name}</DialogTitle>
                 <DialogContent>
-                <Box width="300px">
                     <DialogContentText>
                         Are you sure ?
                     </DialogContentText>
-                    </Box>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
                     <Button color="error" onClick={handleDelete}>OK</Button>
                 </DialogActions>
+                    </Box>
             </Dialog>
-        </>
+        </Box>
     )
 }
