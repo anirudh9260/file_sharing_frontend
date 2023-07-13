@@ -2,16 +2,19 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
     files: [],
+    convertedFiles: [],
     isLoading: false,
+    isConversionLoading: false,
     isUploading: false,
     isCopying: false,
     isDeleting: false,
     isError: false,
-    isConverting: "",
+    isConverting: false,
+    isFileActionModalOpen: false,
     message: ""
 }
 
-function createData(id, uid, file_name, date_modified, type, size, uploaded_by, projectId) {
+function createData(id, uid, file_name, date_modified, type, size, uploaded_by, projectId, conversion_uuid) {
     return {
         id,
         uid, 
@@ -20,7 +23,8 @@ function createData(id, uid, file_name, date_modified, type, size, uploaded_by, 
         type,
         size,
         uploaded_by,
-        projectId
+        projectId,
+        conversion_uuid
     }
 }
 
@@ -32,12 +36,54 @@ export const filesReducer = createSlice({
             return {
                 ...state,
                 isLoading: true,
-                isError : false
+                // isError : false
             }
         },
         fetchFilesSuccess(state, action) {
             let row_data = []
             // console.log("Action payload", action.payload)
+            for (let i = 0; i < action.payload.length; i++) {
+                row_data.push(
+                    createData(
+                        action.payload[i].id,
+                        action.payload[i].uid,
+                        action.payload[i].file_name,
+                        action.payload[i].created_at.toString('MMMM yyyy'),
+                        action.payload[i].extension,
+                        action.payload[i].size,
+                        action.payload[i].username,
+                        action.payload[i].project_id,
+                        action.payload[i].conversion_uuid
+                    ),
+                )
+            }
+
+            return {
+                ...state,
+                isLoading: false,
+                files: row_data,
+                // isError : false
+            }
+        },
+        fetchFilesFailed(state, action) {
+            return {
+                ...state,
+                message: 'Files Fetch Failed',
+                isError: true,
+                isLoading: false,
+            }
+        },
+
+
+        fetchConvertedFiles(state, action) {
+            return {
+                ...state,
+                isConversionLoading: true,
+                // isError : false
+            }
+        },
+        fetchConvertedFilesSuccess(state, action) {
+            let row_data = []
             for (let i = 0; i < action.payload.length; i++) {
                 row_data.push(
                     createData(
@@ -55,19 +101,22 @@ export const filesReducer = createSlice({
 
             return {
                 ...state,
-                isLoading: false,
-                files: row_data,
-                isError : false
+                isConversionLoading: false,
+                convertedFiles: row_data,
+                // isError : false
             }
         },
-        fetchFilesFailed(state, action) {
+        fetchConvertedFilesFailed(state, action) {
             return {
                 ...state,
-                message: 'Files Fetch Failed',
+                message: 'Fetch Converted Files Failed',
                 isError: true,
-                isLoading: false,
+                isConversionLoading: false,
             }
         },
+
+
+
         uploadFiles(state, action) {
             return {
                 ...state,
@@ -169,6 +218,18 @@ export const filesReducer = createSlice({
                 isError: true,
             }
         },
+        fileActionModalOpen(state, action) {
+            return {
+                ...state,
+                isFileActionModalOpen : true
+            }
+        },
+        fileActionModalClose(state, action) {
+            return {
+                ...state,
+                isFileActionModalOpen : false
+            }
+        },
 
 
     },
@@ -178,6 +239,9 @@ export const {
     fetchFiles,
     fetchFilesSuccess,
     fetchFilesFailed,
+    fetchConvertedFiles,
+    fetchConvertedFilesSuccess,
+    fetchConvertedFilesFailed,
     uploadFiles,
     uploadFilesSuccess,
     uploadFilesFailed,
@@ -190,7 +254,9 @@ export const {
     copyLinkFailed,
     convertFile,
     convertFileSuccess,
-    convertFileFailed
+    convertFileFailed,
+    fileActionModalOpen,
+    fileActionModalClose
 } = filesReducer.actions
 
 export default filesReducer.reducer
