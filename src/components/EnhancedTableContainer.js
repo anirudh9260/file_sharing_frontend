@@ -16,6 +16,12 @@ function EnhancedTableContainer(props) {
         dispatch(getFilesForProject(selectedProject.projectId))
     }, [filesState.isDeleting, filesState.isUploading])
 
+    useEffect(() => {
+        if (!filesState.isFileActionModalOpen) {
+            dispatch(getFilesForProject(selectedProject.projectId))
+        }
+    }, [filesState.isFileActionModalOpen])
+
     if (filesState.isLoading === false && filesState.files) {
         return <EnhancedTable selectedProject={selectedProject} rows={filesState.files} />
     }
