@@ -16,9 +16,8 @@ import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import Tooltip from '@mui/material/Tooltip'
-import AdbIcon from '@mui/icons-material/Adb'
-import BackupIcon from '@mui/icons-material/Backup'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
+
 
 const pages = ['Dashboard', 'About', 'Blog']
 
@@ -32,12 +31,13 @@ const TopBar = () => {
     const handleOpenNavMenu = event => {
         setAnchorElNav(event.currentTarget)
     }
-    const handleOpenUserMenu = event => {
-        setAnchorElUser(event.currentTarget)
-    }
-
+    
     const handleCloseNavMenu = () => {
         setAnchorElNav(null)
+    }
+
+    const handleOpenUserMenu = event => {
+        setAnchorElUser(event.currentTarget)
     }
 
     const handleCloseUserMenu = () => {
@@ -48,29 +48,7 @@ const TopBar = () => {
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    {/* <AdbIcon
-                        sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}
-                    /> */}
                     <CloudUploadIcon></CloudUploadIcon>
-                    {/* <Typography
-                        variant="h6"
-                        noWrap
-                        component="a"
-                        href="/"
-                        sx={{
-                            ml: 2,
-                            mr: 2,
-                            display: { xs: 'none', md: 'flex' },
-                            // fontFamily: 'roboto',
-                            fontWeight: 500,
-                            letterSpacing: '.1rem',
-                            color: 'inherit',
-                            textDecoration: 'none',
-                        }}
-                    >
-                        Data Management
-                    </Typography> */}
-
                     <Box
                         sx={{
                             flexGrow: 1,
@@ -118,14 +96,9 @@ const TopBar = () => {
                                     About
                                 </Typography>
                             </MenuItem>
-                            {/* <MenuItem onClick={handleCloseNavMenu}>
-                                <Typography textAlign="center">Blog</Typography>
-                            </MenuItem> */}
                         </Menu>
                     </Box>
-                    {/* <AdbIcon
-                        sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }}
-                    /> */}
+
                     <Typography
                         variant="h5"
                         noWrap
@@ -135,9 +108,7 @@ const TopBar = () => {
                             mr: 2,
                             display: { xs: 'flex', md: 'none' },
                             flexGrow: 1,
-                            // fontFamily: 'monospace',
                             fontWeight: 500,
-                            // letterSpacing: '.3rem',
                             color: 'inherit',
                             textDecoration: 'none',
                         }}
@@ -152,7 +123,7 @@ const TopBar = () => {
                     >
                         {UserSession.isAuthenticated() && (
                             <Button
-                            href="/"
+                                href="/"
                                 key="Home"
                                 onClick={handleCloseNavMenu}
                                 sx={{ my: 2, color: 'white', display: 'block' }}
@@ -171,8 +142,7 @@ const TopBar = () => {
                             variant="h5"
                             align="center"
                             fontFamily="roboto"
-                            
-                            sx={{ my: 2, color: 'white', flex: '1'}}
+                            sx={{ my: 2, color: 'white', flex: '1' }}
                         >
                             DATA MANAGEMENT
                         </Typography>
@@ -180,7 +150,7 @@ const TopBar = () => {
 
                     {UserSession.isAuthenticated() ? (
                         <>
-                            <IconButton
+                            {/* <IconButton
                                 size="large"
                                 aria-label="show 1 new notifications"
                                 color="inherit"
@@ -188,7 +158,7 @@ const TopBar = () => {
                                 <Badge badgeContent={1} color="error">
                                     <NotificationsIcon />
                                 </Badge>
-                            </IconButton>
+                            </IconButton> */}
                             <Box sx={{ flexGrow: 0 }}>
                                 <Tooltip title="Open settings">
                                     <IconButton
@@ -201,9 +171,23 @@ const TopBar = () => {
                                         />
                                     </IconButton>
                                 </Tooltip>
+
+                                <Typography
+                                    variant="h6"
+                                    sx={{
+                                        mr: 2,
+                                        display: { xs: 'none', md: 'block' },
+                                        flexGrow: 1,
+                                        fontWeight: 500,
+                                        color: 'inherit',
+                                    }}
+                                >
+                                    {UserSession.getUserName()}
+                                </Typography>
+
                                 <Menu
-                                    sx={{ mt: '45px' }}
                                     id="menu-appbar"
+                                    sx={{ mt: '45px' }}
                                     anchorEl={anchorElUser}
                                     anchorOrigin={{
                                         vertical: 'top',
@@ -224,16 +208,6 @@ const TopBar = () => {
                                     >
                                         Profile
                                     </MenuItem>
-                                    <MenuItem onClick={handleCloseUserMenu}>
-                                        <Typography textAlign="center">
-                                            Account
-                                        </Typography>
-                                    </MenuItem>
-                                    <MenuItem onClick={handleCloseUserMenu}>
-                                        <Typography textAlign="center">
-                                            Dashboard
-                                        </Typography>
-                                    </MenuItem>
                                     <MenuItem
                                         onClick={() => {
                                             UserSession.removeUser()
@@ -245,21 +219,21 @@ const TopBar = () => {
                                 </Menu>
                             </Box>
                         </>
-                    ) : location.pathname === '/signup' ? (
-                        <Button
-                            key="Login"
-                            onClick={() => navigate('/signin')}
-                            sx={{ my: 2, color: 'white', display: 'block' }}
-                        >
-                            Login
-                        </Button>
-                    ) : (
+                    ) : location.pathname === '/signin' ? (
                         <Button
                             key="Signup"
                             onClick={() => navigate('/signup')}
                             sx={{ my: 2, color: 'white', display: 'block' }}
                         >
                             Sign Up
+                        </Button>
+                    ) : (
+                        <Button
+                            key="Login"
+                            onClick={() => navigate('/signin')}
+                            sx={{ my: 2, color: 'white', display: 'block' }}
+                        >
+                            Login
                         </Button>
                     )}
                 </Toolbar>
