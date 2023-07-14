@@ -16,8 +16,6 @@ const initialState = {
     
     message: '',
     isError: false,
-    projectName: '',
-    projectId: '',
 }
 
 function createData(projectId, projectName, userName) {
