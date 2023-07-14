@@ -2,7 +2,6 @@ import React from 'react'
 import ProjectBar from './ProjectBar'
 import Container from '@mui/material/Container'
 import EnhancedTableContainer from './EnhancedTableContainer'
-import FileBar from './FileBar'
 import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks'
 import { useState, useEffect } from 'react'
 import SnackbarNotification from './SnackbarNotification'
@@ -14,30 +13,23 @@ import UserSession from '../services/auth'
 const Home = () => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
-
-    let initialProjectsValue = {}
-
-    const [selectedProject, setSelectedProject] = useState({initialProjectsValue})
+    
     const [snackbarState, setSnackbarState] = useState(false)
 
     const projectsState = useAppSelector(state => state.projectsReducer)
     const filesState = useAppSelector(state => state.filesReducer)
     
-    React.useEffect(() => {
+    useEffect(() => {
         if (!UserSession.isAuthenticated()) {
             navigate('/signin')
         }
     }, [UserSession.isAuthenticated()])
 
-
     useEffect(() => {
         if (UserSession.isAuthenticated()){
-        dispatch(getProjects());}
+        dispatch(getProjects())}
     }, [UserSession.isAuthenticated(), projectsState.isAdding, projectsState.isUpdating, projectsState.isDeleteting])
     
-    useEffect(() => {
-        setSelectedProject(initialProjectsValue);
-    }, [projectsState.isDeleteting])    
     
     useEffect(() => {
         setSnackbarState(true)
@@ -46,11 +38,9 @@ const Home = () => {
     return (
             <Container maxWidth="xl">
                 <ProjectBar
-                    selectedProject={selectedProject}
-                    setSelectedProject={setSelectedProject}
                 ></ProjectBar>
-                <FileBar Project={selectedProject}></FileBar>   
-                <EnhancedTableContainer selectedProject={selectedProject}></EnhancedTableContainer>
+                <EnhancedTableContainer 
+                ></EnhancedTableContainer>
 
                 {snackbarState && (projectsState.message) && (
                     <SnackbarNotification
