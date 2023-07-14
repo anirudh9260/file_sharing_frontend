@@ -4,9 +4,9 @@ import ShareIcon from '@mui/icons-material/Share'
 import FileDownloadIcon from '@mui/icons-material/FileDownload'
 import { useAppDispatch } from '../hooks/redux-hooks'
 import { copyLinkAction } from '../redux/actions/files'
-import DeleteFileConfirmDialog from './DeleteFileConfirmDialog'
 
-function DownloadCopyLinkButton(props) {
+
+export default function DownloadCopyLinkButton(props) {
     const { row } = props
 
     const dispatch = useAppDispatch()
@@ -46,5 +46,3 @@ function DownloadCopyLinkButton(props) {
         </Box>
     )
 }
-
-export default DownloadCopyLinkButton
