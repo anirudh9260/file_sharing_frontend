@@ -11,7 +11,11 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks'
 import { useState, useEffect } from 'react'
 import AddCircleIcon from '@mui/icons-material/AddCircle'
-import { getProjectAccessAction, addProjectAccessAction, removeProjectAccessAction } from '../redux/actions/projects'
+import {
+    getProjectAccessAction,
+    addProjectAccessAction,
+    removeProjectAccessAction,
+} from '../redux/actions/projects'
 import { getAllUsersAction } from '../redux/actions/auth'
 
 function ProjectAccessTable() {
@@ -19,27 +23,39 @@ function ProjectAccessTable() {
     const projectState = useAppSelector(state => state.projectsReducer)
     const [selectedEmail, setSelectedEmail] = useState('')
 
-
     useEffect(() => {
         {
-        dispatch(getAllUsersAction())}
+            dispatch(getAllUsersAction())
+        }
     }, [])
 
     useEffect(() => {
-        if(projectState.isAddingAccess === false && projectState.isRemovingAccess === false){
-            dispatch(getProjectAccessAction(projectState.selectedProject.projectId))}
+        if (
+            projectState.isAddingAccess === false &&
+            projectState.isRemovingAccess === false
+        ) {
+            dispatch(
+                getProjectAccessAction(projectState.selectedProject.projectId),
+            )
+        }
     }, [projectState.isAddingAccess, projectState.isRemovingAccess])
 
-
     const handleDeleteAccess = accessId => {
-        dispatch(removeProjectAccessAction(projectState.selectedProject.projectId, { access_id: ""+accessId }))
+        dispatch(
+            removeProjectAccessAction(projectState.selectedProject.projectId, {
+                access_id: '' + accessId,
+            }),
+        )
     }
 
     const handleAddAccess = () => {
-        dispatch(addProjectAccessAction(projectState.selectedProject.projectId, { email: selectedEmail }))
-        setSelectedEmail("")
-    }   
-
+        dispatch(
+            addProjectAccessAction(projectState.selectedProject.projectId, {
+                email: selectedEmail,
+            }),
+        )
+        setSelectedEmail('')
+    }
 
     return (
         <TableContainer component={Paper}>
@@ -60,7 +76,8 @@ function ProjectAccessTable() {
                                     border: 0,
                                 },
                             }}
-                        ><TableCell>{i+1}</TableCell>
+                        >
+                            <TableCell>{i + 1}</TableCell>
                             <TableCell component="th" scope="row">
                                 {user.email}
                             </TableCell>
@@ -69,8 +86,6 @@ function ProjectAccessTable() {
                                     startIcon={<DeleteIcon />}
                                     onClick={() => handleDeleteAccess(user.id)}
                                     color="error"
-
-
                                 ></Button>
                             </TableCell>
                         </TableRow>
@@ -83,11 +98,12 @@ function ProjectAccessTable() {
                             },
                         }}
                     >
+                        <TableCell component="th" scope="row"></TableCell>
                         <TableCell component="th" scope="row">
-                        </TableCell>
-                        <TableCell component="th" scope="row">
-                            {/* <AddProjectAccess setSelectedEmail={setSelectedEmail}></AddProjectAccess> */}
-                            <TextField value={selectedEmail} onChange={(e) => setSelectedEmail(e.target.value)}></TextField>
+                            <TextField
+                                value={selectedEmail}
+                                onChange={e => setSelectedEmail(e.target.value)}
+                            ></TextField>
                         </TableCell>
                         <TableCell component="th" scope="row">
                             <Button
