@@ -5,14 +5,17 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
-import PropTypes from 'prop-types'
-import {Box}  from '@mui/material'
-import {useAppDispatch } from '../hooks/redux-hooks'
-import { deleteProjectAction } from '../redux/actions/projects'
 
-export default function DeleteProjectDialog(props) {
+import { Box } from '@mui/material'
+import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks'
+import {
+    setProjectsAction,
+    deleteProjectAction,
+} from '../redux/actions/projects'
 
+export default function DeleteProjectDialog() {
     const dispatch = useAppDispatch()
+    const projectsState = useAppSelector(state => state.projectsReducer)
     const [open, setOpen] = React.useState(false)
 
     const handleClickOpen = () => {
@@ -24,34 +27,38 @@ export default function DeleteProjectDialog(props) {
     }
 
     const handleDelete = () => {
-        dispatch(deleteProjectAction(props.projectId))
+        dispatch(deleteProjectAction(projectsState.selectedProject.projectId))
+        dispatch(setProjectsAction({}))
         setOpen(false)
     }
 
-    return (    
+    return (
         <div>
-            <Button variant="contained" size="large" onClick={handleClickOpen} sx={{my: 1}} color="error"> 
-                Delete Project 
+            <Button
+                variant="contained"
+                size="large"
+                onClick={handleClickOpen}
+                sx={{ my: 1 }}
+                color="error"
+            >
+                Delete Project
             </Button>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Delete Project - {props.projectName}</DialogTitle>
-                <DialogContent> 
-                  <Box width="350px">
-                    <DialogContentText>
-                        Are you Sure ?
-                    </DialogContentText>
+                <DialogTitle>
+                    Delete Project - {projectsState.selectedProject.projectName}
+                </DialogTitle>
+                <DialogContent>
+                    <Box width="350px">
+                        <DialogContentText>Are you Sure ?</DialogContentText>
                     </Box>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={handleDelete} color="error">OK</Button>
+                    <Button onClick={handleDelete} color="error">
+                        OK
+                    </Button>
                 </DialogActions>
             </Dialog>
         </div>
     )
-}
-
-DeleteProjectDialog.propTypes = {
-    projectId: PropTypes.number.isRequired,
-    projectName: PropTypes.string.isRequired,
 }
