@@ -9,10 +9,11 @@ import FileUploadIcon from '@mui/icons-material/FileUpload'
 import PropTypes from 'prop-types'
 import { useState } from 'react'
 import { uploadFilesAction } from '../redux/actions/files'
-import { useAppDispatch } from '../hooks/redux-hooks'
+import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks'
 
-function UploadFile(props) {
+function UploadFile() {
     const dispatch = useAppDispatch()
+    const projectsState = useAppSelector(state => state.projectsReducer)
 
     const [selectedFile, setSelectedFile] = useState()
     const [isFilePicked, setIsFilePicked] = useState(false)
@@ -36,7 +37,7 @@ function UploadFile(props) {
         if (isFilePicked) {
             const formData = new FormData()
             formData.append('file', selectedFile)
-            formData.append('project_id', props.Project.projectId)
+            formData.append('project_id', projectsState.selectedProject.projectId)
             console.log(dispatch(uploadFilesAction(formData)))
             setOpen(false)
         }
@@ -57,8 +58,6 @@ function UploadFile(props) {
                 <DialogTitle>Upload File</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        {/* {selectedFile &&
-                            `${selectedFile.name}`} */}
                         <span>
                             <input type="file" onChange={handleFileChange} />
                         </span>

@@ -1,12 +1,11 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { Stack, Box, MenuItem, FormControl } from '@mui/material'
+import { Stack, Box, MenuItem, FormControl, Button } from '@mui/material'
 import InputLabel from '@mui/material/InputLabel'
 import Select from '@mui/material/Select'
 import Container from '@mui/material/Container'
 import { useAppSelector, useAppDispatch } from '../hooks/redux-hooks'
-
-import { setProjectsAction, getProjectUsersAction } from '../redux/actions/projects'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import { setProjectsAction } from '../redux/actions/projects'
 import AddProjectDialog from './AddProjectDialog'
 import EditProjectDialog from './EditProjectDialog'
 import DeleteProjectModal from './DeleteProjectDialog'
@@ -17,15 +16,11 @@ import { getProjects, getProjectAccessAction } from '../redux/actions/projects'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-
-
-
-
-export default function ProjectSettings(props) {
+export default function ProjectSettings() {
+    const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const projectsState = useAppSelector(state => state.projectsReducer)
     const selectedProject = projectsState.selectedProject
-    const authState = useAppSelector(state => state.authReducer)
     const [snackbarState, setSnackbarState] = useState(false)
 
     useEffect(() => {
@@ -39,11 +34,13 @@ export default function ProjectSettings(props) {
         projectsState.isDeleteting,
     ])
 
+    // useEffect(() => {
+    //     setSelectedProject(initialProjectsValue);
+    // }, [projectsState.isDeleteting])
+
     useEffect(() => {
         setSnackbarState(true)
     }, [projectsState.message])
-
-    
 
     let menu_items = []
 
@@ -76,6 +73,12 @@ export default function ProjectSettings(props) {
                 sx={{ mt: 2, mb: 4 }}
             >
                 <Stack direction="row" spacing={2} justifyContent="center">
+                    <Button
+                        variant="contained"
+                        sx={{ my: 1 }}
+                        startIcon={<ArrowBackIcon />}
+                        onClick={() => navigate('/')}
+                    ></Button>
                     <Box sx={{ minWidth: 200 }}>
                         <FormControl fullWidth>
                             <InputLabel>Select Project</InputLabel>
@@ -87,6 +90,7 @@ export default function ProjectSettings(props) {
                                               .projectName
                                 }
                                 label="Select Project"
+                                defaultValue = ""
                                 onChange={handleSelectProject}
                             >
                                 {menu_items}
@@ -94,42 +98,30 @@ export default function ProjectSettings(props) {
                         </FormControl>
                     </Box>
 
-                    {selectedProject.projectName &&
-                        // (UserSession.getUserName === selectedProject.userName ||
-                        //     UserSession.isAdmin) && 
-                            (
-                            <EditProjectDialog
-                                projectName={selectedProject.projectName}
-                                projectId={selectedProject.projectId}
-                                // setSelectedProject={setSelectedProject}
-                            ></EditProjectDialog>
-                        )}
-                    {selectedProject.projectName &&
-                        // (UserSession.getUserName === selectedProject.userName ||
-                        //     UserSession.isAdmin) && 
-                            (
-                            <DeleteProjectModal
-                                projectName={selectedProject.projectName}
-                                projectId={selectedProject.projectId}
-                            ></DeleteProjectModal>
-                        )}
+                    {selectedProject.projectName && (
+                        <EditProjectDialog
+                        ></EditProjectDialog>
+                    )}
+                    {selectedProject.projectName && (
+                        <DeleteProjectModal
+                        ></DeleteProjectModal>
+                    )}
                 </Stack>
                 <Stack direction="row">
                     <AddProjectDialog></AddProjectDialog>
                 </Stack>
             </Stack>
-            {projectsState.isLoadingUsers === false && projectsState.selectedProject.projectName &&
+            {projectsState.isLoadingUsers === false &&
+                projectsState.selectedProject.projectName &&
                 projectsState.projectAccessUsers && <ProjectAccessTable />}
 
-
-            {snackbarState && (projectsState.message) && (
-                                <SnackbarNotification
-                                    message={projectsState.message}
-                                    onClose={() => setSnackbarState(false)}
-                                    severity={projectsState.isError ? 'error' : 'success'}
-                                />
-                            )}
+            {snackbarState && projectsState.message && (
+                <SnackbarNotification
+                    message={projectsState.message}
+                    onClose={() => setSnackbarState(false)}
+                    severity={projectsState.isError ? 'error' : 'success'}
+                />
+            )}
         </Container>
     )
 }
-

@@ -10,7 +10,7 @@ import FilterListIcon from '@mui/icons-material/FilterList'
 
 export default function EnhancedTableToolbar(props) {
     const { numSelected } = props
-
+    console.log(numSelected)
     return (
         <Toolbar
             sx={{
