@@ -1,29 +1,28 @@
 import React from 'react'
 import EnhancedTable from './EnhancedTable'
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 
 import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks'
 import { getFilesForProject } from '../redux/actions/files'
 
-function EnhancedTableContainer(props) {
+function EnhancedTableContainer() {
 
-    const { selectedProject } = props
     const dispatch = useAppDispatch()
-
     const filesState = useAppSelector(state => state.filesReducer)
+    const projectsState = useAppSelector(state => state.projectsReducer)
 
     useEffect(() => {
-        dispatch(getFilesForProject(selectedProject.projectId))
+        dispatch(getFilesForProject(projectsState.selectedProject.projectId))
     }, [filesState.isDeleting, filesState.isUploading])
 
     useEffect(() => {
         if (!filesState.isFileActionModalOpen) {
-            dispatch(getFilesForProject(selectedProject.projectId))
+            dispatch(getFilesForProject(projectsState.selectedProject.projectId))
         }
     }, [filesState.isFileActionModalOpen])
 
     if (filesState.isLoading === false && filesState.files) {
-        return <EnhancedTable selectedProject={selectedProject} rows={filesState.files} />
+        return <EnhancedTable rows={filesState.files} />
     }
 }
 
