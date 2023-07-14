@@ -14,23 +14,23 @@ import { register } from '../redux/actions/auth'
 import { useAppDispatch } from '../hooks/redux-hooks'
 import { useNavigate } from 'react-router-dom'
 
-function Copyright(props) {
-    return (
-        <Typography
-            variant="body2"
-            color="text.secondary"
-            align="center"
-            {...props}
-        >
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    )
-}
+// function Copyright(props) {
+//     return (
+//         <Typography
+//             variant="body2"
+//             color="text.secondary"
+//             align="center"
+//             {...props}
+//         >
+//             {'Copyright © '}
+//             <Link color="inherit" href="https://mui.com/">
+//                 Your Website
+//             </Link>{' '}
+//             {new Date().getFullYear()}
+//             {'.'}
+//         </Typography>
+//     )
+// }
 
 const theme = createTheme()
 
@@ -48,7 +48,7 @@ export default function SignUp() {
             username: data.get('username'),
             email: data.get('email'),
             password: data.get('password'),
-            role: 'admin',
+            role: 'user',
         }
         console.log(context)
         dispatch(register(context))
