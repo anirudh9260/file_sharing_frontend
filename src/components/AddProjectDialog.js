@@ -29,6 +29,7 @@ export default function AddProjectDialog() {
         dispatch(addProjectAction({
             "project_name":projectName
         }))
+        
     }
 
     return (
