@@ -7,13 +7,15 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
-import PropTypes from 'prop-types'
-import { useAppDispatch } from '../hooks/redux-hooks'
-import { editProjectsAction } from '../redux/actions/projects'
+import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks'
+import { setProjectsAction, editProjectsAction } from '../redux/actions/projects'
 
-export default function EditProjectDialog(props) {
+
+export default function EditProjectDialog() {
     const dispatch = useAppDispatch()
-    const [newProject, setNewProject] = React.useState(props.projectName)
+    const projectsState = useAppSelector(state => state.projectsReducer)
+
+    const [newProject, setNewProject] = React.useState(projectsState.selectedProject.projectName)
     const [open, setOpen] = React.useState(false)
 
     const handleClickOpen = () => {
@@ -25,15 +27,14 @@ export default function EditProjectDialog(props) {
     }
     
     const handleEdit = () => {
-        let newProjectValues = {
-            projectName: newProject,
-            projectId: props.projectId,
-        }
-
-        props.setSelectedProject(newProjectValues)
-        dispatch(
-            editProjectsAction(props.projectId, { project_name: newProject }),
-        )
+        
+        dispatch(editProjectsAction(projectsState.selectedProject.projectId, { project_name: newProject }))
+        
+        let obj = projectsState.projects.find(
+                o => o.projectId === projectsState.selectedProject.projectId
+            )
+            
+        dispatch(setProjectsAction({ ...obj, projectName: newProject }))
         setOpen(false)
     }
 
@@ -59,7 +60,7 @@ export default function EditProjectDialog(props) {
                         margin="dense"
                         id="name"
                         label="Project Name"
-                        defaultValue={props.projectName}
+                        defaultValue={newProject}
                         fullWidth
                         variant="standard"
                         onChange={v => setNewProject(v.target.value)}
@@ -72,14 +73,4 @@ export default function EditProjectDialog(props) {
             </Dialog>
         </div>
     )
-}
-
-EditProjectDialog.propTypes = {
-    projectName: PropTypes.string.isRequired,
-    projectId: PropTypes.number.isRequired,
-}
-
-EditProjectDialog.defaultProp = {
-    projectName: '',
-    projectId: '',
 }
