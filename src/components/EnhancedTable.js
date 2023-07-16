@@ -47,7 +47,7 @@ function stableSort(array, comparator) {
 }
 
 export default function EnhancedTable(props) {
-    const { selectedProject, rows } = props
+    const { rows } = props
     // console.log("Rows:", rows)
 
     const [order, setOrder] = React.useState('asc')
@@ -56,6 +56,8 @@ export default function EnhancedTable(props) {
     const [page, setPage] = React.useState(0)
     const [dense, setDense] = React.useState(true)
     const [rowsPerPage, setRowsPerPage] = React.useState(10)
+
+    console.log(selected)
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc'
