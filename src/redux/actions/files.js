@@ -87,6 +87,25 @@ export const deleteFilesAction = row => async dispatch => {
     }
 }
 
+export const deleteManyFilesAction = fileIds => async dispatch => {
+    console.log('Calling Action : deleteManyFilesAction()')
+    await dispatch(removeFiles())
+    try {
+        
+        const response = await apiClient.delete(`${FILES_API}`, 
+        {
+            data: {
+                "file_ids":fileIds
+                // ...fileIds,
+            },
+        })
+        console.log('Response from deleteManyFilesAction():', response.data)
+        return dispatch(removeFilesSuccess(response.data))
+    } catch (err) {
+        return dispatch(removeFilesFailed(err))
+    }
+}
+
 export const convertFilesAction = formData => async dispatch => {
     console.log('Calling Action : convertFilesAction()')
     await dispatch(convertFile())

@@ -57,7 +57,6 @@ export default function EnhancedTable(props) {
     const [dense, setDense] = React.useState(true)
     const [rowsPerPage, setRowsPerPage] = React.useState(10)
 
-    console.log(selected)
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc'
@@ -128,7 +127,7 @@ export default function EnhancedTable(props) {
     return (
         <Box sx={{ width: '100%' }}>
             <Paper sx={{ width: '100%', mb: 2 }}>
-                <EnhancedTableToolbar numSelected={selected.length} />
+                <EnhancedTableToolbar numSelected={selected.length} selected={selected} />
                 <TableContainer>
                     <Table
                         sx={{ minWidth: 750 }}

@@ -7,10 +7,13 @@ import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
 import DeleteIcon from '@mui/icons-material/Delete'
 import FilterListIcon from '@mui/icons-material/FilterList'
+import DeleteSelectedFileConfirmDialog from './DeleteSelectedFileConfirmDialog'
+
+
 
 export default function EnhancedTableToolbar(props) {
-    const { numSelected } = props
-    console.log(numSelected)
+    const { numSelected, selected } = props
+
     return (
         <Toolbar
             sx={{
@@ -48,7 +51,8 @@ export default function EnhancedTableToolbar(props) {
             {numSelected > 0 ? (
                 <Tooltip title="Delete">
                     <IconButton>
-                        <DeleteIcon />
+                    <DeleteSelectedFileConfirmDialog selected={selected}/>
+                        {/* <DeleteIcon /> */}
                     </IconButton>
                 </Tooltip>
             ) : (

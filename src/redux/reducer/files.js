@@ -166,6 +166,31 @@ export const filesReducer = createSlice({
                 isError: true,
             }
         },
+        removeMultipleFiles(state, action) {
+            return {
+                ...state,
+                message : "",
+                isDeleting: true,
+            }
+        },
+        removeMultipleFilesSuccess(state, action) {
+
+            // console.log("Action payload:", action)
+            return {
+                ...state,
+                message: 'File Delete Successfull',
+                isDeleting: false,
+                isError: false,
+            }
+        },
+        removeMultipleFilesFailed(state, action) {
+            return {
+                ...state,
+                message: 'File Delete Failed',
+                isDeleting: false,
+                isError: true,
+            }
+        },
 
 
         copyLink(state, action) {
