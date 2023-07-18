@@ -2,6 +2,7 @@ import apiClient from '../../services/apiClient'
 import { PROJECTS_API } from '../../constants'
 import {
     setSelectedProject,
+    setProjectsObject,
 
     fetchProjects,
     fetchProjectsSuccess,
@@ -29,9 +30,9 @@ import {
 } from '../reducer/projects'
 
 
-
 // GET Projects Action => GET
 export const getProjects = () => async dispatch => {
+    console.log('Calling Action : getProjects()')
     await dispatch(fetchProjects())
     try {
         const response = await apiClient.get(PROJECTS_API)
@@ -44,9 +45,15 @@ export const getProjects = () => async dispatch => {
 
 
 // SET SELECTED Project Action => GET
-export const setProjectsAction = project => async dispatch => {
-    console.log('Calling Action : setProjects()')
+export const setSelectedProjectsAction = project => async dispatch => {
+    console.log('Calling Action : setSelectedProjectsAction()')
         return dispatch(setSelectedProject(project))
+}
+
+// SET Projects Objects Empty Action => GET
+export const setProjectsObjectAction = () => async dispatch => {
+    console.log('Calling Action : setProjectsObjectAction()')
+        return dispatch(setProjectsObject())
 }
 
 

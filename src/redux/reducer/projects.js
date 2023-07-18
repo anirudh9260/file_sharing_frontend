@@ -46,6 +46,14 @@ export const projectsReducer = createSlice({
             }
         },
 
+        setProjectsObject(state, action) {
+            // console.log("Action", action)
+            return {
+                ...state,
+                projects: [],
+            }
+        },
+
         fetchProjects(state, action) {
             return {
                 ...state,
@@ -240,6 +248,7 @@ export const projectsReducer = createSlice({
 
 export const {
     setSelectedProject,
+    setProjectsObject,
 
     fetchProjects,
     fetchProjectsSuccess,

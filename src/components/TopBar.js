@@ -17,11 +17,14 @@ import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import Tooltip from '@mui/material/Tooltip'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
-
+import { setSelectedProjectsAction, setProjectsObjectAction } from '../redux/actions/projects'
+import { setFilesEmptyAction } from '../redux/actions/files'
+import { useAppDispatch } from '../hooks/redux-hooks'
 
 const pages = ['Dashboard', 'About', 'Blog']
 
 const TopBar = () => {
+    const dispatch = useAppDispatch()
     const location = useLocation()
     const navigate = useNavigate()
 
@@ -210,6 +213,9 @@ const TopBar = () => {
                                     </MenuItem>
                                     <MenuItem
                                         onClick={() => {
+                                            dispatch(setSelectedProjectsAction({}))
+                                            dispatch(setProjectsObjectAction())
+                                            dispatch(setFilesEmptyAction())
                                             UserSession.removeUser()
                                             navigate('/signin')
                                         }}

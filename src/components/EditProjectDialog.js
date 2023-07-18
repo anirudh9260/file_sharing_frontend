@@ -8,7 +8,7 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks'
-import { setProjectsAction, editProjectsAction } from '../redux/actions/projects'
+import { setSelectedProjectsAction, editProjectsAction } from '../redux/actions/projects'
 
 
 export default function EditProjectDialog() {
@@ -34,7 +34,7 @@ export default function EditProjectDialog() {
                 o => o.projectId === projectsState.selectedProject.projectId
             )
             
-        dispatch(setProjectsAction({ ...obj, projectName: newProject }))
+        dispatch(setSelectedProjectsAction({ ...obj, projectName: newProject }))
         setOpen(false)
     }
 

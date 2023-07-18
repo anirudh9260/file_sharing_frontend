@@ -20,8 +20,8 @@ import {
     convertFileSuccess,
     convertFileFailed,
     fileActionModalOpen,
-    fileActionModalClose
-    
+    fileActionModalClose,
+    setFiles
 } from '../reducer/files'
 
 
@@ -92,11 +92,10 @@ export const deleteManyFilesAction = fileIds => async dispatch => {
     await dispatch(removeFiles())
     try {
         
-        const response = await apiClient.delete(`${FILES_API}`, 
+        const response = await apiClient.delete(`${FILES_API}`,
         {
             data: {
                 "file_ids":fileIds
-                // ...fileIds,
             },
         })
         console.log('Response from deleteManyFilesAction():', response.data)
@@ -125,4 +124,10 @@ export const fileActionModalStatus = status => async dispatch => {
     } else {
         return dispatch(fileActionModalClose())
     }
+}
+
+// SET SELECTED Files Action => GET
+export const setFilesEmptyAction = () => async dispatch => {
+    console.log('Calling Action : setFilesEmptyAction()')
+        return dispatch(setFiles())
 }

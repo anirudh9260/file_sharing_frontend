@@ -26,7 +26,6 @@ export default function SignIn() {
     const dispatch = useAppDispatch()
     const authState = useAppSelector(state => state.authReducer)
 
-
     const [snackbarState, setSnackbarState] = useState(false)
 
     React.useEffect(() => {
@@ -47,6 +46,7 @@ export default function SignIn() {
             password: data.get('password'),
         }
         dispatch(login(context))
+        
     }
 
     return (
@@ -125,13 +125,13 @@ export default function SignIn() {
                 </Box>
                 {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
             </Container>
-            {snackbarState && (authState.message) && (
-                    <SnackbarNotification
-                        message={authState.message}
-                        onClose={() => setSnackbarState(false)}
-                        severity={authState.isError ? 'error' : 'success'}
-                    />
-                )}
+            {snackbarState && authState.message && (
+                <SnackbarNotification
+                    message={authState.message}
+                    onClose={() => setSnackbarState(false)}
+                    severity={authState.isError ? 'error' : 'success'}
+                />
+            )}
         </ThemeProvider>
     )
 }

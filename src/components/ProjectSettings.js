@@ -5,7 +5,7 @@ import Select from '@mui/material/Select'
 import Container from '@mui/material/Container'
 import { useAppSelector, useAppDispatch } from '../hooks/redux-hooks'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import { setProjectsAction } from '../redux/actions/projects'
+import { setSelectedProjectsAction } from '../redux/actions/projects'
 import AddProjectDialog from './AddProjectDialog'
 import EditProjectDialog from './EditProjectDialog'
 import DeleteProjectModal from './DeleteProjectDialog'
@@ -61,7 +61,7 @@ export default function ProjectSettings() {
         let obj = projectsState.projects.find(
             o => o.projectId === item.props.name,
         )
-        dispatch(setProjectsAction({ ...obj }))
+        dispatch(setSelectedProjectsAction({ ...obj }))
         dispatch(getProjectAccessAction(obj.projectId))
     }
 

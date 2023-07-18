@@ -5,7 +5,7 @@ import Select from '@mui/material/Select'
 import AddProjectDialog from './AddProjectDialog'
 import UserSession from '../services/auth'
 import { getFilesForProject } from '../redux/actions/files'
-import { setProjectsAction } from '../redux/actions/projects'
+import { setSelectedProjectsAction } from '../redux/actions/projects'
 import { useAppSelector, useAppDispatch } from '../hooks/redux-hooks'
 import { useNavigate } from 'react-router-dom'
 import UploadFile from './UploadFile'
@@ -36,7 +36,7 @@ export default function ProjectBar() {
         let obj = projectsState.projects.find(
             o => o.projectId === item.props.name,
         )
-        dispatch(setProjectsAction({ ...obj }))
+        dispatch(setSelectedProjectsAction({ ...obj }))
         dispatch(getFilesForProject(item.props.name))
     }
 
