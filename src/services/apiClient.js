@@ -11,6 +11,14 @@ const apiClient = axios.create({
     }
 })
 
+
+  apiClient.interceptors.request.use((req) => {
+    if(UserSession.getToken()) {
+        req.headers.Authorization = `Bearer ${UserSession.getToken()}`
+    }
+    return req;
+})
+
 // apiClient.interceptors.response.use(
 //     function (response) {
 //         return response

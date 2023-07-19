@@ -21,7 +21,6 @@ export const authReducer = createSlice({
             }
         },
         fetchLoginSuccess(state, action) {
-            console.log(action.payload)
             UserSession.setUser(action.payload)
             return {
                 ...state,
