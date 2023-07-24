@@ -1,5 +1,5 @@
 import apiClient from '../../services/apiClient'
-import { CHANGE_PASSWORD, LOGIN_API, REGISTER_API, USERS_API } from '../../constants'
+import { CHANGE_PASSWORD, LOGIN_API, REGISTER_API, USERS_API, LOGOUT_API } from '../../constants'
 import {
     fetchLogin,
     fetchLoginSuccess,
@@ -12,7 +12,10 @@ import {
     passwordResetFailed,
     fetchUsers,
     fetchUsersSuccess,
-    fetchUsersFailed
+    fetchUsersFailed,
+    logout,
+    logoutSuccess,
+    logoutFailed
 } from '../reducer/auth'
 
 function jwtDecode(t) {
@@ -74,5 +77,16 @@ export const getAllUsersAction = () => async dispatch => {
         return dispatch(fetchUsersSuccess(response.data))
     } catch (err) {
         return dispatch(fetchUsersFailed(err))
+    }
+}
+
+export const logoutAction = () => async dispatch => {
+    console.log('Calling Action : logout()')
+    await dispatch(logout())
+    try {
+        const response = await apiClient.delete(`${LOGOUT_API}`)
+        return dispatch(logoutSuccess(response.data))
+    } catch (err) {
+        return dispatch(logoutFailed(err))
     }
 }
