@@ -13,7 +13,7 @@ function EnhancedTableContainer() {
 
     useEffect(() => {
         dispatch(getFilesForProject(projectsState.selectedProject.projectId))
-    }, [filesState.isDeleting, filesState.isUploading])
+    }, [projectsState.selectedProject, filesState.isDeleting, filesState.isUploading])
 
     useEffect(() => {
         if (!filesState.isFileActionModalOpen) {
