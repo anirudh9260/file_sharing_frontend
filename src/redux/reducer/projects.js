@@ -71,9 +71,14 @@ export const projectsReducer = createSlice({
                     ),
                 )
             }
+            let selectedProject = {}
+            if ( row_data && row_data.length > 0 ){
+                selectedProject = row_data[0]
+            }
             return {
                 ...state,
                 isLoading: false,
+                selectedProject : selectedProject,
                 projects: row_data,
             }
         },
