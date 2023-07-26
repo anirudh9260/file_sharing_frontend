@@ -8,20 +8,15 @@ import UserSession from './services/auth'
 import About from './components/About'
 import Profile from './components/Profile'
 import ProjectSettings from './components/ProjectSettings'
-
+import PageNotFound from './components/PageNotFound'
 
 function App() {
-    const onDelete = () => {
-        console.log('onDelete Clicked')
-    }
-
-    let projects = ['a', 'b', 'c']
-
     return (
         <BrowserRouter>
             <TopBar />
             <div style={{ marginTop: 10 }}>
                 <Routes>
+                <Route path='*' element={<PageNotFound />} />
                     {/* <Route
                         exact
                         path="/"
@@ -35,23 +30,10 @@ function App() {
                         }}
                     /> */}
 
-                    <Route
-                        path="/"
-                        element={
-                            UserSession.isAuthenticated() ? (
-                                <Home />
-                            ) : (
-                                <SignIn />
-                            )
-                        }
-                    />
-
+                    <Route path="/dash" element={ UserSession.isAuthenticated() ? (<Home />):(<SignIn />)}/>
                     <Route path="/home" element={<Home />}></Route>
                     <Route path="/signin" element={<SignIn />}></Route>
-                    <Route
-                        path="/settings"
-                        element={<ProjectSettings />}
-                    ></Route>
+                    <Route path="/settings" element={<ProjectSettings />}></Route>
                     <Route path="/signup" element={<SignUp />}></Route>
                     <Route path="/about" element={<About />}></Route>
                     <Route path="/profile" element={<Profile />}></Route>

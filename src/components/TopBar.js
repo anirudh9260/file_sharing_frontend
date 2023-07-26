@@ -25,7 +25,7 @@ import { logoutAction } from '../redux/actions/auth'
 const pages = [
     {
         label: 'Dashboard',
-        route: '/home',
+        route: '/dash',
     },
     {
         label: 'About',
@@ -144,7 +144,7 @@ const TopBar = () => {
                     >
                         {UserSession.isAuthenticated() && (
                             <Button
-                                href="/"
+                                href="/dash"
                                 key="Home"
                                 onClick={handleCloseNavMenu}
                                 sx={{ my: 2, color: 'white', display: 'block' }}

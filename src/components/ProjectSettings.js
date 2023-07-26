@@ -77,7 +77,7 @@ export default function ProjectSettings() {
                         variant="contained"
                         sx={{ my: 1 }}
                         startIcon={<ArrowBackIcon />}
-                        onClick={() => navigate('/')}
+                        onClick={() => navigate('/dash')}
                     ></Button>
                     <Box sx={{ minWidth: 200 }}>
                         <FormControl fullWidth>

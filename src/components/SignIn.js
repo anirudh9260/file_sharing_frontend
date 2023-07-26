@@ -30,7 +30,7 @@ export default function SignIn() {
 
     React.useEffect(() => {
         if (UserSession.isAuthenticated()) {
-            navigate('/')
+            navigate('/dash')
         }
     }, [UserSession.isAuthenticated()])
 

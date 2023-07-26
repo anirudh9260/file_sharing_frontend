@@ -19,11 +19,11 @@ const Home = () => {
     const projectsState = useAppSelector(state => state.projectsReducer)
     const filesState = useAppSelector(state => state.filesReducer)
     
-    // useEffect(() => {
-    //     if (!UserSession.isAuthenticated()) {
-    //         navigate('/signin')
-    //     }
-    // }, [])
+    useEffect(() => {
+        if (!UserSession.isAuthenticated()) {
+            navigate('/signin')
+        }
+    }, [])
 
     useEffect(() => {
         
