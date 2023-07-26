@@ -18,6 +18,8 @@ import {
     logoutFailed
 } from '../reducer/auth'
 
+
+
 function jwtDecode(t) {
     let token = {};
     token.raw = t;
