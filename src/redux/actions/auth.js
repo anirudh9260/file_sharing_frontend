@@ -85,8 +85,8 @@ export const logoutAction = () => async dispatch => {
     await dispatch(logout())
     try {
         const response = await apiClient.delete(`${LOGOUT_API}`)
-        return dispatch(logoutSuccess(response.data))
+        return await dispatch(logoutSuccess(response.data))
     } catch (err) {
-        return dispatch(logoutFailed(err))
+        return await dispatch(logoutFailed(err))
     }
 }

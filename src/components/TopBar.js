@@ -20,32 +20,42 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload'
 import { setSelectedProjectsAction, setProjectsObjectAction } from '../redux/actions/projects'
 import { setFilesEmptyAction } from '../redux/actions/files'
 import { useAppDispatch } from '../hooks/redux-hooks'
+import { logoutAction } from '../redux/actions/auth'
 
-const pages = ['Dashboard', 'About', 'Blog']
+const pages = [
+    {
+        label: 'Dashboard',
+        route: '/home',
+    },
+    {
+        label: 'About',
+        route: '/about',
+    },
+]
 
 const TopBar = () => {
-    const dispatch = useAppDispatch()
     const location = useLocation()
     const navigate = useNavigate()
+    const dispatch = useAppDispatch()
 
     const [anchorElNav, setAnchorElNav] = React.useState(null)
     const [anchorElUser, setAnchorElUser] = React.useState(null)
 
     const handleOpenNavMenu = event => {
         setAnchorElNav(event.currentTarget)
-    }
-    
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null)
-    }
+    };
 
     const handleOpenUserMenu = event => {
         setAnchorElUser(event.currentTarget)
-    }
+    };
+
+    const handleCloseNavMenu = () => {
+        setAnchorElNav(null)
+    };
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null)
-    }
+    };
 
     return (
         <AppBar position="static">
@@ -86,19 +96,27 @@ const TopBar = () => {
                                 display: { xs: 'block', md: 'none' },
                             }}
                         >
-                            {UserSession.isAuthenticated() && (
+                            {/* {UserSession.isAuthenticated() && (
                                 <MenuItem onClick={handleCloseNavMenu}>
                                     <Typography textAlign="center">
                                         Home
                                     </Typography>
                                 </MenuItem>
-                            )}
+                            )} */}
 
-                            <MenuItem onClick={handleCloseNavMenu}>
+                            {/* <MenuItem onClick={handleCloseNavMenu}>
                                 <Typography textAlign="center">
                                     About
                                 </Typography>
-                            </MenuItem>
+                            </MenuItem> */}
+
+                            {UserSession.isAuthenticated() && (
+                                pages.map((page, index) => (
+                                <MenuItem key={index} onClick={()=> { navigate(page.route); handleCloseNavMenu}}>
+                                <Typography textAlign='center'>{page.label}</Typography>
+                                </MenuItem>
+                                ))
+                            )}
                         </Menu>
                     </Box>
 
@@ -213,11 +231,13 @@ const TopBar = () => {
                                     </MenuItem>
                                     <MenuItem
                                         onClick={() => {
-                                            dispatch(setSelectedProjectsAction({}))
+                                            dispatch(logoutAction())
+                                            navigate('/signin')
+                                            dispatch(
+                                                setSelectedProjectsAction({})
+                                            )
                                             dispatch(setProjectsObjectAction())
                                             dispatch(setFilesEmptyAction())
-                                            UserSession.removeUser()
-                                            navigate('/signin')
                                         }}
                                     >
                                         Logout

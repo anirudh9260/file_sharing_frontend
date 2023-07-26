@@ -25,13 +25,13 @@ export default function ProjectSettings() {
 
     useEffect(() => {
         if (UserSession.isAuthenticated()) {
+            console.log("Project Setting", UserSession.isAuthenticated())
             dispatch(getProjects())
         }
     }, [
-        UserSession.isAuthenticated(),
-        projectsState.isAdding,
-        projectsState.isUpdating,
-        projectsState.isDeleteting,
+        // projectsState.isAdding,
+        // projectsState.isUpdating,
+        // projectsState.isDeleteting,
     ])
 
     // useEffect(() => {
