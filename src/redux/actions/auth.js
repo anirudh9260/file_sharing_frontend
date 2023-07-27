@@ -74,6 +74,7 @@ export const getAllUsersAction = () => async dispatch => {
     await dispatch(fetchUsers())
     try {
         const response = await apiClient.get(`${USERS_API}/emails`)
+        
         return dispatch(fetchUsersSuccess(response.data))
     } catch (err) {
         return dispatch(fetchUsersFailed(err))
@@ -85,8 +86,11 @@ export const logoutAction = () => async dispatch => {
     await dispatch(logout())
     try {
         const response = await apiClient.delete(`${LOGOUT_API}`)
-        return await dispatch(logoutSuccess(response.data))
+        if (response.status === 200) {
+            return dispatch(logoutSuccess(response))
+        }
+        return dispatch(logoutFailed(response))
     } catch (err) {
-        return await dispatch(logoutFailed(err))
+        return dispatch(logoutFailed(err))
     }
 }

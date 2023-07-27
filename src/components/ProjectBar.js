@@ -37,7 +37,7 @@ export default function ProjectBar() {
             o => o.projectId === item.props.name,
         )
         dispatch(setSelectedProjectsAction({ ...obj }))
-        dispatch(getFilesForProject(item.props.name))
+        // dispatch(getFilesForProject(item.props.name))
     }
 
     return (

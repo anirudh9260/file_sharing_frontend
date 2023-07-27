@@ -28,15 +28,19 @@ export default function SignIn() {
 
     const [snackbarState, setSnackbarState] = useState(false)
 
+
     React.useEffect(() => {
         if (UserSession.isAuthenticated()) {
             navigate('/dash')
         }
     }, [UserSession.isAuthenticated()])
 
+    
+
     useEffect(() => {
         setSnackbarState(true)
     }, [authState.message])
+
 
     const handleSubmit = event => {
         event.preventDefault()

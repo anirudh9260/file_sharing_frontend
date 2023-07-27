@@ -1,8 +1,11 @@
 import React from 'react'
+
+import { Typography } from '@mui/material'
+
 const About = () => {
     return (
         <>
-            <h1>About</h1>
+            <Typography variant="h5" textAlign="center">About Section</Typography>
         </>
     )
 }

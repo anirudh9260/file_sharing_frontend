@@ -12,6 +12,7 @@ import {
     setSelectedProjectsAction,
     deleteProjectAction,
 } from '../../redux/actions/projects'
+import { setFilesEmptyAction } from '../../redux/actions/files'
 
 export default function DeleteProjectDialog() {
     const dispatch = useAppDispatch()
@@ -29,6 +30,7 @@ export default function DeleteProjectDialog() {
     const handleDelete = () => {
         dispatch(deleteProjectAction(projectsState.selectedProject.projectId))
         dispatch(setSelectedProjectsAction({}))
+        dispatch(setFilesEmptyAction())
         setOpen(false)
     }
 

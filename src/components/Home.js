@@ -27,11 +27,12 @@ const Home = () => {
 
 
     useEffect(() => {
-        if (UserSession.isAuthenticated()){
-            console.log("home", UserSession.isAuthenticated())
-        dispatch(getProjects())}
-    }, [projectsState.isAdding, projectsState.isUpdating, projectsState.isDeleteting]
-        )
+        if (UserSession.isAuthenticated()) {
+            dispatch(getProjects())
+        }
+    }, [
+        projectsState.isAdding
+    ])
     
 
     useEffect(() => {

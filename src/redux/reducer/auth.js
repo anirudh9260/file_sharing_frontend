@@ -6,7 +6,8 @@ const initialState = {
     users: [],
     message : "",
     isError: false,
-    isLoadingUsers : false
+    isLoadingUsers : false,
+
 }
 
 export const authReducer = createSlice({
@@ -32,6 +33,7 @@ export const authReducer = createSlice({
                 ...state,
                 message: action.payload.response.data['error'],
                 isLoading: false,
+                
                 isError: true,
             }
         },
@@ -120,8 +122,6 @@ export const authReducer = createSlice({
             }
         },
         logoutFailed(state, action) {
-            UserSession.removeUser()
-            console.log(action.payload.response.data)
             return {
                 ...state,
                 isLogout: false,

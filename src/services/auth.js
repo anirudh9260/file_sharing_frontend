@@ -32,19 +32,19 @@ const removeUser = () => {
 }
 
 const getUserId = () => {
-    return JSON.parse(localStorage.getItem('user')).userId
+    return JSON.parse(localStorage.getItem('user'))?.userId
 }
 
 const getUserName = () => {
-    return JSON.parse(localStorage.getItem('user')).username
+    return JSON.parse(localStorage.getItem('user'))?.username
 }
 
 const getUserRole = () => {
-    return JSON.parse(localStorage.getItem('user')).role
+    return JSON.parse(localStorage.getItem('user'))?.role
 }
 
 const isAdmin = () => {
-    return JSON.parse(localStorage.getItem('user')).role === 'admin'
+    return JSON.parse(localStorage.getItem('user'))?.role === 'admin'
 }
 
 const isAuthenticated = () => {

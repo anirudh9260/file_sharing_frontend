@@ -1,26 +1,31 @@
 import * as React from 'react'
-import AppBar from '@mui/material/AppBar'
-import Button from '@mui/material/Button'
-import Toolbar from '@mui/material/Toolbar'
-import Typography from '@mui/material/Typography'
-import UserSession from '../services/auth'
 import { useNavigate } from 'react-router-dom'
-import IconButton from '@mui/material/IconButton'
+import { useLocation } from 'react-router-dom'
+
+import CloudUploadIcon from '@mui/icons-material/CloudUpload'
 import MenuIcon from '@mui/icons-material/Menu'
+import NotificationsIcon from '@mui/icons-material/Notifications'
+import AppBar from '@mui/material/AppBar'
+import Avatar from '@mui/material/Avatar'
+import Badge from '@mui/material/Badge'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Container from '@mui/material/Container'
+import IconButton from '@mui/material/IconButton'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
-import NotificationsIcon from '@mui/icons-material/Notifications'
-import Badge from '@mui/material/Badge'
-import { useLocation } from 'react-router-dom'
-import Avatar from '@mui/material/Avatar'
-import Box from '@mui/material/Box'
-import Container from '@mui/material/Container'
+import Toolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
-import CloudUploadIcon from '@mui/icons-material/CloudUpload'
-import { setSelectedProjectsAction, setProjectsObjectAction } from '../redux/actions/projects'
-import { setFilesEmptyAction } from '../redux/actions/files'
+import Typography from '@mui/material/Typography'
+
 import { useAppDispatch } from '../hooks/redux-hooks'
 import { logoutAction } from '../redux/actions/auth'
+import { setFilesEmptyAction } from '../redux/actions/files'
+import {
+    setSelectedProjectsAction,
+    setProjectsObjectAction,
+} from '../redux/actions/projects'
+import UserSession from '../services/auth'
 
 const pages = [
     {
@@ -43,19 +48,32 @@ const TopBar = () => {
 
     const handleOpenNavMenu = event => {
         setAnchorElNav(event.currentTarget)
-    };
+    }
 
     const handleOpenUserMenu = event => {
         setAnchorElUser(event.currentTarget)
-    };
+    }
 
     const handleCloseNavMenu = () => {
         setAnchorElNav(null)
-    };
+    }
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null)
-    };
+    }
+
+    const logOutUser = () => {
+        
+        dispatch(logoutAction()).then((res) => {
+            if (res && res?.payload && res?.payload?.status == 200) {
+                dispatch(setSelectedProjectsAction({}))
+                dispatch(setProjectsObjectAction())
+                dispatch(setFilesEmptyAction())
+                handleCloseUserMenu()
+                navigate('/signin')
+            }
+        })
+    }
 
     return (
         <AppBar position="static">
@@ -110,13 +128,20 @@ const TopBar = () => {
                                 </Typography>
                             </MenuItem> */}
 
-                            {UserSession.isAuthenticated() && (
+                            {UserSession.isAuthenticated() &&
                                 pages.map((page, index) => (
-                                <MenuItem key={index} onClick={()=> { navigate(page.route); handleCloseNavMenu}}>
-                                <Typography textAlign='center'>{page.label}</Typography>
-                                </MenuItem>
-                                ))
-                            )}
+                                    <MenuItem
+                                        key={index}
+                                        onClick={() => {
+                                            navigate(page.route)
+                                            handleCloseNavMenu
+                                        }}
+                                    >
+                                        <Typography textAlign="center">
+                                            {page.label}
+                                        </Typography>
+                                    </MenuItem>
+                                ))}
                         </Menu>
                     </Box>
 
@@ -203,7 +228,9 @@ const TopBar = () => {
                                         color: 'inherit',
                                     }}
                                 >
-                                    {UserSession.getUserName()}
+                                    {UserSession.isAuthenticated()
+                                        ? UserSession.getUserName()
+                                        : ''}
                                 </Typography>
 
                                 <Menu
@@ -225,20 +252,21 @@ const TopBar = () => {
                                     <MenuItem
                                         onClick={() => {
                                             navigate('/profile')
+                                            handleCloseUserMenu()
                                         }}
                                     >
-                                        Profile
+                                        <Typography textAlign="center">
+                                            Profile
+                                        </Typography>
                                     </MenuItem>
                                     <MenuItem
                                         onClick={() => {
-                                            dispatch(logoutAction())
-                                            navigate('/signin')
-                                            // dispatch(setSelectedProjectsAction({}))
-                                            // dispatch(setProjectsObjectAction())
-                                            // dispatch(setFilesEmptyAction())
+                                            logOutUser()
                                         }}
                                     >
-                                        Logout
+                                        <Typography textAlign="center">
+                                            Logout
+                                        </Typography>
                                     </MenuItem>
                                 </Menu>
                             </Box>

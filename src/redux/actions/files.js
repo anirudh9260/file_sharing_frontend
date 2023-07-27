@@ -32,7 +32,7 @@ export const getFilesForProject = projectId => async dispatch => {
     await dispatch(fetchFiles())
     try {
         const response = await apiClient.get(`${FILES_API}/${projectId}`)
-        console.log('Response from getFilesForProject():', response.data)
+        // console.log('Response from getFilesForProject():', response.data)
         return dispatch(fetchFilesSuccess(response.data))
     } catch (err) {
         return dispatch(fetchFilesFailed(err))
