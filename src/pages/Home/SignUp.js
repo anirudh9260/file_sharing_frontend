@@ -1,42 +1,35 @@
 import * as React from 'react'
-import Avatar from '@mui/material/Avatar'
-import Button from '@mui/material/Button'
-import CssBaseline from '@mui/material/CssBaseline'
-import TextField from '@mui/material/TextField'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import Grid from '@mui/material/Grid'
-import Box from '@mui/material/Box'
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
-import Typography from '@mui/material/Typography'
-import Container from '@mui/material/Container'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { register } from '../../redux/actions/auth'
-import { useAppDispatch } from '../../hooks/redux-hooks'
 import { useNavigate } from 'react-router-dom'
 
-// function Copyright(props) {
-//     return (
-//         <Typography
-//             variant="body2"
-//             color="text.secondary"
-//             align="center"
-//             {...props}
-//         >
-//             {'Copyright © '}
-//             <Link color="inherit" href="https://mui.com/">
-//                 Your Website
-//             </Link>{' '}
-//             {new Date().getFullYear()}
-//             {'.'}
-//         </Typography>
-//     )
-// }
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
+import Avatar from '@mui/material/Avatar'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Container from '@mui/material/Container'
+import CssBaseline from '@mui/material/CssBaseline'
+import Grid from '@mui/material/Grid'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
+
+import SnackbarNotification from '../../components/SnackbarNotification'
+import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks'
+import { register } from '../../redux/actions/auth'
 
 const theme = createTheme()
 
 export default function SignUp() {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
+    const authState = useAppSelector(state => state.authReducer)
+
+    const [snackbarState, setSnackbarState] = useState(false)
+
+    useEffect(() => {
+        setSnackbarState(true)
+    }, [authState.message])
 
     const handleSubmit = event => {
         event.preventDefault()
@@ -147,8 +140,14 @@ export default function SignUp() {
                         </Grid>
                     </Box>
                 </Box>
-                {/* <Copyright sx={{ mt: 5 }} /> */}
             </Container>
+            {snackbarState && authState.message && (
+                <SnackbarNotification
+                    message={authState.message}
+                    onClose={() => setSnackbarState(false)}
+                    severity={authState.isError ? 'error' : 'success'}
+                />
+            )}
         </ThemeProvider>
     )
 }

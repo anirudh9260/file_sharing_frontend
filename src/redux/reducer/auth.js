@@ -39,6 +39,7 @@ export const authReducer = createSlice({
         fetchRegister(state, action) {
             return {
                 ...state,
+                message:"",
                 isLoading: true,
             }
         },
@@ -50,10 +51,12 @@ export const authReducer = createSlice({
             }
         },
         fetchRegisterFailed(state, action) {
+            console.log(action.payload.response)
             return {
                 ...state,
-                // TODO: add api error response
+                message: action.payload.response.data["error"],
                 isLoading: false,
+                isError: true
             }
         },
         passwordReset(state, action) {
