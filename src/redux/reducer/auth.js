@@ -4,10 +4,9 @@ import UserSession from '../../services/auth'
 const initialState = {
     access_token: null,
     users: [],
-    message : "",
+    message: '',
     isError: false,
-    isLoadingUsers : false,
-
+    isLoadingUsers: false,
 }
 
 export const authReducer = createSlice({
@@ -33,7 +32,7 @@ export const authReducer = createSlice({
                 ...state,
                 message: action.payload.response.data['error'],
                 isLoading: false,
-                
+
                 isError: true,
             }
         },
@@ -53,6 +52,7 @@ export const authReducer = createSlice({
         fetchRegisterFailed(state, action) {
             return {
                 ...state,
+                // TODO: add api error response
                 isLoading: false,
             }
         },
@@ -147,7 +147,7 @@ export const {
     fetchUsersFailed,
     logout,
     logoutSuccess,
-    logoutFailed
+    logoutFailed,
 } = authReducer.actions
 
 export default authReducer.reducer

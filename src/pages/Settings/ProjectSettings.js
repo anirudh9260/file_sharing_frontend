@@ -42,25 +42,25 @@ export default function ProjectSettings() {
         setSnackbarState(true)
     }, [projectsState.message])
 
-    let menu_items = []
+    // let menu_items = []
 
-    if (projectsState && !projectsState.isLoading) {
-        menu_items = projectsState.projects.map(item => {
-            return (
-                <MenuItem
-                    name={item.projectId}
-                    key={item.projectId}
-                    value={item.projectName}
-                >
-                    {item.projectName}
-                </MenuItem>
-            )
-        })
-    }
+    // if (projectsState && !projectsState.isLoading) {
+    //     menu_items = projectsState.projects.map(item => {
+    //         return (
+    //             <MenuItem
+    //                 name={item.projectId}
+    //                 key={item.projectId}
+    //                 value={item.projectName}
+    //             >
+    //                 {item.projectName}
+    //             </MenuItem>
+    //         )
+    //     })
+    // }
 
-    const handleSelectProject = (event, item) => {
+    const handleSelectProject = event => {
         let obj = projectsState.projects.find(
-            o => o.projectId === item.props.name,
+            o => o.projectId === event.target.value,
         )
         dispatch(setSelectedProjectsAction({ ...obj }))
         dispatch(getProjectAccessAction(obj.projectId))
@@ -85,15 +85,23 @@ export default function ProjectSettings() {
                             <InputLabel>Select Project</InputLabel>
                             <Select
                                 value={
-                                    (!projectsState.selectedProject.projectName)
-                                        ? ''
-                                        : projectsState.selectedProject
-                                              .projectName
+                                    projectsState.selectedProject?.projectId
+                                        ? projectsState.selectedProject
+                                              ?.projectId
+                                        : ''
                                 }
                                 label="Select Project"
+                                defaultValue=""
                                 onChange={handleSelectProject}
                             >
-                                {menu_items}
+                                {projectsState.projects.map(item => (
+                                    <MenuItem
+                                        key={item.projectId}
+                                        value={item.projectId}
+                                    >
+                                        {item.projectName}
+                                    </MenuItem>
+                                ))}
                             </Select>
                         </FormControl>
                     </Box>
