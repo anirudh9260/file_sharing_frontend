@@ -1,5 +1,12 @@
 import React from 'react'
-import { Stack, Box, Button, MenuItem, FormControl, Typography } from '@mui/material'
+import {
+    Stack,
+    Box,
+    Button,
+    MenuItem,
+    FormControl,
+    Typography,
+} from '@mui/material'
 import InputLabel from '@mui/material/InputLabel'
 import Select from '@mui/material/Select'
 import AddProjectDialog from './AddProjectDialog'
@@ -16,28 +23,26 @@ export default function ProjectBar() {
 
     const projectsState = useAppSelector(state => state.projectsReducer)
 
-    let menu_items = []
+    // let menu_items = []
 
-    if (projectsState && !projectsState.isLoading) {
-        menu_items = projectsState.projects.map(item => {
-            return (
-                <MenuItem
-                    name={item.projectId}
-                    key={item.projectId}
-                    value={item.projectName}
-                >
-                    {item.projectName}
-                </MenuItem>
-            )
-        })
-    }
-
-    const handleSelectProject = (event, item) => {
+    // if (projectsState && !projectsState.isLoading) {
+    //     menu_items = projectsState.projects.map(item => {
+    //         return (
+    //             <MenuItem
+    //                 name={item.projectId}
+    //                 key={item.projectId}
+    //                 value={item.projectName}
+    //             >
+    //                 {item.projectName}
+    //             </MenuItem>
+    //         )
+    //     })
+    // }
+    const handleSelectProject = event => {
         let obj = projectsState.projects.find(
-            o => o.projectId === item.props.name,
+            o => o.projectId === event.target.value,
         )
         dispatch(setSelectedProjectsAction({ ...obj }))
-        // dispatch(getFilesForProject(item.props.name))
     }
 
     return (
@@ -53,16 +58,23 @@ export default function ProjectBar() {
                             <InputLabel>Select Project</InputLabel>
                             <Select
                                 value={
-                                    !projectsState.selectedProject.projectName 
-                                        ? ''
-                                        : projectsState.selectedProject
-                                              .projectName
+                                    projectsState.selectedProject?.projectId
+                                        ? projectsState.selectedProject
+                                              ?.projectId
+                                        : ''
                                 }
-                                defaultValue = ""
                                 label="Select Project"
+                                defaultValue=""
                                 onChange={handleSelectProject}
                             >
-                                {menu_items}
+                                {projectsState.projects.map(item => (
+                                    <MenuItem
+                                        key={item.projectId}
+                                        value={item.projectId}
+                                    >
+                                        {item.projectName}
+                                    </MenuItem>
+                                ))}
                             </Select>
                         </FormControl>
                     </Box>
@@ -89,18 +101,18 @@ export default function ProjectBar() {
             </Stack>
 
             <Stack direction="row" justifyContent="space-between">
-            <Typography sx={{ flex: '1 1 100%' }} variant="h5">
-                {!projectsState.selectedProject.projectName
-                    ? 'Please select a project'
-                    : projectsState.selectedProject.projectName + ' Files'}
-            </Typography>
+                <Typography sx={{ flex: '1 1 100%' }} variant="h5">
+                    {!projectsState.selectedProject.projectName
+                        ? 'Please select a project'
+                        : projectsState.selectedProject.projectName + ' Files'}
+                </Typography>
 
-            {projectsState.selectedProject.projectName && (
-                <UploadFile
-                    Project={projectsState.selectedProject}
-                ></UploadFile>
-            )}
-        </Stack>
+                {projectsState.selectedProject.projectName && (
+                    <UploadFile
+                        Project={projectsState.selectedProject}
+                    ></UploadFile>
+                )}
+            </Stack>
         </div>
     )
 }

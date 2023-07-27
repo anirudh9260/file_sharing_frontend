@@ -30,6 +30,16 @@ function App() {
                         }}
                     /> */}
 
+                    {/* <Route
+                        path="/"
+                        element={
+                            UserSession.isAuthenticated() ? (
+                                <Home />
+                            ) : (
+                                <SignIn />
+                            )
+                        }
+                    /> */}
                     <Route
                         path="/"
                         element={
@@ -40,17 +50,8 @@ function App() {
                             )
                         }
                     />
-                    <Route
-                        path="/dash"
-                        element={
-                            UserSession.isAuthenticated() ? (
-                                <Home />
-                            ) : (
-                                <SignIn />
-                            )
-                        }
-                    />
-                    {/* <Route path="/home" element={<Home />}></Route> */}
+
+                    <Route path="/dash" element={<Home />}></Route>
                     <Route path="/signin" element={<SignIn />}></Route>
                     <Route
                         path="/settings"
