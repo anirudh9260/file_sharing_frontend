@@ -11,11 +11,11 @@ import Paper from '@mui/material/Paper'
 import Checkbox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Switch from '@mui/material/Switch'
-import RowButton from './RowButton'
+import RowButton from '../../components/RowButton'
 import PropTypes from 'prop-types'
 import EnhancedTableHead from './EnhancedTableHead'
 import EnhancedTableToolbar from './EnhancedTableToolbar'
-import FileActionModal from './FileActionModal'
+import FileActionModal from '../../components/FileActionModal'
 
 
 function descendingComparator(a, b, orderBy) {

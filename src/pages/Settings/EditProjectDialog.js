@@ -7,8 +7,8 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
-import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks'
-import { setSelectedProjectsAction, editProjectsAction } from '../redux/actions/projects'
+import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks'
+import { setSelectedProjectsAction, editProjectsAction } from '../../redux/actions/projects'
 
 
 export default function EditProjectDialog() {

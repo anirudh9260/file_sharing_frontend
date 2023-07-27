@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
 import DeleteIcon from '@mui/icons-material/Delete'
 import FilterListIcon from '@mui/icons-material/FilterList'
-import DeleteSelectedFileConfirmDialog from './DeleteSelectedFileConfirmDialog'
+import DeleteSelectedFileConfirmDialog from '../../components/DeleteSelectedFileConfirmDialog'
 
 
 

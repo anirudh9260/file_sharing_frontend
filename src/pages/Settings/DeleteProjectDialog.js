@@ -7,11 +7,11 @@ import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 
 import { Box } from '@mui/material'
-import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks'
+import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks'
 import {
     setSelectedProjectsAction,
     deleteProjectAction,
-} from '../redux/actions/projects'
+} from '../../redux/actions/projects'
 
 export default function DeleteProjectDialog() {
     const dispatch = useAppDispatch()

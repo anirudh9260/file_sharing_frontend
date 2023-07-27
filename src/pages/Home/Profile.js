@@ -6,10 +6,10 @@ import CardContent from '@mui/material/CardContent'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import { CardMedia, TextField } from '@mui/material'
-import UserSession from '../services/auth'
-import SnackbarNotification from './SnackbarNotification'
-import { passwordResetAction } from '../redux/actions/auth'
-import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks'
+import UserSession from '../../services/auth'
+import SnackbarNotification from '../../components/SnackbarNotification'
+import { passwordResetAction } from '../../redux/actions/auth'
+import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks'
 
 const Profile = () => {
     const dispatch = useAppDispatch()

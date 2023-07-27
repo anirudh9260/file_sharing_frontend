@@ -233,11 +233,9 @@ const TopBar = () => {
                                         onClick={() => {
                                             dispatch(logoutAction())
                                             navigate('/signin')
-                                            dispatch(
-                                                setSelectedProjectsAction({})
-                                            )
-                                            dispatch(setProjectsObjectAction())
-                                            dispatch(setFilesEmptyAction())
+                                            // dispatch(setSelectedProjectsAction({}))
+                                            // dispatch(setProjectsObjectAction())
+                                            // dispatch(setFilesEmptyAction())
                                         }}
                                     >
                                         Logout

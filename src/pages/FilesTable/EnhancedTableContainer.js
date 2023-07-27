@@ -2,8 +2,8 @@ import React from 'react'
 import EnhancedTable from './EnhancedTable'
 import { useEffect } from 'react'
 
-import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks'
-import { getFilesForProject } from '../redux/actions/files'
+import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks'
+import { getFilesForProject } from '../../redux/actions/files'
 
 function EnhancedTableContainer() {
 

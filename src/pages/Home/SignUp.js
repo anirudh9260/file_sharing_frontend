@@ -10,8 +10,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { register } from '../redux/actions/auth'
-import { useAppDispatch } from '../hooks/redux-hooks'
+import { register } from '../../redux/actions/auth'
+import { useAppDispatch } from '../../hooks/redux-hooks'
 import { useNavigate } from 'react-router-dom'
 
 // function Copyright(props) {

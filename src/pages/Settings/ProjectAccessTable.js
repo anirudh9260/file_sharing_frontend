@@ -8,15 +8,15 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import DeleteIcon from '@mui/icons-material/Delete'
-import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks'
+import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks'
 import { useState, useEffect } from 'react'
 import AddCircleIcon from '@mui/icons-material/AddCircle'
 import {
     getProjectAccessAction,
     addProjectAccessAction,
     removeProjectAccessAction,
-} from '../redux/actions/projects'
-import { getAllUsersAction } from '../redux/actions/auth'
+} from '../../redux/actions/projects'
+import { getAllUsersAction } from '../../redux/actions/auth'
 
 function ProjectAccessTable() {
     const dispatch = useAppDispatch()
