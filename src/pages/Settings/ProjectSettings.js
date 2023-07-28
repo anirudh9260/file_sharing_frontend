@@ -42,21 +42,6 @@ export default function ProjectSettings() {
         setSnackbarState(true)
     }, [projectsState.message])
 
-    // let menu_items = []
-
-    // if (projectsState && !projectsState.isLoading) {
-    //     menu_items = projectsState.projects.map(item => {
-    //         return (
-    //             <MenuItem
-    //                 name={item.projectId}
-    //                 key={item.projectId}
-    //                 value={item.projectName}
-    //             >
-    //                 {item.projectName}
-    //             </MenuItem>
-    //         )
-    //     })
-    // }
 
     const handleSelectProject = event => {
         let obj = projectsState.projects.find(
@@ -87,7 +72,7 @@ export default function ProjectSettings() {
                                 value={
                                     projectsState.selectedProject?.projectId
                                         ? projectsState.selectedProject
-                                              ?.projectId
+                                                ?.projectId
                                         : ''
                                 }
                                 label="Select Project"
