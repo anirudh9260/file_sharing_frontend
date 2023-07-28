@@ -16,23 +16,20 @@ import { useNavigate } from 'react-router-dom'
 import SnackbarNotification from '../../components/SnackbarNotification'
 import { FormBackdropElement } from '../../components/FormElements'
 
-// function Copyright(props) {
-//     return (
-//         <Typography
-//             variant="body2"
-//             color="text.secondary"
-//             align="center"
-//             {...props}
-//         >
-//             {'Copyright © '}
-//             <Link color="inherit" href="https://mui.com/">
-//                 Your Website
-//             </Link>{' '}
-//             {new Date().getFullYear()}
-//             {'.'}
-//         </Typography>
-//     )
-// }
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
+import Avatar from '@mui/material/Avatar'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Container from '@mui/material/Container'
+import CssBaseline from '@mui/material/CssBaseline'
+import Grid from '@mui/material/Grid'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
+
+import SnackbarNotification from '../../components/SnackbarNotification'
+import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks'
+import { register } from '../../redux/actions/auth'
 
 const theme = createTheme()
 
@@ -167,8 +164,14 @@ export default function SignUp() {
                         </Grid>
                     </Box>
                 </Box>
-                {/* <Copyright sx={{ mt: 5 }} /> */}
             </Container>
+            {snackbarState && authState.message && (
+                <SnackbarNotification
+                    message={authState.message}
+                    onClose={() => setSnackbarState(false)}
+                    severity={authState.isError ? 'error' : 'success'}
+                />
+            )}
         </ThemeProvider>
     )
 }

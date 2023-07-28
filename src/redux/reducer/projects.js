@@ -71,10 +71,21 @@ export const projectsReducer = createSlice({
                     ),
                 )
             }
+
+            if (Object.keys({...state.selectedProject}).length > 0){
+                console.log("Project already selected", {...state.selectedProject})
+                return {
+                    ...state,
+                    isLoading: false,
+                    projects: row_data,
+                }
+            }
+            
             let selectedProject = {}
             if ( row_data && row_data.length > 0 ){
                 selectedProject = row_data[0]
             }
+            console.log("Project not selected. selecting default: ", selectedProject.projectName)
             return {
                 ...state,
                 isLoading: false,
@@ -100,6 +111,7 @@ export const projectsReducer = createSlice({
             }
         },
         addProjectsSuccess(state, action) {
+            console.log(action.payload)
             return {
                 ...state,
                 message: 'Add Project Successfull',

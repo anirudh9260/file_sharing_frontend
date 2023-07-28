@@ -1,4 +1,6 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
+
 import {
     Stack,
     Box,
@@ -9,12 +11,11 @@ import {
 } from '@mui/material'
 import InputLabel from '@mui/material/InputLabel'
 import Select from '@mui/material/Select'
-import AddProjectDialog from './AddProjectDialog'
-import UserSession from '../services/auth'
-import { getFilesForProject } from '../redux/actions/files'
-import { setSelectedProjectsAction } from '../redux/actions/projects'
+
 import { useAppSelector, useAppDispatch } from '../hooks/redux-hooks'
-import { useNavigate } from 'react-router-dom'
+import { setSelectedProjectsAction } from '../redux/actions/projects'
+import UserSession from '../services/auth'
+import AddProjectDialog from './AddProjectDialog'
 import UploadFile from './UploadFile'
 
 export default function ProjectBar() {
@@ -23,21 +24,6 @@ export default function ProjectBar() {
 
     const projectsState = useAppSelector(state => state.projectsReducer)
 
-    // let menu_items = []
-
-    // if (projectsState && !projectsState.isLoading) {
-    //     menu_items = projectsState.projects.map(item => {
-    //         return (
-    //             <MenuItem
-    //                 name={item.projectId}
-    //                 key={item.projectId}
-    //                 value={item.projectName}
-    //             >
-    //                 {item.projectName}
-    //             </MenuItem>
-    //         )
-    //     })
-    // }
     const handleSelectProject = event => {
         let obj = projectsState.projects.find(
             o => o.projectId === event.target.value,
@@ -60,7 +46,7 @@ export default function ProjectBar() {
                                 value={
                                     projectsState.selectedProject?.projectId
                                         ? projectsState.selectedProject
-                                              ?.projectId
+                                                ?.projectId
                                         : ''
                                 }
                                 label="Select Project"

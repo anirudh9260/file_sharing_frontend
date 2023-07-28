@@ -1,22 +1,24 @@
 import React from 'react'
+import { useState, useEffect } from 'react'
+
+import AddCircleIcon from '@mui/icons-material/AddCircle'
+import DeleteIcon from '@mui/icons-material/Delete'
 import { Button, TextField } from '@mui/material'
+import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
-import Paper from '@mui/material/Paper'
-import DeleteIcon from '@mui/icons-material/Delete'
+
 import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks'
-import { useState, useEffect } from 'react'
-import AddCircleIcon from '@mui/icons-material/AddCircle'
+import { getAllUsersAction } from '../../redux/actions/auth'
 import {
     getProjectAccessAction,
     addProjectAccessAction,
     removeProjectAccessAction,
 } from '../../redux/actions/projects'
-import { getAllUsersAction } from '../../redux/actions/auth'
 
 function ProjectAccessTable() {
     const dispatch = useAppDispatch()
