@@ -41,6 +41,7 @@ export const authReducer = createSlice({
         postRegister(state, action) {
             return {
                 ...state,
+                message: '',
                 isLoading: true,
             }
         },
@@ -55,7 +56,6 @@ export const authReducer = createSlice({
             const errorMessage = action?.payload?.response?.data?.error
                 ? action?.payload?.response?.data?.error
                 : ''
-            console.log(action.payload?.response)
             return {
                 ...state,
                 message: `User registration failed: ${errorMessage}`,
@@ -114,25 +114,28 @@ export const authReducer = createSlice({
             }
         },
 
-        logout(state, action) {
+        postLogout(state, action) {
             return {
                 ...state,
-                isLogout: true,
+                message: '',
+                isLoading: true,
             }
         },
-        logoutSuccess(state, action) {
+        postLogoutSuccess(state, action) {
             UserSession.removeUser()
             return {
                 ...state,
-                isLogout: false,
-                isError: false,
+                isLoading: false,
             }
         },
-        logoutFailed(state, action) {
+        postLogoutFailed(state, action) {
+            const errorMessage = action?.payload?.response?.data?.error
+                ? action?.payload?.response?.data?.error
+                : ''
             return {
                 ...state,
-                isLogout: false,
-                message: action.payload.response.data['error'],
+                message: `User logout failed: ${errorMessage}`,
+                isLoading: false,
                 isError: true,
             }
         },
@@ -152,9 +155,9 @@ export const {
     fetchUsers,
     fetchUsersSuccess,
     fetchUsersFailed,
-    logout,
-    logoutSuccess,
-    logoutFailed,
+    postLogout,
+    postLogoutSuccess,
+    postLogoutFailed,
 } = authReducer.actions
 
 export default authReducer.reducer
