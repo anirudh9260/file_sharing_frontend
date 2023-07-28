@@ -1,7 +1,20 @@
-import * as React from 'react'
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import Avatar from '@mui/material/Avatar'
+import Button from '@mui/material/Button'
+import CssBaseline from '@mui/material/CssBaseline'
+import TextField from '@mui/material/TextField'
 import { Link } from 'react-router-dom'
+import Grid from '@mui/material/Grid'
+import Box from '@mui/material/Box'
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
+import Typography from '@mui/material/Typography'
+import Container from '@mui/material/Container'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { register } from '../../redux/actions/auth'
+import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks'
 import { useNavigate } from 'react-router-dom'
+import SnackbarNotification from '../../components/SnackbarNotification'
+import { FormBackdropElement } from '../../components/FormElements'
 
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Avatar from '@mui/material/Avatar'
@@ -27,10 +40,6 @@ export default function SignUp() {
 
     const [snackbarState, setSnackbarState] = useState(false)
 
-    useEffect(() => {
-        setSnackbarState(true)
-    }, [authState.message])
-
     const handleSubmit = event => {
         event.preventDefault()
         const data = new FormData(event.currentTarget)
@@ -43,13 +52,28 @@ export default function SignUp() {
             password: data.get('password'),
             role: 'user',
         }
-        console.log(context)
-        dispatch(register(context))
+        dispatch(register(context)).then(res => {
+            if (res && res?.payload && res?.payload?.status == 201) {
+                navigate('/signin')
+            }
+        })
     }
+
+    useEffect(() => {
+        setSnackbarState(true)
+    }, [authState.message])
 
     return (
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
+                <FormBackdropElement loader={authState.isLoading} />
+                {snackbarState && authState.message && (
+                    <SnackbarNotification
+                        message={authState.message}
+                        onClose={() => setSnackbarState(false)}
+                        severity={authState.isError ? 'error' : 'success'}
+                    />
+                )}
                 <CssBaseline />
                 <Box
                     sx={{
