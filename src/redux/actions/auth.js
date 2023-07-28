@@ -19,9 +19,9 @@ import {
     fetchUsers,
     fetchUsersSuccess,
     fetchUsersFailed,
-    logout,
-    logoutSuccess,
-    logoutFailed,
+    postLogout,
+    postLogoutSuccess,
+    postLogoutFailed,
 } from '../reducer/auth'
 
 function jwtDecode(t) {
@@ -95,14 +95,16 @@ export const getAllUsersAction = () => async dispatch => {
 
 export const logoutAction = () => async dispatch => {
     console.log('Calling Action : logout()')
-    await dispatch(logout())
+    await dispatch(postLogout())
     try {
         const response = await apiClient.delete(`${LOGOUT_API}`)
         if (response.status === 200) {
-            return dispatch(logoutSuccess(response))
+            return dispatch(postLogoutSuccess(response))
         }
-        return dispatch(logoutFailed(response))
+        return dispatch(postLogoutFailed(response))
     } catch (err) {
-        return dispatch(logoutFailed(err))
+        return dispatch(postLogoutFailed(err))
     }
 }
+
+// TODO: update function names so that they follow a pattern. eg: userLogin, userRegister, userLogout
