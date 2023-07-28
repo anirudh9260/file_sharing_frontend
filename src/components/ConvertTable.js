@@ -35,8 +35,6 @@ export default function ConvertTable(props) {
             dispatch(getConvertedFilesAction(row.conversion_uuid))
         }
     }, [open, filesState.isConverting])
-    console.log("row", row)
-    console.log("filestate", filesState.convertedFiles)
 
     const fileTypes = ['.xml', '.csv', '.json', '.yaml']
 

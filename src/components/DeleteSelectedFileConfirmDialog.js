@@ -26,7 +26,7 @@ export default function DeleteSelectedFileConfirmDialog(props) {
     const handleClose = () => {
         setOpen(false)
     }
-    console.log(selected)
+
     const handleDeleteSelected = () => {
         dispatch(deleteManyFilesAction(selected))
         setOpen(false)

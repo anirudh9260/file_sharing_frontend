@@ -104,6 +104,8 @@ function ProjectAccessTable() {
                         <TableCell component="th" scope="row">
                             <TextField
                                 value={selectedEmail}
+                                
+                                
                                 onChange={e => setSelectedEmail(e.target.value)}
                             ></TextField>
                         </TableCell>

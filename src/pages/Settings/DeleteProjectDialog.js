@@ -1,18 +1,21 @@
-import * as React from 'react'
-import Button from '@mui/material/Button'
-import Dialog from '@mui/material/Dialog'
-import DialogActions from '@mui/material/DialogActions'
-import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
-import DialogTitle from '@mui/material/DialogTitle'
+import * as React from 'react';
 
-import { Box } from '@mui/material'
-import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks'
-import {
-    setSelectedProjectsAction,
-    deleteProjectAction,
-} from '../../redux/actions/projects'
-import { setFilesEmptyAction } from '../../redux/actions/files'
+
+
+import { Box } from '@mui/material';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
+
+
+import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
+import { setFilesEmptyAction } from '../../redux/actions/files';
+import { setSelectedProjectsAction, deleteProjectAction } from '../../redux/actions/projects';
+
 
 export default function DeleteProjectDialog() {
     const dispatch = useAppDispatch()
@@ -28,10 +31,16 @@ export default function DeleteProjectDialog() {
     }
 
     const handleDelete = () => {
-        dispatch(deleteProjectAction(projectsState.selectedProject.projectId))
-        dispatch(setSelectedProjectsAction({}))
-        dispatch(setFilesEmptyAction())
-        setOpen(false)
+        dispatch(
+            deleteProjectAction(projectsState.selectedProject.projectId),
+        ).then(res => {
+            if (res && res?.payload && res?.payload?.status == 200) {
+                // dispatch(deleteProjectAction(projectsState.selectedProject.projectId))
+                // dispatch(setSelectedProjectsAction({}))
+                dispatch(setFilesEmptyAction())
+            }
+            setOpen(false)
+        })
     }
 
     return (
