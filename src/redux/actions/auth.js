@@ -1,12 +1,18 @@
 import apiClient from '../../services/apiClient'
-import { CHANGE_PASSWORD, LOGIN_API, REGISTER_API, USERS_API, LOGOUT_API } from '../../constants'
 import {
-    fetchLogin,
-    fetchLoginSuccess,
-    fetchLoginFailed,
-    fetchRegister,
-    fetchRegisterSuccess,
-    fetchRegisterFailed,
+    CHANGE_PASSWORD,
+    LOGIN_API,
+    REGISTER_API,
+    USERS_API,
+    LOGOUT_API,
+} from '../../constants'
+import {
+    postLogin,
+    postLoginSuccess,
+    postLoginFailed,
+    postRegister,
+    postRegisterSuccess,
+    postRegisterFailed,
     passwordReset,
     passwordResetSuccess,
     passwordResetFailed,
@@ -15,50 +21,56 @@ import {
     fetchUsersFailed,
     logout,
     logoutSuccess,
-    logoutFailed
+    logoutFailed,
 } from '../reducer/auth'
 
 function jwtDecode(t) {
-    let token = {};
-    token.raw = t;
-    token.header = JSON.parse(window.atob(t.split('.')[0]));
-    token.payload = JSON.parse(window.atob(t.split('.')[1]));
-    return (token)
-  }
+    let token = {}
+    token.raw = t
+    token.header = JSON.parse(window.atob(t.split('.')[0]))
+    token.payload = JSON.parse(window.atob(t.split('.')[1]))
+    return token
+}
 
 export const login = payload => async dispatch => {
     console.log('Calling action : login()')
-    await dispatch(fetchLogin())
+    await dispatch(postLogin())
     try {
         const response = await apiClient.post(LOGIN_API, payload)
 
-        let actionPayload = response.data
-        let token = jwtDecode(actionPayload["access_token"])
-        actionPayload['userId'] = token.payload.sub["user_id"]
-        actionPayload['role'] = token.payload.sub["role"]
-        actionPayload['username'] = token.payload.sub["username"]
-        // actionPayload['username'] = payload.username
-        // actionPayload['password'] = payload.password
-        return dispatch(fetchLoginSuccess(actionPayload))
+        if (response.data && response.status === 200) {
+            const actionPayload = response.data
+            const token = jwtDecode(actionPayload?.access_token)
+            actionPayload['userId'] = token?.payload.sub?.user_id
+            actionPayload['role'] = token.payload?.sub?.role
+            actionPayload['username'] = token?.payload?.sub?.username
+            // actionPayload['username'] = payload.username
+            // actionPayload['password'] = payload.password
+            return dispatch(postLoginSuccess(actionPayload))
+        }
+        return dispatch(postLoginFailed(response))
     } catch (err) {
-        return dispatch(fetchLoginFailed(err))
+        return dispatch(postLoginFailed(err))
     }
 }
-
 
 export const register = payload => async dispatch => {
     console.log('Calling action : register()')
-    await dispatch(fetchRegister())
+    await dispatch(postRegister())
     try {
         const response = await apiClient.post(REGISTER_API, payload)
-        return dispatch(fetchRegisterSuccess(response))
+        console.log(response)
+        if (response.data && response.status === 201) {
+            return dispatch(postRegisterSuccess(response))
+        }
+
+        return dispatch(postRegisterFailed(response))
     } catch (err) {
-        return dispatch(fetchRegisterFailed(err))
+        return dispatch(postRegisterFailed(err))
     }
 }
 
-
-export const passwordResetAction = (payload) => async (dispatch) => {
+export const passwordResetAction = payload => async dispatch => {
     console.log('Calling action : password_reset()')
     await dispatch(passwordReset())
     try {
@@ -74,7 +86,7 @@ export const getAllUsersAction = () => async dispatch => {
     await dispatch(fetchUsers())
     try {
         const response = await apiClient.get(`${USERS_API}/emails`)
-        
+
         return dispatch(fetchUsersSuccess(response.data))
     } catch (err) {
         return dispatch(fetchUsersFailed(err))

@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useEffect, useState } from 'react'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -11,8 +11,9 @@ import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { register } from '../../redux/actions/auth'
-import { useAppDispatch } from '../../hooks/redux-hooks'
+import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks'
 import { useNavigate } from 'react-router-dom'
+import SnackbarNotification from '../../components/SnackbarNotification'
 
 // function Copyright(props) {
 //     return (
@@ -37,6 +38,9 @@ const theme = createTheme()
 export default function SignUp() {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
+    const authState = useAppSelector(state => state.authReducer)
+
+    const [snackbarState, setSnackbarState] = useState(false)
 
     const handleSubmit = event => {
         event.preventDefault()
@@ -53,6 +57,10 @@ export default function SignUp() {
         console.log(context)
         dispatch(register(context))
     }
+
+    useEffect(() => {
+        setSnackbarState(true)
+    }, [authState.message])
 
     return (
         <ThemeProvider theme={theme}>
@@ -149,6 +157,13 @@ export default function SignUp() {
                 </Box>
                 {/* <Copyright sx={{ mt: 5 }} /> */}
             </Container>
+            {snackbarState && authState.message && (
+                <SnackbarNotification
+                    message={authState.message}
+                    onClose={() => setSnackbarState(false)}
+                    severity={authState.isError ? 'error' : 'success'}
+                />
+            )}
         </ThemeProvider>
     )
 }

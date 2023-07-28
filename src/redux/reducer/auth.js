@@ -2,58 +2,65 @@ import { createSlice } from '@reduxjs/toolkit'
 import UserSession from '../../services/auth'
 
 const initialState = {
+    isLoading: false,
+    message: '',
     access_token: null,
     users: [],
-    message: '',
     isError: false,
-    isLoadingUsers: false,
 }
 
 export const authReducer = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        fetchLogin(state, action) {
+        postLogin(state, action) {
             return {
                 ...state,
                 message: '',
                 isLoading: true,
             }
         },
-        fetchLoginSuccess(state, action) {
+        postLoginSuccess(state, action) {
             UserSession.setUser(action.payload)
             return {
                 ...state,
                 isLoading: false,
             }
         },
-        fetchLoginFailed(state, action) {
+        postLoginFailed(state, action) {
+            const errorMessage = action?.payload?.response?.data?.error
+                ? action?.payload?.response?.data?.error
+                : ''
             return {
                 ...state,
-                message: action.payload.response.data['error'],
+                message: `User login failed: ${errorMessage}`,
                 isLoading: false,
-
                 isError: true,
             }
         },
-        fetchRegister(state, action) {
+        postRegister(state, action) {
             return {
                 ...state,
                 isLoading: true,
             }
         },
-        fetchRegisterSuccess(state, action) {
+        postRegisterSuccess(state, action) {
             return {
                 ...state,
-                user: action.payload.data,
+                user: action.payload?.data,
                 isLoading: false,
             }
         },
-        fetchRegisterFailed(state, action) {
+        postRegisterFailed(state, action) {
+            const errorMessage = action?.payload?.response?.data?.error
+                ? action?.payload?.response?.data?.error
+                : ''
+            console.log(action.payload?.response)
             return {
                 ...state,
-                // TODO: add api error response
+                message: `User registration failed: ${errorMessage}`,
                 isLoading: false,
+                isError: true,
             }
         },
         passwordReset(state, action) {
@@ -85,7 +92,7 @@ export const authReducer = createSlice({
         fetchUsers(state, action) {
             return {
                 ...state,
-                isLoadingUsers: true,
+                isLoading: true,
                 message: '',
             }
         },
@@ -93,7 +100,7 @@ export const authReducer = createSlice({
             return {
                 ...state,
                 users: action.payload,
-                isLoadingUsers: false,
+                isLoading: false,
                 isError: false,
             }
         },
@@ -101,7 +108,7 @@ export const authReducer = createSlice({
             console.log(action.payload.response.data)
             return {
                 ...state,
-                isLoadingUsers: false,
+                isLoading: false,
                 message: action.payload.response.data['error'],
                 isError: true,
             }
@@ -133,12 +140,12 @@ export const authReducer = createSlice({
 })
 
 export const {
-    fetchLogin,
-    fetchLoginSuccess,
-    fetchLoginFailed,
-    fetchRegister,
-    fetchRegisterSuccess,
-    fetchRegisterFailed,
+    postLogin,
+    postLoginSuccess,
+    postLoginFailed,
+    postRegister,
+    postRegisterSuccess,
+    postRegisterFailed,
     passwordReset,
     passwordResetSuccess,
     passwordResetFailed,
