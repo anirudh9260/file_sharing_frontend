@@ -14,6 +14,7 @@ import { register } from '../../redux/actions/auth'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks'
 import { useNavigate } from 'react-router-dom'
 import SnackbarNotification from '../../components/SnackbarNotification'
+import { FormBackdropElement } from '../../components/FormElements'
 
 // function Copyright(props) {
 //     return (
@@ -54,8 +55,11 @@ export default function SignUp() {
             password: data.get('password'),
             role: 'user',
         }
-        console.log(context)
-        dispatch(register(context))
+        dispatch(register(context)).then(res => {
+            if (res && res?.payload && res?.payload?.status == 201) {
+                navigate('/signin')
+            }
+        })
     }
 
     useEffect(() => {
@@ -65,6 +69,14 @@ export default function SignUp() {
     return (
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
+                <FormBackdropElement loader={authState.isLoading} />
+                {snackbarState && authState.message && (
+                    <SnackbarNotification
+                        message={authState.message}
+                        onClose={() => setSnackbarState(false)}
+                        severity={authState.isError ? 'error' : 'success'}
+                    />
+                )}
                 <CssBaseline />
                 <Box
                     sx={{
@@ -157,13 +169,6 @@ export default function SignUp() {
                 </Box>
                 {/* <Copyright sx={{ mt: 5 }} /> */}
             </Container>
-            {snackbarState && authState.message && (
-                <SnackbarNotification
-                    message={authState.message}
-                    onClose={() => setSnackbarState(false)}
-                    severity={authState.isError ? 'error' : 'success'}
-                />
-            )}
         </ThemeProvider>
     )
 }
