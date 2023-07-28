@@ -13,11 +13,10 @@ import Container from '@mui/material/Container'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks'
 import { login } from '../../redux/actions/auth'
-import CircularProgress from '@mui/material/CircularProgress'
 import { useNavigate } from 'react-router-dom'
 import UserSession from '../../services/auth'
 import SnackbarNotification from '../../components/SnackbarNotification'
-
+import { FormBackdropElement } from '../../components/FormElements'
 
 const theme = createTheme()
 
@@ -28,19 +27,15 @@ export default function SignIn() {
 
     const [snackbarState, setSnackbarState] = useState(false)
 
-
     React.useEffect(() => {
         if (UserSession.isAuthenticated()) {
             navigate('/dash')
         }
     }, [UserSession.isAuthenticated()])
 
-    
-
     useEffect(() => {
         setSnackbarState(true)
     }, [authState.message])
-
 
     const handleSubmit = event => {
         event.preventDefault()
@@ -50,12 +45,19 @@ export default function SignIn() {
             password: data.get('password'),
         }
         dispatch(login(context))
-        
     }
 
     return (
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
+                <FormBackdropElement loader={authState.isLoading} />
+                {snackbarState && authState.message && (
+                    <SnackbarNotification
+                        message={authState.message}
+                        onClose={() => setSnackbarState(false)}
+                        severity={authState.isError ? 'error' : 'success'}
+                    />
+                )}
                 <CssBaseline />
                 <Box
                     sx={{
@@ -98,11 +100,11 @@ export default function SignIn() {
                             autoComplete="current-password"
                         />
 
-                        {authState.isLoading && (
+                        {/* {authState.isLoading && (
                             <div>
                                 <CircularProgress />
                             </div>
-                        )}
+                        )} */}
                         <Button
                             data-type="SignIn"
                             type="submit"
@@ -110,7 +112,7 @@ export default function SignIn() {
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                         >
-                            SignIn
+                            Sign In
                         </Button>
 
                         <Grid container>
@@ -129,13 +131,6 @@ export default function SignIn() {
                 </Box>
                 {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
             </Container>
-            {snackbarState && authState.message && (
-                <SnackbarNotification
-                    message={authState.message}
-                    onClose={() => setSnackbarState(false)}
-                    severity={authState.isError ? 'error' : 'success'}
-                />
-            )}
         </ThemeProvider>
     )
 }
