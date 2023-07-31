@@ -16,20 +16,8 @@ import { useNavigate } from 'react-router-dom'
 import SnackbarNotification from '../../components/SnackbarNotification'
 import { FormBackdropElement } from '../../components/FormElements'
 
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
-import Avatar from '@mui/material/Avatar'
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import Container from '@mui/material/Container'
-import CssBaseline from '@mui/material/CssBaseline'
-import Grid from '@mui/material/Grid'
-import TextField from '@mui/material/TextField'
-import Typography from '@mui/material/Typography'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
 
-import SnackbarNotification from '../../components/SnackbarNotification'
-import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks'
-import { register } from '../../redux/actions/auth'
+
 
 const theme = createTheme()
 
