@@ -94,9 +94,11 @@ export default function CopyLinkButton(props) {
                                 fullWidth
                                 InputProps={{
                                     endAdornment: (
+                                        <Button >
                                         <ContentCopyIcon
                                             onClick={handleCopyLink}
                                         />
+                                        </Button>
                                     ),
                                 }}
                             />
