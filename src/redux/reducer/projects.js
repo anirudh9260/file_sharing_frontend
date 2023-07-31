@@ -12,8 +12,8 @@ const initialState = {
     projectAccessUsers: [],
     isLoadingUsers: false,
     isAddingAccess: false,
-    isRemovingAccess : false,
-    
+    isRemovingAccess: false,
+
     message: '',
     isError: false,
 }
@@ -72,7 +72,7 @@ export const projectsReducer = createSlice({
                 )
             }
 
-            if (Object.keys({...state.selectedProject}).length > 0){
+            if (Object.keys({ ...state.selectedProject }).length > 0) {
                 // console.log("Project already selected", {...state.selectedProject})
                 return {
                     ...state,
@@ -80,16 +80,16 @@ export const projectsReducer = createSlice({
                     projects: row_data,
                 }
             }
-            
+
             let selectedProject = {}
-            if ( row_data && row_data.length > 0 ){
+            if (row_data && row_data.length > 0) {
                 selectedProject = row_data[0]
             }
             // console.log("Project not selected. selecting default: ", selectedProject.projectName)
             return {
                 ...state,
                 isLoading: false,
-                selectedProject : selectedProject,
+                selectedProject: selectedProject,
                 projects: row_data,
             }
         },
@@ -110,11 +110,19 @@ export const projectsReducer = createSlice({
                 isAdding: true,
             }
         },
+
         addProjectsSuccess(state, action) {
-            // console.log(action.payload)
+            let selectedProject = {}
+            console.log(action.payload)
+            selectedProject = {
+                projectId: action.payload.id,
+                projectName: action.payload.project_name,
+                userName: action.payload.user,
+            }
             return {
                 ...state,
-                message: 'Add Project Successfull',
+                selectedProject: selectedProject,
+                message: action.payload.message,
                 isAdding: false,
                 isError: false,
             }
@@ -178,7 +186,6 @@ export const projectsReducer = createSlice({
             }
         },
 
-
         fetchProjectAccess(state, action) {
             return {
                 ...state,
@@ -211,12 +218,11 @@ export const projectsReducer = createSlice({
             }
         },
 
-
         addProjectAccess(state, action) {
             return {
                 ...state,
                 isAddingAccess: true,
-                message:""
+                message: '',
             }
         },
         addProjectAccessSuccess(state, action) {
@@ -240,7 +246,7 @@ export const projectsReducer = createSlice({
             return {
                 ...state,
                 isRemovingAccess: true,
-                message: ""
+                message: '',
             }
         },
         removeProjectAccessSuccess(state, action) {
@@ -288,7 +294,7 @@ export const {
     addProjectAccessFailed,
     removeProjectAccess,
     removeProjectAccessSuccess,
-    removeProjectAccessFailed
+    removeProjectAccessFailed,
 } = projectsReducer.actions
 
 export default projectsReducer.reducer
