@@ -8,11 +8,9 @@ import InputAdornment from '@mui/material/InputAdornment';
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-
 import { useAppDispatch } from '../hooks/redux-hooks'
 import { convertFilesAction } from '../redux/actions/files'
-
+import DriveFileMoveIcon from '@mui/icons-material/DriveFileMove';
 
 export default function ConvertFileDialog(props) {
     const dispatch = useAppDispatch()
@@ -45,7 +43,7 @@ export default function ConvertFileDialog(props) {
                 // sx={{ my: 1 }}
                 sx={{ mx: 1 }}
                 color="success"
-                startIcon={<ArrowBackIcon />}
+                startIcon={<DriveFileMoveIcon />}
             >
                 Convert
             </Button>

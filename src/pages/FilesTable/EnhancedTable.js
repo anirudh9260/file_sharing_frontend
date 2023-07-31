@@ -11,12 +11,13 @@ import Paper from '@mui/material/Paper'
 import Checkbox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Switch from '@mui/material/Switch'
-import RowButton from '../../components/RowButton'
 import PropTypes from 'prop-types'
 import EnhancedTableHead from './EnhancedTableHead'
 import EnhancedTableToolbar from './EnhancedTableToolbar'
 import FileActionModal from '../../components/FileActionModal'
-
+import DownloadButton from '../../components/DownloadButton'
+import CopyLinkButton from '../../components/CopyLinkButton'
+import DeleteFileConfirmDialog from '../../components/DeleteFileConfirmDialog'
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -195,7 +196,11 @@ export default function EnhancedTable(props) {
                                             {row.uploaded_by}
                                         </TableCell>
                                         <TableCell align="right">
-                                            <RowButton row={row}></RowButton>
+                                            <Box  display="flex" justifyContent="right">
+                                            <DownloadButton row={row}></DownloadButton>
+                                            <CopyLinkButton row={row}></CopyLinkButton>
+                                            <DeleteFileConfirmDialog row = {row}></DeleteFileConfirmDialog>
+                                        </Box>
                                         </TableCell>
                                     </TableRow>
                                 )

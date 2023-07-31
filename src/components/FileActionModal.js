@@ -2,10 +2,10 @@ import React from 'react'
 import { Button, Box, Stack } from '@mui/material'
 import { Typography } from '@mui/material'
 import Modal from '@mui/material/Modal';
-import DownloadCopyLinkButton from './DownloadCopyLinkButton'
+import CopyLinkButton from './CopyLinkButton';
 import DeleteFileConfirmDialog from './DeleteFileConfirmDialog'
 import ConvertTable from './ConvertTable';
-import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks'
+import { useAppDispatch } from '../hooks/redux-hooks'
 import { fileActionModalStatus } from '../redux/actions/files'
 
 const style = {
@@ -23,7 +23,7 @@ const style = {
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
-  };
+};
 
 
 function FileActionModal(props) {
@@ -65,24 +65,20 @@ function FileActionModal(props) {
                     alignItems="center"
                     justifyContent="space-around"
                     spacing={4}
+                    width={400}
                 >
                     <Stack
                         direction="row"
                         justifyContent="space-between"
                         alignItems="center"
-                        spacing={4}
+                        spacing={14}
                     >
                         <Typography variant="h5">{row.file_name}</Typography>
-
-                        <DownloadCopyLinkButton
+                        <CopyLinkButton
                             row={row}
-                        ></DownloadCopyLinkButton>
+                        ></CopyLinkButton>
                     </Stack>
-
-
-
                     <ConvertTable row={row} open={open}></ConvertTable>
-
                     <Stack
                         direction="row"
                         justifyContent="flex-end"

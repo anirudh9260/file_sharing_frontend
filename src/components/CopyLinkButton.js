@@ -1,12 +1,13 @@
 import React from 'react'
 import { Box, Button } from '@mui/material'
-import ShareIcon from '@mui/icons-material/Share'
-import FileDownloadIcon from '@mui/icons-material/FileDownload'
+
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+
 import { useAppDispatch } from '../hooks/redux-hooks'
 import { copyLinkAction } from '../redux/actions/files'
 
 
-export default function DownloadCopyLinkButton(props) {
+export default function CopyLinkButton(props) {
     const { row } = props
 
     const dispatch = useAppDispatch()
@@ -22,27 +23,16 @@ export default function DownloadCopyLinkButton(props) {
     }
 
     return (
-        <Box>
-            {/* <ShareIcon></ShareIcon> */}
-            <a href={link} download target="_blank" rel="noopener noreferrer">
-                <Button
-                    variant="contained"
-                    target=""
-                    sx={{ mx: 1 }}
-                    startIcon={<FileDownloadIcon />}
-                >
-                    Download
-                </Button>
-            </a>
+ 
+            
             <Button
                 variant="contained"
                 color="success"
                 onClick={handleCopyLink}
-                startIcon={<ShareIcon />}
+                startIcon={<ContentCopyIcon />}
                 sx={{ mx: 1 }}
             >
                 Copy Link
             </Button>
-        </Box>
     )
 }

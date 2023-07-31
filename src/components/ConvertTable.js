@@ -9,7 +9,7 @@ import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import { getConvertedFilesAction } from '../redux/actions/files'
 import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks'
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import FileDownloadIcon from '@mui/icons-material/FileDownload'
 import ConvertFileDialog from './ConvertFileDialog'
 
