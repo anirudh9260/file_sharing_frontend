@@ -32,6 +32,12 @@ export const filesReducer = createSlice({
     name: 'files',
     initialState,
     reducers: {
+        setFilesMessage(state, action) {
+            return {
+                ...state,
+                message: '',
+            }
+        },
         fetchFiles(state, action) {
             return {
                 ...state,
@@ -241,6 +247,7 @@ export const filesReducer = createSlice({
 })
 
 export const {
+    setFilesMessage,
     fetchFiles,
     fetchFilesSuccess,
     fetchFilesFailed,

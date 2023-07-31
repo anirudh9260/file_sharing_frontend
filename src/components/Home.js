@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react'
 import { getProjects } from '../redux/actions/projects'
 import { useNavigate } from 'react-router-dom'
 import { setMessage } from '../redux/reducer/projects'
+import { setFilesMessage } from '../redux/reducer/files'
 
 
 const Home = () => {
@@ -21,6 +22,7 @@ const Home = () => {
     const filesState = useAppSelector(state => state.filesReducer)
 
     useEffect(() => {
+        dispatch(setFilesMessage())
         dispatch(setMessage())
     }, [])
     

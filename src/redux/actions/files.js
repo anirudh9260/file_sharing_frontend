@@ -1,6 +1,7 @@
 import apiClient, { uploadApiClient } from '../../services/apiClient'
 import { FILES_API } from '../../constants'
 import {
+    setFilesMessage,
     fetchFiles,
     fetchFilesSuccess,
     fetchFilesFailed,
@@ -24,7 +25,11 @@ import {
     setFiles
 } from '../reducer/files'
 
-
+// SET Files Reducer Message Empty Action
+export const setFilesMessageAction = () => async dispatch => {
+    console.log('Calling Action : setFilesMessageAction()')
+        return dispatch(setFilesMessage())
+}
 
 export const getFilesForProject = projectId => async dispatch => {
     if (projectId){

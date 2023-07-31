@@ -31,7 +31,7 @@ import {
 } from '../reducer/projects'
 
 
-// SET SELECTED Project Action => GET
+// SET Project Reducer Message Empty Action
 export const setMessageAction = () => async dispatch => {
     console.log('Calling Action : setMessageAction()')
         return dispatch(setMessage())
