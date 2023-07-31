@@ -37,6 +37,12 @@ export const projectsReducer = createSlice({
     name: 'projects',
     initialState,
     reducers: {
+        setMessage(state, action) {
+            return {
+                ...state,
+                message: '',
+            }
+        },
         setSelectedProject(state, action) {
             // console.log("Action", action)
             return {
@@ -160,7 +166,7 @@ export const projectsReducer = createSlice({
                 // message: `Delete Project Failed : ${
                 //     action?.payload?.msg ? action?.payload?.msg : ''
                 // }`,
-                message: action.payload.response.data.error
+                message: action.payload.response.data.error,
             }
         },
 
@@ -272,6 +278,7 @@ export const projectsReducer = createSlice({
 })
 
 export const {
+    setMessage,
     setSelectedProject,
     setProjectsObject,
 

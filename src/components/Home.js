@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks'
 import { useState, useEffect } from 'react'
 import { getProjects } from '../redux/actions/projects'
 import { useNavigate } from 'react-router-dom'
+import { setMessage } from '../redux/reducer/projects'
 
 
 const Home = () => {
@@ -18,6 +19,10 @@ const Home = () => {
 
     const projectsState = useAppSelector(state => state.projectsReducer)
     const filesState = useAppSelector(state => state.filesReducer)
+
+    useEffect(() => {
+        dispatch(setMessage())
+    }, [])
     
     useEffect(() => {
         if (!UserSession.isAuthenticated()) {

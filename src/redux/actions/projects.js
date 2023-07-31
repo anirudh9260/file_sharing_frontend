@@ -1,6 +1,7 @@
 import apiClient from '../../services/apiClient'
 import { PROJECTS_API } from '../../constants'
 import {
+    setMessage,
     setSelectedProject,
     setProjectsObject,
 
@@ -29,6 +30,12 @@ import {
 
 } from '../reducer/projects'
 
+
+// SET SELECTED Project Action => GET
+export const setMessageAction = () => async dispatch => {
+    console.log('Calling Action : setMessageAction()')
+        return dispatch(setMessage())
+}
 
 // GET Projects Action => GET
 export const getProjects = () => async dispatch => {
