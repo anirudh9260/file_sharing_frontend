@@ -152,13 +152,15 @@ export const projectsReducer = createSlice({
             }
         },
         deleteProjectsFailed(state, action) {
+            console.log(action.payload)
             return {
                 ...state,
                 isDeleteting: false,
                 isError: true,
-                message: `Delete Project Failed : ${
-                    action?.payload?.msg ? action?.payload?.msg : ''
-                }`,
+                // message: `Delete Project Failed : ${
+                //     action?.payload?.msg ? action?.payload?.msg : ''
+                // }`,
+                message: action.payload.response.data.error
             }
         },
 
