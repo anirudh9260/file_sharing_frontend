@@ -5,8 +5,8 @@ import Modal from '@mui/material/Modal';
 import CopyLinkButton from './CopyLinkButton';
 import DeleteFileConfirmDialog from './DeleteFileConfirmDialog'
 import ConvertTable from './ConvertTable';
-import { useAppDispatch } from '../hooks/redux-hooks'
-import { fileActionModalStatus } from '../redux/actions/files'
+import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks'
+import { getFilesForProject } from '../redux/actions/files'
 
 const style = {
     position: 'absolute',
@@ -28,17 +28,17 @@ const style = {
 
 function FileActionModal(props) {
     const dispatch = useAppDispatch()
+    const projectsState = useAppSelector(state => state.projectsReducer)
     const { row } = props
     const [open, setOpen] = React.useState(false)
 
     const handleClickOpen = () => {
         setOpen(true)
-        dispatch(fileActionModalStatus(true))
     }
 
     const handleClose = () => {
         setOpen(false)
-        dispatch(fileActionModalStatus(false))
+        dispatch(getFilesForProject(projectsState.selectedProject.projectId))
     }
     
     return (

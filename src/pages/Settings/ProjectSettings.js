@@ -1,28 +1,26 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react'
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import { Stack, Box, MenuItem, FormControl, Button } from '@mui/material'
+import Container from '@mui/material/Container'
+import InputLabel from '@mui/material/InputLabel'
+import Select from '@mui/material/Select'
 
-
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Stack, Box, MenuItem, FormControl, Button } from '@mui/material';
-import Container from '@mui/material/Container';
-import InputLabel from '@mui/material/InputLabel';
-import Select from '@mui/material/Select';
-
-
-
-import AddProjectDialog from '../../components/AddProjectDialog';
-import SnackbarNotification from '../../components/SnackbarNotification';
-import { useAppSelector, useAppDispatch } from '../../hooks/redux-hooks';
-import { setSelectedProjectsAction } from '../../redux/actions/projects';
-import { getProjects, getProjectAccessAction } from '../../redux/actions/projects';
-import { setMessage } from '../../redux/reducer/projects';
-import UserSession from '../../services/auth';
-import DeleteProjectModal from './DeleteProjectDialog';
-import EditProjectDialog from './EditProjectDialog';
-import ProjectAccessTable from './ProjectAccessTable';
-
+import AddProjectDialog from '../../components/AddProjectDialog'
+import SnackbarNotification from '../../components/SnackbarNotification'
+import { useAppSelector, useAppDispatch } from '../../hooks/redux-hooks'
+import { setSelectedProjectsAction } from '../../redux/actions/projects'
+import {
+    getProjects,
+    getProjectAccessAction,
+} from '../../redux/actions/projects'
+import { setMessage } from '../../redux/reducer/projects'
+import UserSession from '../../services/auth'
+import DeleteProjectModal from './DeleteProjectDialog'
+import EditProjectDialog from './EditProjectDialog'
+import ProjectAccessTable from './ProjectAccessTable'
 
 export default function ProjectSettings() {
     const navigate = useNavigate()
@@ -34,7 +32,7 @@ export default function ProjectSettings() {
     useEffect(() => {
         dispatch(setMessage())
     }, [])
-    
+
     useEffect(() => {
         if (UserSession.isAuthenticated()) {
             dispatch(getProjects())
@@ -48,7 +46,6 @@ export default function ProjectSettings() {
     useEffect(() => {
         setSnackbarState(true)
     }, [projectsState.message])
-
 
     const handleSelectProject = event => {
         let obj = projectsState.projects.find(
@@ -79,7 +76,7 @@ export default function ProjectSettings() {
                                 value={
                                     projectsState.selectedProject?.projectId
                                         ? projectsState.selectedProject
-                                                ?.projectId
+                                              ?.projectId
                                         : ''
                                 }
                                 label="Select Project"

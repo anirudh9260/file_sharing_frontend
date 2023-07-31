@@ -10,7 +10,6 @@ const initialState = {
     isDeleting: false,
     isError: false,
     isConverting: false,
-    isFileActionModalOpen: false,
     message: ""
 }
 
@@ -223,18 +222,6 @@ export const filesReducer = createSlice({
                 isError: true,
             }
         },
-        fileActionModalOpen(state, action) {
-            return {
-                ...state,
-                isFileActionModalOpen : true
-            }
-        },
-        fileActionModalClose(state, action) {
-            return {
-                ...state,
-                isFileActionModalOpen : false
-            }
-        },
         setFiles(state, action) {
             return {
                 ...state,
@@ -267,8 +254,6 @@ export const {
     convertFile,
     convertFileSuccess,
     convertFileFailed,
-    fileActionModalOpen,
-    fileActionModalClose,
     setFiles
 } = filesReducer.actions
 

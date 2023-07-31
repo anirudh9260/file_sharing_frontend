@@ -20,8 +20,6 @@ import {
     convertFile,
     convertFileSuccess,
     convertFileFailed,
-    fileActionModalOpen,
-    fileActionModalClose,
     setFiles
 } from '../reducer/files'
 
@@ -122,14 +120,6 @@ export const convertFilesAction = formData => async dispatch => {
     }
 }
 
-export const fileActionModalStatus = status => async dispatch => {
-    console.log('Calling Action : fileActionModalStatus()')
-    if (status) {
-        return dispatch(fileActionModalOpen())
-    } else {
-        return dispatch(fileActionModalClose())
-    }
-}
 
 // SET SELECTED Files Action => GET
 export const setFilesEmptyAction = () => async dispatch => {
