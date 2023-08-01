@@ -65,15 +65,15 @@ function FileActionModal(props) {
                     alignItems="center"
                     justifyContent="space-around"
                     spacing={4}
-                    width={400}
+                    width={450}
                 >
                     <Stack
                         direction="row"
-                        justifyContent="space-between"
+                        justifyContent="space-evenly"
                         alignItems="center"
-                        spacing={14}
+                        spacing={12}
                     >
-                        <Typography variant="h5">{row.file_name}</Typography>
+                        <Typography variant="h6" color="blue">{row.file_name}</Typography>
                         <CopyLinkButton
                             row={row}
                         ></CopyLinkButton>

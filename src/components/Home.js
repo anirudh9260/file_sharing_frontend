@@ -1,15 +1,21 @@
-import React from 'react'
-import UserSession from '../services/auth'
-import ProjectBar from './ProjectBar'
-import Container from '@mui/material/Container'
-import EnhancedTableContainer from '../pages/FilesTable/EnhancedTableContainer'
-import SnackbarNotification from './SnackbarNotification'
-import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks'
-import { useState, useEffect } from 'react'
-import { getProjects } from '../redux/actions/projects'
-import { useNavigate } from 'react-router-dom'
-import { setMessage } from '../redux/reducer/projects'
-import { setFilesMessage } from '../redux/reducer/files'
+import React from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+
+
+import Container from '@mui/material/Container';
+
+
+import { getFilesForProject } from '../redux/actions/files';
+import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
+import EnhancedTableContainer from '../pages/FilesTable/EnhancedTableContainer';
+import { getProjects } from '../redux/actions/projects';
+import { setFilesMessage } from '../redux/reducer/files';
+import { setMessage } from '../redux/reducer/projects';
+import UserSession from '../services/auth';
+import ProjectBar from './ProjectBar';
+import SnackbarNotification from './SnackbarNotification';
 
 
 const Home = () => {
@@ -32,19 +38,26 @@ const Home = () => {
         }
     }, [])
 
-
     useEffect(() => {
         if (UserSession.isAuthenticated()) {
             dispatch(getProjects())
         }
-    }, [
-        projectsState.isAdding
-    ])
+    }, [projectsState.isAdding])
+
+
+    useEffect(() => {
+        if (!filesState.isUpdating) {
+            dispatch(
+                getFilesForProject(projectsState.selectedProject.projectId),
+            )
+        }
+    }, [projectsState.selectedProject, filesState.isUpdating])
+
     
 
     useEffect(() => {
         setSnackbarState(true)
-    }, [projectsState.message, filesState.isUploading, filesState.isDeleteting, filesState.isCopying, filesState.isConverting])
+    }, [projectsState.message, filesState.isUpdating, filesState.isCopying, filesState.isConverting])
     
 
     return (

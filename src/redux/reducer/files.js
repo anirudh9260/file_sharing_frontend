@@ -10,7 +10,8 @@ const initialState = {
     isDeleting: false,
     isError: false,
     isConverting: false,
-    message: ""
+    message: "",
+    isUpdating:false
 }
 
 function createData(id, uid, file_name, date_modified, type, size, uploaded_by, projectId, conversion_uuid) {
@@ -126,14 +127,14 @@ export const filesReducer = createSlice({
             return {
                 ...state,
                 // message : "",
-                isUploading: true,
+                isUpdating: true,
             }
         },
         uploadFilesSuccess(state, action) {
             return {
                 ...state,
                 message: 'File Upload Successfull',
-                isUploading: false,
+                isUpdating: false,
                 isError: false,
             }
         },
@@ -142,7 +143,7 @@ export const filesReducer = createSlice({
             return {
                 ...state,
                 message: action.payload.response.data.error,
-                isUploading: false,
+                isUpdating: false,
                 isError: true,
             }
         },
@@ -150,7 +151,7 @@ export const filesReducer = createSlice({
             return {
                 ...state,
                 message : "",
-                isDeleting: true,
+                isUpdating: true,
             }
         },
         removeFilesSuccess(state, action) {
@@ -159,7 +160,7 @@ export const filesReducer = createSlice({
             return {
                 ...state,
                 message: 'File Delete Successfull',
-                isDeleting: false,
+                isUpdating: false,
                 isError: false,
             }
         },
@@ -167,7 +168,7 @@ export const filesReducer = createSlice({
             return {
                 ...state,
                 message: 'File Delete Failed',
-                isDeleting: false,
+                isUpdating: false,
                 isError: true,
             }
         },
