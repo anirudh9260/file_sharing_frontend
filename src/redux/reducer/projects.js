@@ -3,7 +3,6 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
     projects: [],
     selectedProject: {},
-    isSetting: false,
     isLoading: false,
     isAdding: false,
     isDeleteting: false,
@@ -44,16 +43,13 @@ export const projectsReducer = createSlice({
             }
         },
         setSelectedProject(state, action) {
-            // console.log("Action", action)
             return {
                 ...state,
-                isSetting: true,
                 selectedProject: action.payload,
             }
         },
 
         setProjectsObject(state, action) {
-            // console.log("Action", action)
             return {
                 ...state,
                 projects: [],
