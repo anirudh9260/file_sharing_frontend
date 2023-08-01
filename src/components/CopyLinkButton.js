@@ -89,10 +89,10 @@ export default function CopyLinkButton(props) {
                             <TextField
                                 id="standard-name"
                                 label="Link"
-                                value={link}
-                                readOnly={true}
+                                value={link}                                
                                 fullWidth
                                 InputProps={{
+                                    readOnly: true,
                                     endAdornment: (
                                         <Button >
                                         <ContentCopyIcon
