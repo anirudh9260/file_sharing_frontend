@@ -167,7 +167,7 @@ const TopBar = () => {
                     >
                         {UserSession.isAuthenticated() && (
                             <Button
-                                href="/dmp-ui/dash"
+                                href="/dmp/dash"
                                 key="Home"
                                 onClick={handleCloseNavMenu}
                                 sx={{ my: 2, color: 'white', display: 'block' }}
