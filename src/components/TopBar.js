@@ -4,7 +4,6 @@ import { useLocation } from 'react-router-dom'
 
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
 import MenuIcon from '@mui/icons-material/Menu'
-import NotificationsIcon from '@mui/icons-material/Notifications'
 import AppBar from '@mui/material/AppBar'
 import Avatar from '@mui/material/Avatar'
 import Badge from '@mui/material/Badge'
@@ -63,8 +62,7 @@ const TopBar = () => {
     }
 
     const logOutUser = () => {
-        
-        dispatch(logoutAction()).then((res) => {
+        dispatch(logoutAction()).then(res => {
             if (res && res?.payload && res?.payload?.status == 200) {
                 dispatch(setSelectedProjectsAction({}))
                 dispatch(setProjectsObjectAction())
@@ -169,7 +167,7 @@ const TopBar = () => {
                     >
                         {UserSession.isAuthenticated() && (
                             <Button
-                                href="/dash"
+                                href="/dmp-ui/dash"
                                 key="Home"
                                 onClick={handleCloseNavMenu}
                                 sx={{ my: 2, color: 'white', display: 'block' }}
