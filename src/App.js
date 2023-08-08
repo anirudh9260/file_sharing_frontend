@@ -13,7 +13,7 @@ import UserSession from './services/auth'
 
 function App() {
     return (
-        <BrowserRouter>
+            <div>
             <TopBar />
             <div style={{ marginTop: 10 }}>
                 <Routes>
@@ -63,7 +63,7 @@ function App() {
                     <Route path="*" element={<PageNotFound />} />
                 </Routes>
             </div>
-        </BrowserRouter>
+            </div>
     )
 }
 
