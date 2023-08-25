@@ -5,13 +5,13 @@ const initialState = {
     convertedFiles: [],
     isLoading: false,
     isConversionLoading: false,
-    isUploading: false,
     isCopying: false,
     isDeleting: false,
     isError: false,
     isConverting: false,
     message: "",
-    isUpdating:false
+    isUpdating:false,
+    isSelected: false
 }
 
 function createData(id, uid, file_name, date_modified, type, size, uploaded_by, projectId, conversion_uuid) {
@@ -36,6 +36,22 @@ export const filesReducer = createSlice({
             return {
                 ...state,
                 message: '',
+            }
+        },
+        fileSelected(state, action) {
+            return {
+                ...state,
+                message: "" ,
+                isError: false,
+                isSelected: true
+            }
+        },
+        incorrectFileSelected(state, action) {
+            return {
+                ...state,
+                message: "'" + action.payload + "' File Format Not Allowed. See allowed formats." ,
+                isError: true,
+                isSelected: false
             }
         },
         fetchFiles(state, action) {
@@ -236,6 +252,8 @@ export const filesReducer = createSlice({
 
 export const {
     setFilesMessage,
+    fileSelected,
+    incorrectFileSelected,
     fetchFiles,
     fetchFilesSuccess,
     fetchFilesFailed,
