@@ -2,6 +2,8 @@ import apiClient, { uploadApiClient } from '../../services/apiClient'
 import { FILES_API } from '../../constants'
 import {
     setFilesMessage,
+    fileSelected,
+    incorrectFileSelected,
     fetchFiles,
     fetchFilesSuccess,
     fetchFilesFailed,
@@ -42,6 +44,18 @@ export const getFilesForProject = projectId => async dispatch => {
     }}
 }
 
+export const searchFilesInProject = searchParams => async dispatch => {
+    if (searchParams.projectId){
+    console.log('Calling Action : searchFilesInProject()')
+    await dispatch(fetchFiles())
+    try {
+        const response = await apiClient.get(`${FILES_API}/${searchParams.projectId}/search/${searchParams.searchText}`)
+        return dispatch(fetchFilesSuccess(response.data))
+    } catch (err) {
+        return dispatch(fetchFilesFailed(err))
+    }}
+}
+
 export const getConvertedFilesAction = convertedUUID => async dispatch => {
     if (convertedUUID){
     console.log('Calling Action : getConvertedFilesAction()')
@@ -54,6 +68,13 @@ export const getConvertedFilesAction = convertedUUID => async dispatch => {
         return dispatch(fetchConvertedFilesFailed(err))
     }}
 }
+
+export const selectFileAction = (fileExtension) => async dispatch => {
+    console.log('Calling Action : selectFileAction()')
+    await dispatch(fileSelected())
+    return dispatch(incorrectFileSelected(fileExtension))
+}
+
 
 export const uploadFilesAction = formData => async dispatch => {
     console.log('Calling Action : uploadFiles()')
