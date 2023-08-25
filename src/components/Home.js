@@ -27,6 +27,9 @@ const Home = () => {
     useEffect(() => {
         dispatch(setFilesMessage())
         dispatch(setMessage())
+        if (UserSession.isAuthenticated()) {
+            dispatch(getProjects())
+        }
     }, [])
     
     useEffect(() => {
@@ -35,11 +38,7 @@ const Home = () => {
         }
     }, [])
 
-    useEffect(() => {
-        if (UserSession.isAuthenticated()) {
-            dispatch(getProjects())
-        }
-    }, [projectsState.isAdding])
+    
 
 
     useEffect(() => {

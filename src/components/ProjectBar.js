@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-
+import { useEffect } from 'react'
 import {
     Stack,
     Box,
@@ -18,12 +18,19 @@ import UserSession from '../services/auth'
 import AddProjectDialog from './AddProjectDialog'
 import UploadFile from './UploadFile'
 import SearchFile from './SearchFile'
+import { getProjects } from '../redux/actions/projects'
 
 export default function ProjectBar() {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
     const projectsState = useAppSelector(state => state.projectsReducer)
+
+    useEffect(() => {
+        if (UserSession.isAuthenticated()) {
+            dispatch(getProjects())
+        }
+    }, [projectsState.isAdding])
 
     const handleSelectProject = event => {
         let obj = projectsState.projects.find(

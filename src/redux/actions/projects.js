@@ -69,7 +69,7 @@ export const addProjectAction = body => async dispatch => {
     await dispatch(addProjects())
     try {
         const response = await apiClient.post(PROJECTS_API, body)
-        console.log('Printing from addProjectAction():', response.data)
+        // console.log('Printing from addProjectAction():', response.data)
         return dispatch(addProjectsSuccess(response.data))
     } catch (err) {
         return dispatch(addProjectsFailed(err))

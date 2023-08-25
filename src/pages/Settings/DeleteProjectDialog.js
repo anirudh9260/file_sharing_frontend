@@ -1,6 +1,5 @@
 import * as React from 'react';
-
-
+import { useNavigate } from 'react-router-dom'
 
 import { Box } from '@mui/material';
 import Button from '@mui/material/Button';
@@ -10,14 +9,13 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-
-
 import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
 import { setFilesEmptyAction } from '../../redux/actions/files';
-import { setSelectedProjectsAction, deleteProjectAction } from '../../redux/actions/projects';
+import { getProjects, setSelectedProjectsAction, deleteProjectAction } from '../../redux/actions/projects';
 
 
 export default function DeleteProjectDialog() {
+    const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const projectsState = useAppSelector(state => state.projectsReducer)
     const [open, setOpen] = React.useState(false)
@@ -35,10 +33,11 @@ export default function DeleteProjectDialog() {
             deleteProjectAction(projectsState.selectedProject.projectId),
         ).then(res => {
             if (res && res?.payload && res?.payload?.status == 200) {
-                // dispatch(deleteProjectAction(projectsState.selectedProject.projectId))
                 // dispatch(setSelectedProjectsAction({}))
                 dispatch(setFilesEmptyAction())
             }
+            // dispatch(getProjects())
+            navigate("/dash")
             setOpen(false)
         })
     }

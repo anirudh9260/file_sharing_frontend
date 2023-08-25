@@ -115,7 +115,7 @@ export const projectsReducer = createSlice({
 
         addProjectsSuccess(state, action) {
             let selectedProject = {}
-            console.log(action.payload)
+            // console.log(action.payload)
             selectedProject = {
                 projectId: action.payload.id,
                 projectName: action.payload.project_name,
@@ -148,6 +148,7 @@ export const projectsReducer = createSlice({
         deleteProjectsSuccess(state, action) {
             return {
                 ...state,
+                selectedProject: {},
                 message: 'Project Successfully Deleted',
                 isDeleteting: false,
                 isError: false,
