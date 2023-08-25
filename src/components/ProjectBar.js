@@ -17,6 +17,7 @@ import { setSelectedProjectsAction } from '../redux/actions/projects'
 import UserSession from '../services/auth'
 import AddProjectDialog from './AddProjectDialog'
 import UploadFile from './UploadFile'
+import SearchFile from './SearchFile'
 
 export default function ProjectBar() {
     const dispatch = useAppDispatch()
@@ -86,12 +87,14 @@ export default function ProjectBar() {
                 </Stack>
             </Stack>
 
-            <Stack direction="row" justifyContent="space-between">
-                <Typography sx={{ flex: '1 1 100%' }} variant="h5">
+            <Stack direction="row" alignItems="center" justifyContent="space-between">
+                <Typography  variant="h5">
                     {!projectsState.selectedProject.projectName
                         ? 'Please select a project'
                         : projectsState.selectedProject.projectName + ' Files'}
                 </Typography>
+
+                {projectsState.selectedProject.projectName && (<SearchFile></SearchFile>)}
 
                 {projectsState.selectedProject.projectName && (
                     <UploadFile

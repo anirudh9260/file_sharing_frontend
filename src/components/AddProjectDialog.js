@@ -55,7 +55,7 @@ export default function AddProjectDialog() {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={handleAddNewProject}>OK</Button>
+                    <Button disabled = {projectName == "" ? true : false} onClick={handleAddNewProject}>OK</Button>
                 </DialogActions>
             </Dialog>
         </div>
