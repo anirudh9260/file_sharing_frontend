@@ -81,7 +81,7 @@ function UploadFile() {
                 onClick={handleClickOpen}
                 sx={{ px: '5', whiteSpace: 'nowrap' }}
             >
-                UPLOAD FILE <FileUploadIcon></FileUploadIcon>
+                Upload File <FileUploadIcon></FileUploadIcon>
             </Button>
 
             <Modal
@@ -104,7 +104,7 @@ function UploadFile() {
                             spacing={15}
                         >
                             <Typography variant="h6">
-                                UPLOAD FILE
+                                Upload File
                             </Typography>
                             <AllowedExtensions></AllowedExtensions>
                         </Stack>
