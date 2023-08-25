@@ -50,7 +50,7 @@ export default function AddProjectDialog() {
                         label="Project Name"
                         fullWidth
                         variant="standard"
-                        onChange = {(e) => setProjectName(e.target.value) }
+                        onChange = {(e) => setProjectName(e.target.value.trim()) }
                     />
                 </DialogContent>
                 <DialogActions>
