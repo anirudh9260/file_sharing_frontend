@@ -12,6 +12,7 @@ import AddProjectDialog from '../../components/AddProjectDialog'
 import SnackbarNotification from '../../components/SnackbarNotification'
 import { useAppSelector, useAppDispatch } from '../../hooks/redux-hooks'
 import { setSelectedProjectsAction } from '../../redux/actions/projects'
+import { getAllUsersAction } from '../../redux/actions/auth'
 import {
     getProjects,
     getProjectAccessAction,
@@ -30,7 +31,8 @@ export default function ProjectSettings() {
     const [snackbarState, setSnackbarState] = useState(false)
 
     useEffect(() => {
-        dispatch(setMessage())
+        dispatch(setMessage());
+        dispatch(getAllUsersAction())
     }, [])
 
     useEffect(() => {
