@@ -78,7 +78,7 @@ export default function ProjectSettings() {
                                 value={
                                     projectsState.selectedProject?.projectId
                                         ? projectsState.selectedProject
-                                              ?.projectId
+                                                ?.projectId
                                         : ''
                                 }
                                 label="Select Project"
