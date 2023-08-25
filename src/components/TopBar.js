@@ -194,15 +194,7 @@ const TopBar = () => {
 
                     {UserSession.isAuthenticated() ? (
                         <>
-                            {/* <IconButton
-                                size="large"
-                                aria-label="show 1 new notifications"
-                                color="inherit"
-                            >
-                                <Badge badgeContent={1} color="error">
-                                    <NotificationsIcon />
-                                </Badge>
-                            </IconButton> */}
+                            
                             <Box sx={{ flexGrow: 0 }}>
                                 <Tooltip title="Open settings">
                                     <IconButton

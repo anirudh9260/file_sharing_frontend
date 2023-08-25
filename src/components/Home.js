@@ -2,10 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-
-
 import Container from '@mui/material/Container';
-
 
 import { getFilesForProject } from '../redux/actions/files';
 import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
@@ -57,7 +54,7 @@ const Home = () => {
 
     useEffect(() => {
         setSnackbarState(true)
-    }, [projectsState.message, filesState.isUpdating, filesState.isCopying, filesState.isConverting])
+    }, [projectsState.message, filesState.isUpdating, filesState.isCopying, filesState.isConverting, filesState.isSelected])
     
 
     return (
