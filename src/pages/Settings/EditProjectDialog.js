@@ -68,7 +68,7 @@ export default function EditProjectDialog() {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={handleEdit}>OK</Button>
+                    <Button disabled = {newProject == "" ? true : false} onClick={handleEdit}>OK</Button>
                 </DialogActions>
             </Dialog>
         </div>
