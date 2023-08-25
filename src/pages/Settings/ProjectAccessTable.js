@@ -13,7 +13,7 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 
 import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks'
-import { getAllUsersAction } from '../../redux/actions/auth'
+
 import {
     getProjectAccessAction,
     addProjectAccessAction,
@@ -25,11 +25,6 @@ function ProjectAccessTable() {
     const projectState = useAppSelector(state => state.projectsReducer)
     const [selectedEmail, setSelectedEmail] = useState('')
 
-    useEffect(() => {
-        {
-            dispatch(getAllUsersAction())
-        }
-    }, [])
 
     useEffect(() => {
         if (
@@ -88,7 +83,8 @@ function ProjectAccessTable() {
                                     startIcon={<DeleteIcon />}
                                     onClick={() => handleDeleteAccess(user.id)}
                                     color="error"
-                                ></Button>
+                                    variant='contained'
+                                > Remove</Button>
                             </TableCell>
                         </TableRow>
                     ))}
@@ -113,8 +109,10 @@ function ProjectAccessTable() {
                             <Button
                                 startIcon={<AddCircleIcon />}
                                 onClick={handleAddAccess}
+                                variant='contained'
                                 color="success"
-                            ></Button>
+                                sx={{px:4}}
+                            >Add</Button>
                         </TableCell>
                     </TableRow>
                 </TableBody>
