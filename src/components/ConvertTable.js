@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks'
 import { useEffect } from 'react'
 import FileDownloadIcon from '@mui/icons-material/FileDownload'
 import ConvertFileDialog from './ConvertFileDialog'
-
+import { alllowedConversions } from '../constants/conversions'
 
 const getLink = row => {
     const link =
@@ -27,7 +27,7 @@ const getLink = row => {
 export default function ConvertTable(props) {
     const { row, open } = props
     const dispatch = useAppDispatch()
-
+    console.log("row:", row.type.substring(1))
     const filesState = useAppSelector(state => state.filesReducer)
 
     useEffect(() => {
@@ -36,7 +36,8 @@ export default function ConvertTable(props) {
         }
     }, [open, filesState.isConverting])
 
-    const fileTypes = ['.xml', '.csv', '.json', '.yaml']
+    // const fileTypes = ['.xml', '.csv', '.json', '.yaml']
+    const fileTypes = alllowedConversions[row.type.substring(1,row.type.length)] || []
 
     let table_rows = structuredClone(filesState.convertedFiles)
 
